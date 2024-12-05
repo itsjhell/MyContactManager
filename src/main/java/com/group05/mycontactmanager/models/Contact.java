@@ -18,6 +18,7 @@ public class Contact {
     private final List<PhoneNumber> numbers;
     private final List<String> emailAddresses;
     private String imagePath;
+    private String notes;
     
     //l'oggeto verrà istanziato inizialmente con i soli dati obbligatori
     public Contact(String name, String surname) {
@@ -39,6 +40,10 @@ public class Contact {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+    
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     public String getName() {
         return name;
@@ -49,6 +54,10 @@ public class Contact {
     }
     
     public String getImagePath() {
+        return imagePath;
+    }
+    
+    public String getNotes() {
         return imagePath;
     }
     
@@ -86,6 +95,4 @@ public class Contact {
         sb.append("\n");
         return sb.toString();
     }
-    
-    
 }
