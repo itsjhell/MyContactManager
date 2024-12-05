@@ -9,7 +9,7 @@ MyContactManager è un software per la gestione di una rubrica personale, svilup
 
 ## Partecipanti
 > Gruppo 05: <br>
-- Alfonso Villani 
 - Alessandro Petti
 - Alessandro Sabia 
+- Alfonso Villani 
 - Giovanni Lamberti
