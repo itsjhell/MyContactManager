@@ -17,8 +17,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("View"), 1250, 800);
         stage.setScene(scene);
+        stage.setMinWidth(1250); 
+        stage.setMinHeight(800); 
+
+        stage.setTitle("MyContactManager");
         stage.show();
     }
 
