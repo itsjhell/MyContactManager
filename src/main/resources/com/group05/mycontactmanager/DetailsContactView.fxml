@@ -109,7 +109,7 @@
                         <Insets right="10.0" />
                      </padding>
                   </TextField>
-                  <Label fx:id="erorrEmail" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="170.0" text="Errore" />
+                  <Label fx:id="errorEmail" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="170.0" text="Errore" />
                   <TextField fx:id="emailAddress3" layoutX="14.0" layoutY="122.0" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="63.0">
                      <padding>
                         <Insets right="10.0" />

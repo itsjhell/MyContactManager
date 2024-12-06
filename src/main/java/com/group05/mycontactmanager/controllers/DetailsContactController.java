@@ -25,7 +25,7 @@ import javafx.scene.image.ImageView;
 /**
  * FXML Controller class
  *
- * @author alfon
+ * @author group05
  */
 public class DetailsContactController implements Initializable {
 
@@ -58,8 +58,6 @@ public class DetailsContactController implements Initializable {
     @FXML
     private TextField emailAddress1;
     @FXML
-    private Label erorrEmail;
-    @FXML
     private TextField emailAddress3;
     @FXML
     private TextField emailAddress2;
@@ -73,6 +71,8 @@ public class DetailsContactController implements Initializable {
     private Button deleteButton;
     
     private static SplitPane splitPane;
+    @FXML
+    private Label errorEmail;
 
     /**
      * Initializes the controller class.

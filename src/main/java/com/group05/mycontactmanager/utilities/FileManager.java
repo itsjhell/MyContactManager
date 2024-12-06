@@ -14,14 +14,6 @@ import javafx.stage.FileChooser;
  * @author group05
  */
 public class FileManager {
-    
-    public static String chooseFile(String task, String extension) {
-        FileChooser fileChooser = new FileChooser();
-        return null;
-    }
-     
-    public static void loadImage(Contact contact) {
-    }
 
     public static void saveContactManager(ContactManager contactManager) {
     }

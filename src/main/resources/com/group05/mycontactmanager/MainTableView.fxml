@@ -34,7 +34,7 @@
                         </Label>
                         <Button fx:id="addButton" layoutX="494.0" layoutY="10.0" mnemonicParsing="false" onAction="#addContactToList" prefHeight="57.0" prefWidth="95.0" text="Aggiungi Contatto" textAlignment="CENTER" wrapText="true" />
                         <Button fx:id="selectButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#selectContacts" prefHeight="57.0" prefWidth="95.0" text="Seleziona" textAlignment="CENTER" wrapText="true" />
-                        <ComboBox fx:id="searchParameter" layoutX="128.0" layoutY="34.0" onAction="#search" prefHeight="31.0" prefWidth="73.0" />
+                        <ComboBox fx:id="searchParameter" layoutX="128.0" layoutY="34.0" onAction="#chooseSearchParameter" prefHeight="31.0" prefWidth="73.0" />
                         <TextField fx:id="searchField" layoutX="207.0" layoutY="34.0" prefHeight="31.0" prefWidth="269.0" />
                         <Label layoutX="128.0" layoutY="16.0" prefHeight="21.0" prefWidth="95.0" text="Cerca per..." textAlignment="CENTER">
                            <font>
@@ -49,7 +49,7 @@
                         <TableColumn fx:id="surnameClm" prefWidth="143.0" text="Cognome" />
                         <TableColumn fx:id="nameClm" prefWidth="157.0" text="Nome" />
                         <TableColumn prefWidth="202.0" />
-                        <TableColumn prefWidth="112.0" />
+                        <TableColumn fx:id="checkClm" prefWidth="112.0" />
                      </columns>
                   </TableView>
                </children>

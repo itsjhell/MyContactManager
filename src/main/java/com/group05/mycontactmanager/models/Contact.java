@@ -58,7 +58,7 @@ public class Contact {
     }
     
     public String getNotes() {
-        return imagePath;
+        return notes;
     }
     
     public void addNumber(PhoneNumber phoneNumber) {

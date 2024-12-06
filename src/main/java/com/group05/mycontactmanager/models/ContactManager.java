@@ -22,8 +22,20 @@ public class ContactManager {
         this.name = new SimpleStringProperty(name);
         this.contactList = FXCollections.observableArrayList(); 
     }
+
+    public void setName(StringProperty name) {
+        this.name = name;
+    }
+
+    public void setContactList(ObservableList<Contact> contactList) {
+        this.contactList = contactList;
+    }
     
-    public ObservableList getContactList() {
+    public StringProperty getName() {
+        return name;
+    }
+
+    public ObservableList<Contact> getContactList() {
         return contactList;
     }
     
@@ -32,20 +44,7 @@ public class ContactManager {
     
     public void removeContact(Contact contact) {
     }
-    
-    
-    public ObservableList searchBySurnameAndName(StringProperty Surname) {
-        return null;
-    }
-    
-    public ObservableList searchByEmail(StringProperty email) {
-        return null;
-    }
-  
-    public ObservableList searchByPhoneNumber(StringProperty phone) {
-        return null;
-    }
-    
+      
     @Override
     public String toString() {
         return null;

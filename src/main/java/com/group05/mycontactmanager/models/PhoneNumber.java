@@ -19,20 +19,20 @@ public class PhoneNumber {
         this.number = number;
     }
 
-    public PhonePrefix getPrefix() {
-        return prefix;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
     public void setPrefix(PhonePrefix prefix) {
         this.prefix = prefix;
     }
 
     public void setNumber(String number) {
         this.number = number;
+    }
+    
+    public PhonePrefix getPrefix() {
+        return prefix;
+    }
+
+    public String getNumber() {
+        return number;
     }
     
     @Override

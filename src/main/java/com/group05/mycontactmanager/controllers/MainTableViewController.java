@@ -10,6 +10,8 @@ import com.group05.mycontactmanager.models.Contact;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +29,7 @@ import javafx.scene.image.Image;
 /**
  * FXML Controller class
  *
- * @author alfon
+ * @author group05
  */
 public class MainTableViewController implements Initializable {
 
@@ -59,6 +61,8 @@ public class MainTableViewController implements Initializable {
     private TableColumn<Contact, String> surnameClm;
     @FXML
     private TableColumn<Contact, String> nameClm;
+    @FXML
+    private TableColumn<?, ?> checkClm;
 
     /**
      * Initializes the controller class.
@@ -99,6 +103,28 @@ public class MainTableViewController implements Initializable {
     }
 
     @FXML
-    private void search(ActionEvent event) {
+    private void chooseSearchParameter(ActionEvent event) {
     }
+    
+    public ObservableList searchBySurnameAndName(StringProperty surname, StringProperty name) {
+        return null;
+    }
+    
+    public ObservableList searchBySurname(StringProperty surname) {
+        return null;
+    }
+    
+    public ObservableList searchByName(StringProperty name) {
+        return null;
+    }
+    
+    public ObservableList searchByEmail(StringProperty email) {
+        return null;
+    }
+  
+    public ObservableList searchByPhoneNumber(StringProperty phone) {
+        return null;
+    }
+    
+    
 }
