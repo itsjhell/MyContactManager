@@ -5,8 +5,10 @@
  */
 package com.group05.mycontactmanager.controllers;
 
+import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.PhonePrefix;
 import java.io.IOException;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -64,10 +66,22 @@ abstract class ContactController {
     @FXML
     private TextArea notesArea;
     
+    private Contact contact;
+    
+    private ObservableList<Contact> contactList;
+    
     protected static SplitPane splitPane;
     
     public static void setSplitPane(SplitPane sp){
         splitPane = sp;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+    public void setContactList(ObservableList<Contact> contactList) {
+        this.contactList = contactList;
     }
     
     @FXML
