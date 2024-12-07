@@ -20,15 +20,15 @@ public class Contact {
     private String imagePath;
     private String notes;
     
-    //l'oggeto verrà istanziato inizialmente con i soli dati obbligatori
-    public Contact(String name, String surname) {
+        public Contact(String name, String surname, List<PhoneNumber> numbers, List<String> emailAddresses, String imagePath, String notes) {
         this.name = name;
         this.surname = surname;
-        this.numbers = new ArrayList<>();
-        this.emailAddresses = new ArrayList<>();
-        this.imagePath = "defaultpath/defaultimg.png";
+        this.numbers = numbers;
+        this.emailAddresses = emailAddresses;
+        this.imagePath = imagePath;
+        this.notes = notes;
     }
-
+        
     public void setName(String name) {
         this.name = name;
     }
@@ -60,7 +60,16 @@ public class Contact {
     public String getNotes() {
         return notes;
     }
-    
+
+    public List<PhoneNumber> getNumbers() {
+        return numbers;
+    }
+
+    public List<String> getEmailAddresses() {
+        return emailAddresses;
+    }
+
+    /*
     public void addNumber(PhoneNumber phoneNumber) {
    
     }
@@ -75,7 +84,7 @@ public class Contact {
         
     public void removeEmailAddress(String emailAddress) {
       
-    }
+    }*/
 
     @Override
     public String toString() {
