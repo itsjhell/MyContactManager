@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -62,7 +63,7 @@ public class MainTableViewController implements Initializable {
     @FXML
     private TableColumn<Contact, String> nameClm;
     @FXML
-    private TableColumn<?, ?> checkClm;
+    private TableColumn<Contact, CheckBox> checkClm;
 
     /**
      * Initializes the controller class.
@@ -70,11 +71,10 @@ public class MainTableViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        DetailsContactController.setSplitPane(splitPane);
-        EditContactController.setSplitPane(splitPane);
-        AddContactController.setSplitPane(splitPane);
+        ContactController.setSplitPane(splitPane);
     }    
 
+    // LETTURA E SCRITTURA SU FILES...
     @FXML
     private void saveContactList(ActionEvent event) {
     }
@@ -98,10 +98,13 @@ public class MainTableViewController implements Initializable {
         splitPane.getItems().add(fxmlLoader.load());
     }
 
+    // SELEZIONA CONTATTI...
     @FXML
     private void selectContacts(ActionEvent event) {
     }
 
+    
+    // RICERCHE
     @FXML
     private void chooseSearchParameter(ActionEvent event) {
     }
@@ -125,6 +128,4 @@ public class MainTableViewController implements Initializable {
     public ObservableList searchByPhoneNumber(StringProperty phone) {
         return null;
     }
-    
-    
 }

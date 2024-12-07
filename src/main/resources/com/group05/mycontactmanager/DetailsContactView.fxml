@@ -153,8 +153,8 @@
       </VBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
          <children>
-            <Button fx:id="editButton" mnemonicParsing="false" onAction="#editContact" text="Modifica" />
-            <Button fx:id="deleteButton" cancelButton="true" mnemonicParsing="false" onAction="#deleteContact" text="Elimina" />
+            <Button fx:id="editButton" mnemonicParsing="false" onAction="#executeLeftTask" text="Modifica" />
+            <Button fx:id="deleteButton" cancelButton="true" mnemonicParsing="false" onAction="#executeRightTask" text="Elimina" />
          </children>
       </HBox>
    </children>

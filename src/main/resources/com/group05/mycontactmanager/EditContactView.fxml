@@ -153,8 +153,8 @@
       </VBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
          <children>
-            <Button fx:id="saveEditsButton" mnemonicParsing="false" onAction="#saveEditsToContact" text="Salva modifiche" />
-            <Button fx:id="CancelButton" cancelButton="true" mnemonicParsing="false" onAction="#cancelAddContact" text="Annulla modifiche" />
+            <Button fx:id="saveEditsButton" mnemonicParsing="false" onAction="#executeLeftTask" text="Salva modifiche" />
+            <Button fx:id="cancelEditsButton" cancelButton="true" mnemonicParsing="false" onAction="#executeRightTask" text="Annulla modifiche" />
          </children>
       </HBox>
    </children>
