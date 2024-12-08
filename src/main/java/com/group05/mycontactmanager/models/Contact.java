@@ -1,107 +1,93 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.group05.mycontactmanager.models;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author group05
- */
 public class Contact {
     private String name;
     private String surname;
-    private final List<PhoneNumber> numbers;
-    private final List<String> emailAddresses;
+    private List<PhoneNumber> numbers;
+    private List<String> emailAddresses;
     private String imagePath;
     private String notes;
-    
-        public Contact(String name, String surname, List<PhoneNumber> numbers, List<String> emailAddresses, String imagePath, String notes) {
+
+    public Contact(String name, String surname) {
         this.name = name;
         this.surname = surname;
-        this.numbers = numbers;
-        this.emailAddresses = emailAddresses;
-        this.imagePath = imagePath;
-        this.notes = notes;
-    }
-        
-    public void setName(String name) {
-        this.name = name;
+        this.numbers = new ArrayList<>();
+        this.emailAddresses = new ArrayList<>();
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-    
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-    
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
+    // Getter e setter
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSurname() {
         return surname;
     }
-    
-    public String getImagePath() {
-        return imagePath;
-    }
-    
-    public String getNotes() {
-        return notes;
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public List<PhoneNumber> getNumbers() {
         return numbers;
     }
 
+    public void addNumber(PhoneNumber number) {
+        if (number != null && !numbers.contains(number)) {
+            numbers.add(number);
+        }
+    }
+
+    public void removeNumber(PhoneNumber number) {
+        numbers.remove(number);
+    }
+
     public List<String> getEmailAddresses() {
         return emailAddresses;
     }
 
-    /*
-    public void addNumber(PhoneNumber phoneNumber) {
-   
+    public void addEmail(String email) {
+        if (email != null && !emailAddresses.contains(email)) {
+            emailAddresses.add(email);
+        }
     }
-        
-    public void addEmailAddress(String emailAddress) {
-   
+
+    public void removeEmail(String email) {
+        emailAddresses.remove(email);
     }
-    
-    public void removeNumber(PhoneNumber phoneNumber) {
-     
+
+    public String getImagePath() {
+        return imagePath;
     }
-        
-    public void removeEmailAddress(String emailAddress) {
-      
-    }*/
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(name + ";");
-        sb.append(surname + ";");
-        for(int i = 0; i < 3; i++) {
-            if(i<numbers.size())
-                sb.append(numbers.get(i));
-            sb.append(";");
-        }
-        for(int i = 0; i < 3; i++) {
-            if(i<emailAddresses.size())
-                sb.append(emailAddresses.get(i));
-            sb.append(";");
-        }
-        sb.append("\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name);
+        sb.append(" Surname: ").append(surname);
+        sb.append(" Numbers: ").append(numbers);
+        sb.append(" Emails: ").append(emailAddresses);
+        sb.append(" Image Path: ").append(imagePath);
+        sb.append(" Notes: ").append(notes);
         return sb.toString();
     }
 }
