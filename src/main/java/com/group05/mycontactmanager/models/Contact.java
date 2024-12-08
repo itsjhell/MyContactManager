@@ -1,3 +1,14 @@
+/**
+ * @file Contact.java
+ * @brief Questo file implementa la scheda del contatto.
+ * 
+ * La classe raggruppa funzioni che permettono di gestire le informazioni
+ * relative al contatto, tra cui nome, cognome, note, foto, email e numero di telefono.
+ * 
+ * @author Group 05
+ * @date Dicembre 8, 2024
+ * @version 1.0
+ */
 package com.group05.mycontactmanager.models;
 
 import java.util.ArrayList;
@@ -11,6 +22,14 @@ public class Contact {
     private String imagePath;
     private String notes;
 
+    /**
+     * @brief Costruttore di un contatto con due campi obbligatori.
+     * 
+     * Viene inizializzata di default una lista vuota.
+     * 
+     * @param name nome del contatto.
+     * @param surname cognome del contatto.
+     */
     public Contact(String name, String surname) {
         this.name = name;
         this.surname = surname;
@@ -18,67 +37,146 @@ public class Contact {
         this.emailAddresses = new ArrayList<>();
     }
 
-    // Getter e setter
+    /**
+     * @brief La funzione restituisce il nome del contatto.
+     * 
+     * @return nome del contatto.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @brief La funzione imposta il nome del contatto.
+     * 
+     * @param[in] name nome del contatto.
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+   
+    /**
+     * @brief La funzione restituisce il cognome del contatto.
+     * 
+     * @return cognome del contatto.
+     */
     public String getSurname() {
         return surname;
     }
 
+    /**
+     * @brief La funzione imposta il cognome del contatto.
+     * 
+     * @param[in] surname cognome del contatto.
+     */
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    /**
+     * @brief La funzione restituisce i numeri di teleofono del contatto.
+     * 
+     * @return numeri del contatto.
+     */
     public List<PhoneNumber> getNumbers() {
         return numbers;
     }
 
+    /**
+     * @brief La funzione aggiunge un nuovo numero di telefono al contatto.
+     * 
+     * @pre "!numbers.contains(number)" il numero non deve essere già presente.
+     * @pre "number != null" il numero non deve essere uguale a null.
+     * 
+     * @param[in] number numero da aggiungere.
+     */
     public void addNumber(PhoneNumber number) {
         if (number != null && !numbers.contains(number)) {
             numbers.add(number);
         }
     }
 
+    /**
+     * @brief La funzione rimuove un numero di telefono dalla lista del contatto.
+     * 
+     * @param number il numero da rimuovere.
+     */
     public void removeNumber(PhoneNumber number) {
         numbers.remove(number);
     }
 
+    /**
+     * @brief La funzione restituisce le email del contatto.
+     * 
+     * @return la lista delle email.
+     */
     public List<String> getEmailAddresses() {
         return emailAddresses;
     }
 
+    /**
+     * @brief La funzione aggiunge un nuovo indirizzo email al contatto.
+     * 
+     * @pre "email != null" email non deve essere uguale a null.
+     * @pre "!emailAddresses.contains(email)" email non deve essere già presente.
+     * 
+     * @param[in] email la nuova email da inserire.
+     */
     public void addEmail(String email) {
         if (email != null && !emailAddresses.contains(email)) {
             emailAddresses.add(email);
         }
     }
 
+    /**
+     * @brief La funzione rimuove l'email dalla lista del contatto.
+     * 
+     * @param email 
+     */
     public void removeEmail(String email) {
         emailAddresses.remove(email);
     }
 
+    /**
+     * @brief La funzione restituisce il percorso dell'immagine profilo del contatto.
+     * 
+     * @return immagine profilo.
+     */
     public String getImagePath() {
         return imagePath;
     }
 
+    /**
+     * @brief La funzione imposta il percorso di una nuova immagine profilo del contatto.
+     * 
+     * @param[in] imagePath nuovo percorso immagine.
+     */
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
+    /**
+     * @brief La funzione restituisce le note associate al contatto.
+     * 
+     * @return note del contatto.
+     */
     public String getNotes() {
         return notes;
     }
 
+    /**
+     * @brief La funzione imposta un blocco note associato al contatto.
+     * 
+     * @param[in] notes nuove note.
+     */
     public void setNotes(String notes) {
         this.notes = notes;
     }
 
+    /**
+     * @brief Fornisce una rappresentazione testuale del contatto.
+     * @return Una stringa contenente nome, cognome, numeri di telefono, email, percorso immagine e note.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
