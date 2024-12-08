@@ -8,6 +8,7 @@ package com.group05.mycontactmanager.controllers;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.PhonePrefix;
 import java.io.IOException;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,7 +67,7 @@ abstract class ContactController {
     @FXML
     private TextArea notesArea;
     
-    private Contact contact;
+    private ObjectProperty<Contact> contact;
     
     private ObservableList<Contact> contactList;
     
@@ -75,13 +76,24 @@ abstract class ContactController {
     public static void setSplitPane(SplitPane sp){
         splitPane = sp;
     }
+    
 
-    public void setContact(Contact contact) {
+    // ObjectProperty<Contact> contact;
+    public void setContact(ObjectProperty<Contact> contact) {
         this.contact = contact;
     }
+    
+    public ObjectProperty<Contact> getContact() {
+        return contact;
+    }
 
+    // ObservableList<Contact> contactList
     public void setContactList(ObservableList<Contact> contactList) {
         this.contactList = contactList;
+    }
+    
+    public ObservableList<Contact> getContactList() {
+        return contactList;
     }
     
     @FXML

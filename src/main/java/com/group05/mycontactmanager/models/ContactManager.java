@@ -5,37 +5,35 @@
  */
 package com.group05.mycontactmanager.models;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author group05
  */
 public class ContactManager {
-    private StringProperty name;
-    private ObservableList<Contact> contactList;
+    private String name;
+    private List<Contact> contactList;
     
     public ContactManager(String name) {
-        this.name = new SimpleStringProperty(name);
-        this.contactList = FXCollections.observableArrayList(); 
+        this.name = name;
+        this.contactList = new ArrayList<>(); 
     }
 
-    public void setName(StringProperty name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setContactList(ObservableList<Contact> contactList) {
+    public void setContactList(List contactList) {
         this.contactList = contactList;
     }
     
-    public StringProperty getName() {
+    public String getName() {
         return name;
     }
 
-    public ObservableList<Contact> getContactList() {
+    public List getContactList() {
         return contactList;
     }
     

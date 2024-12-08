@@ -10,6 +10,7 @@ import com.group05.mycontactmanager.models.Contact;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -64,6 +65,29 @@ public class MainTableViewController implements Initializable {
     private TableColumn<Contact, String> nameClm;
     @FXML
     private TableColumn<Contact, CheckBox> checkClm;
+    
+    
+    private ObjectProperty<Contact> contact;
+    
+    private ObservableList<Contact> contactList;
+    
+    // ObjectProperty<Contact> contact;
+    public void setContact(ObjectProperty<Contact> contact) {
+        this.contact = contact;
+    }
+    
+    public ObjectProperty<Contact> getContact() {
+        return contact;
+    }
+
+    // ObservableList<Contact> contactList
+    public void setContactList(ObservableList<Contact> contactList) {
+        this.contactList = contactList;
+    }
+    
+    public ObservableList<Contact> getContactList() {
+        return contactList;
+    }
 
     /**
      * Initializes the controller class.
