@@ -21,13 +21,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 /**
- * FXML Controller Superclass
- *
+ * @file ContactController.java
+ * @brief Classe controller astratta che fornisce elementi comuni per la gestione delle viste legate ai contatti.
+ * 
+ * Questa classe definisce componenti UI e metodi comuni a diversi controller,
+ * come AddContactController, DetailsContactController ed EditContactController.
+ * Gestisce campi di input per un contatto e accede al riferimento di uno SplitPane per caricare la successiva interfaccia.
+ * 
  * @author group05
+ * @date Dicembre 08,2024
+ * @version 1.0
  */
 abstract class ContactController {
     
-
     @FXML
     private TextField nameField;
     @FXML
@@ -68,53 +74,98 @@ abstract class ContactController {
     private TextArea notesArea;
     
     private ObjectProperty<Contact> contact;
-    
     private ObservableList<Contact> contactList;
     
+    /**
+     * @brief SplitPane condiviso tra vari controller per gestire la visualizzazione delle viste.
+     */
     protected static SplitPane splitPane;
     
+    /**
+     * @brief Imposta il riferimento allo SplitPane condiviso.
+     * @param sp Il nuovo SplitPane da utilizzare.
+     */
     public static void setSplitPane(SplitPane sp){
         splitPane = sp;
     }
     
-
-    // ObjectProperty<Contact> contact;
+    /**
+     * @brief Imposta l'ObjectProperty Contact, per legare un contatto al controller.
+     * @param contact L'ObjectProperty che contiene il contatto da gestire.
+     */
     public void setContact(ObjectProperty<Contact> contact) {
         this.contact = contact;
     }
     
+    /**
+     * @brief Restituisce l'ObjectProperty legata al contatto.
+     * @return L'ObjectProperty contenente il contatto.
+     */
     public ObjectProperty<Contact> getContact() {
         return contact;
     }
 
-    // ObservableList<Contact> contactList
+    /**
+     * @brief Imposta la lista dei contatti gestita dal controller.
+     * @param contactList L'ObservableList di contatti.
+     */
     public void setContactList(ObservableList<Contact> contactList) {
         this.contactList = contactList;
     }
     
+    /**
+     * @brief Restituisce la lista dei contatti gestita dal controller.
+     * @return L'ObservableList di contatti.
+     */
     public ObservableList<Contact> getContactList() {
         return contactList;
     }
     
+    /**
+     * @brief Carica un'immagine per il contatto.
+     * @param event L'ActionEvent associato all'azione.
+     */
     @FXML
     private void loadImage(ActionEvent event) {
     }
 
+    /**
+     * @brief Sceglie il prefisso telefonico.
+     * @param event L'ActionEvent associato alla scelta del prefisso.
+     */
     @FXML
     private void choosePrefix(ActionEvent event) {
     }
 
+    /**
+     * @brief Aggiunge un numero di telefono.
+     * @param event L'ActionEvent associato all'azione.
+     */
     @FXML
     private void addPhoneNumber(ActionEvent event) {
     }
 
+    /**
+     * @brief Aggiunge un indirizzo email.
+     * @param event L'ActionEvent associato all'azione.
+     */
     @FXML
     private void addEmail(ActionEvent event) {
     }
     
+    /**
+     * @brief Metodo astratto che va implementato nella sottoclasse in base alla funzionalità richiesta.
+     * @param event L'ActionEvent associato.
+     * @throws IOException In caso di errore nel caricamento vista.
+     */
     @FXML
     abstract void executeLeftTask(ActionEvent event) throws IOException;
 
+    /**
+     * @brief Metodo astratto che va implementato nella sottoclasse in base alla funzionalità richiesta.
+     * @param event L'ActionEvent associato.
+     * @throws IOException In caso di errore nel caricamento vista.
+     */
     @FXML
     abstract void executeRightTask(ActionEvent event) throws IOException;
 }

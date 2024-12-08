@@ -17,9 +17,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
 /**
- * FXML Controller class
- *
+ * @file DetailsContactController.java
+ * @brief Controller dedicato alla vista di dettaglio di un contatto.
+ * 
+ * Questa classe permette la visualizzazione dei dettagli di un contatto selezionato,
+ * fornendo anche la possibilità di accedere alla modifica del contatto o alla sua rimozione.
+ * 
  * @author group05
+ * @date Dicembre 08,2024
+ * @version 1.0
  */
 public class DetailsContactController extends ContactController implements Initializable {
 
@@ -29,26 +35,39 @@ public class DetailsContactController extends ContactController implements Initi
     private Button deleteButton;
 
     /**
-     * Initializes the controller class.
+     * @brief Inizializza il controller dopo il caricamento della vista.
+     * @param url L'URL per risolvere percorsi relativi.
+     * @param rb Il ResourceBundle per l'internazionalizzazione.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // TODO: Logica di inizializzazione se necessaria.
     }
 
+    /**
+     * @brief Azione associata al compito sinistro "LeftTask"
+     *        Carica l'interfaccia di modifica del contatto
+     * @param event L'evento ActionEvent generato dall'interfaccia.
+     * @throws IOException In caso di errore nel caricamento della vista FXML.
+     */
     @FXML
     @Override
-     void executeLeftTask(ActionEvent event) throws IOException {
+    void executeLeftTask(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("EditContactView" + ".fxml"));
         splitPane.getItems().remove(1);
         splitPane.getItems().add(fxmlLoader.load());
-    /*  EditContactController editController = fxmlLoader.getController(); // ottengo l'oggetto controller
-        editController.setContact(new Contact("a", "b", null, null, "", "")); // test comunicazione
-    */
+
+       
     }
 
+    /**
+     * @brief Azione associata al compito destro "RightTask"
+     *        Rimuove il contatto dalla lista.
+     * @param event L'evento ActionEvent generato dall'interfaccia.
+     */
     @FXML
     @Override
-     void executeRightTask(ActionEvent event) {
+    void executeRightTask(ActionEvent event) {
+      
     }
 }
