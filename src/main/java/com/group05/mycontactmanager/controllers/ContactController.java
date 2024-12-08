@@ -78,7 +78,7 @@ abstract class ContactController {
     
     /**
      * @brief Imposta il riferimento allo SplitPane condiviso.
-     * @param sp Il nuovo SplitPane da utilizzare.
+     * @param[in] sp Il nuovo SplitPane da utilizzare.
      */
     public static void setSplitPane(SplitPane sp){
         splitPane = sp;
@@ -86,7 +86,7 @@ abstract class ContactController {
     
     /**
      * @brief Imposta l'ObjectProperty Contact, per legare un contatto al controller.
-     * @param contact L'ObjectProperty che contiene il contatto da gestire.
+     * @param[in] contact L'ObjectProperty che contiene il contatto da gestire.
      */
     public void setContact(ObjectProperty<Contact> contact) {
         this.contact = contact;
@@ -102,7 +102,7 @@ abstract class ContactController {
 
     /**
      * @brief Imposta la lista dei contatti gestita dal controller.
-     * @param contactList L'ObservableList di contatti.
+     * @param[in] contactList L'ObservableList di contatti.
      */
     public void setContactList(ObservableList<Contact> contactList) {
         this.contactList = contactList;
@@ -118,7 +118,7 @@ abstract class ContactController {
     
     /**
      * @brief Carica un'immagine per il contatto.
-     * @param event L'ActionEvent associato all'azione.
+     * @param[in] event L'ActionEvent associato all'azione.
      */
     @FXML
     private void loadImage(ActionEvent event) {
@@ -126,7 +126,7 @@ abstract class ContactController {
 
     /**
      * @brief Sceglie il prefisso telefonico.
-     * @param event L'ActionEvent associato alla scelta del prefisso.
+     * @param[in] event L'ActionEvent associato alla scelta del prefisso.
      */
     @FXML
     private void choosePrefix(ActionEvent event) {
@@ -134,7 +134,7 @@ abstract class ContactController {
 
     /**
      * @brief Aggiunge un numero di telefono.
-     * @param event L'ActionEvent associato all'azione.
+     * @param[in] event L'ActionEvent associato all'azione.
      */
     @FXML
     private void addPhoneNumber(ActionEvent event) {
@@ -142,7 +142,7 @@ abstract class ContactController {
 
     /**
      * @brief Aggiunge un indirizzo email.
-     * @param event L'ActionEvent associato all'azione.
+     * @param[in] event L'ActionEvent associato all'azione.
      */
     @FXML
     private void addEmail(ActionEvent event) {
@@ -150,7 +150,7 @@ abstract class ContactController {
     
     /**
      * @brief Metodo astratto che va implementato nella sottoclasse in base alla funzionalità richiesta.
-     * @param event L'ActionEvent associato.
+     * @param[in] event L'ActionEvent associato.
      * @throws IOException In caso di errore nel caricamento vista.
      */
     @FXML
@@ -158,7 +158,7 @@ abstract class ContactController {
 
     /**
      * @brief Metodo astratto che va implementato nella sottoclasse in base alla funzionalità richiesta.
-     * @param event L'ActionEvent associato.
+     * @param[in] event L'ActionEvent associato.
      * @throws IOException In caso di errore nel caricamento vista.
      */
     @FXML

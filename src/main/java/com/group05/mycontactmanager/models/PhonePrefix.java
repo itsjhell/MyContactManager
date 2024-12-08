@@ -24,7 +24,7 @@ public enum PhonePrefix {
 
     /**
      * @brief Costruttore per assegnare un prefisso all'enumerazione.
-     * @param prefix La stringa che rappresenta il prefisso.
+     * @param[in] prefix La stringa che rappresenta il prefisso.
      */
     PhonePrefix(String prefix) {
         this.prefix = prefix;

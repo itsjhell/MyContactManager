@@ -31,18 +31,18 @@ public class DetailsContactController extends ContactController implements Initi
 
     /**
      * @brief Inizializza il controller dopo il caricamento della vista.
-     * @param url L'URL per risolvere percorsi relativi.
-     * @param rb Il ResourceBundle per l'internazionalizzazione.
+     * @param[in] url L'URL per risolvere percorsi relativi.
+     * @param[in] rb Il ResourceBundle per l'internazionalizzazione.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO: Logica di inizializzazione se necessaria.
+    
     }
 
     /**
      * @brief Azione associata al compito sinistro "LeftTask"
      *        Carica l'interfaccia di modifica del contatto
-     * @param event L'evento ActionEvent generato dall'interfaccia.
+     * @param[in] event L'evento ActionEvent generato dall'interfaccia.
      * @throws IOException In caso di errore nel caricamento della vista FXML.
      */
     @FXML
@@ -58,7 +58,7 @@ public class DetailsContactController extends ContactController implements Initi
     /**
      * @brief Azione associata al compito destro "RightTask"
      *        Rimuove il contatto dalla lista.
-     * @param event L'evento ActionEvent generato dall'interfaccia.
+     * @param[in] event L'evento ActionEvent generato dall'interfaccia.
      */
     @FXML
     @Override

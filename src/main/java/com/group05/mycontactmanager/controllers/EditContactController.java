@@ -30,8 +30,8 @@ public class EditContactController extends ContactController implements Initiali
     
     /**
      * @brief Inizializza il controller dopo il caricamento della vista.
-     * @param url L'URL per percorsi relativi.
-     * @param rb Il ResourceBundle per l'internazionalizzazione.
+     * @param[in] url L'URL per percorsi relativi.
+     * @param[in] rb Il ResourceBundle per l'internazionalizzazione.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -40,8 +40,8 @@ public class EditContactController extends ContactController implements Initiali
 
     /**
      * @brief Azione associata al compito sinistro:
-     *        ritorna alla vista dei dettagli del contatto.
-     * @param event L'ActionEvent associato.
+     *        ritorna alla visualizzazione dei dettagli del contatto.
+     * @param[in] event L'ActionEvent associato.
      * @throws IOException In caso di errore nel caricamento della vista.
      */
     @FXML
@@ -54,8 +54,8 @@ public class EditContactController extends ContactController implements Initiali
 
     /**
      * @brief Azione associata al compito destro.
-     *        salvare le modifiche al contatto.
-     * @param event L'ActionEvent associato.
+     *        salva le modifiche al contatto.
+     * @param[in] event L'ActionEvent associato.
      */
     @FXML
     @Override

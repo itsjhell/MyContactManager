@@ -73,7 +73,7 @@ public class MainTableViewController implements Initializable {
     
     /**
      * @brief Imposta l'ObjectProperty del contatto selezionato.
-     * @param contact L'ObjectProperty contenente il contatto.
+     * @param[in] contact L'ObjectProperty contenente il contatto.
      */
     public void setContact(ObjectProperty<Contact> contact) {
         this.contact = contact;
@@ -89,7 +89,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Imposta la lista di contatti.
-     * @param contactList L'ObservableList di contatti.
+     * @param[in] contactList L'ObservableList di contatti.
      */
     public void setContactList(ObservableList<Contact> contactList) {
         this.contactList = contactList;
@@ -105,8 +105,8 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Inizializza il controller.
-     * @param url L'URL per percorsi relativi.
-     * @param rb Il ResourceBundle per l'internazionalizzazione.
+     * @param[in] url L'URL per percorsi relativi.
+     * @param[in] rb Il ResourceBundle per l'internazionalizzazione.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -116,7 +116,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Salva la lista dei contatti su file.
-     * @param event L'ActionEvent associato.
+     * @param[in] event L'ActionEvent associato.
      */
     @FXML
     private void saveContactList(ActionEvent event) {
@@ -124,7 +124,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Carica la lista dei contatti da file.
-     * @param event L'ActionEvent associato.
+     * @param[in] event L'ActionEvent associato.
      */
     @FXML
     private void loadContactList(ActionEvent event) {
@@ -132,7 +132,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Importa contatti da un file CSV.
-     * @param event L'ActionEvent associato.
+     * @param[in] event L'ActionEvent associato.
      */
     @FXML
     private void importContacts(ActionEvent event) {
@@ -140,7 +140,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Esporta contatti in un file CSV.
-     * @param event L'ActionEvent associato.
+     * @param[in] event L'ActionEvent associato.
      */
     @FXML
     private void exportContacts(ActionEvent event) {
@@ -148,7 +148,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Aggiunge un nuovo contatto alla lista, caricando la vista di aggiunta.
-     * @param event L'ActionEvent associato.
+     * @param[in] event L'ActionEvent associato.
      * @throws IOException In caso di errore nel caricamento della vista FXML.
      */
     @FXML
@@ -160,7 +160,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Seleziona i contatti.
-     * @param event L'ActionEvent associato.
+     * @param[in] event L'ActionEvent associato.
      */
     @FXML
     private void selectContacts(ActionEvent event) {
@@ -168,7 +168,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Sceglie il parametro di ricerca.
-     * @param event L'ActionEvent associato.
+     * @param[in] event L'ActionEvent associato.
      */
     @FXML
     private void chooseSearchParameter(ActionEvent event) {
@@ -176,8 +176,8 @@ public class MainTableViewController implements Initializable {
     
     /**
      * @brief Ricerca contatti per cognome e nome.
-     * @param surname La proprietà Stringa del cognome.
-     * @param name La proprietà Stringa del nome.
+     * @param[in] surname La proprietà Stringa del cognome.
+     * @param[in] name La proprietà Stringa del nome.
      * @return Un'ObservableList di contatti corrispondenti che soddisfano i criteri di ricerca 
      */
     public ObservableList searchBySurnameAndName(StringProperty surname, StringProperty name) {
@@ -186,7 +186,7 @@ public class MainTableViewController implements Initializable {
     
     /**
      * @brief Ricerca contatti per cognome .
-     * @param surname La proprietà Stringa del cognome.
+     * @param[in] surname La proprietà Stringa del cognome.
      * @return Un'ObservableList di contatti che soddisfano i criteri di ricerca.
      */
     public ObservableList searchBySurname(StringProperty surname) {
@@ -195,7 +195,7 @@ public class MainTableViewController implements Initializable {
     
     /**
      * @brief Ricerca contatti per nome .
-     * @param name La proprietà Stringa del nome.
+     * @param[in] name La proprietà Stringa del nome.
      * @return Un'ObservableList di contatti che soddisfano i criteri di ricerca. 
      */
     public ObservableList searchByName(StringProperty name) {
@@ -204,7 +204,7 @@ public class MainTableViewController implements Initializable {
     
     /**
      * @brief Ricerca contatti per email (non implementato).
-     * @param email La proprietà Stringa dell'email.
+     * @param[in] email La proprietà Stringa dell'email.
      * @return Un'ObservableList di contatti che soddisfano i criteri di ricerca.
      */
     public ObservableList searchByEmail(StringProperty email) {
@@ -213,7 +213,7 @@ public class MainTableViewController implements Initializable {
   
     /**
      * @brief Ricerca contatti per numero di telefono (non implementato).
-     * @param phone La proprietà Stringa del numero di telefono.
+     * @param[in] phone La proprietà Stringa del numero di telefono.
      * @return UUn'ObservableList di contatti che soddisfano i criteri di ricerca.
      */
     public ObservableList searchByPhoneNumber(StringProperty phone) {

@@ -32,7 +32,9 @@ public class App extends Application {
      * Carica la vista "MainTableView" da un file FXML, 
      * imposta le dimensioni minime della finestra, un titolo e mostra lo stage.
      * 
-     * @param stage Lo `Stage` principale.
+     * @pre 'loadFXML' la risorsa .fxml deve esistere
+     * 
+     * @param[in] stage Lo `Stage` principale.
      * @throws IOException In caso di errore nel caricamento del file FXML.
      */
     @Override
@@ -47,7 +49,7 @@ public class App extends Application {
 
     /**
      * @brief Cambia la vista radice della scena corrente.
-     * @param fxml Il nome del file FXML da caricare come nuova radice.
+     * @param[in] fxml Il nome del file FXML da caricare come nuova radice.
      * @throws IOException In caso di errore nel caricamento del file FXML.
      */
     static void setRoot(String fxml) throws IOException {
@@ -60,7 +62,7 @@ public class App extends Application {
      * Questo metodo utilizza il `FXMLLoader` per caricare la risorsa FXML 
      * corrispondente al nome fornito e restituire il `Parent` ottenuto.
      * 
-     * @param fxml Il nome del file FXML (senza `.fxml`) da caricare.
+     * @param[in] fxml Il nome del file FXML (senza `.fxml`) da caricare.
      * @return Un oggetto `Parent` caricato dalla risorsa FXML specificata.
      * @throws IOException In caso di errore nel caricamento del file FXML.
      */
@@ -75,7 +77,7 @@ public class App extends Application {
      * Esegue il lancio dell'applicazione JavaFX. Una volta chiamato, si attiva 
      * il ciclo di vita JavaFX che a sua volta invoca il metodo `start`.
      * 
-     * @param args Argomenti passati da linea di comando, se presenti.
+     * @param[in] args Argomenti passati da linea di comando, se presenti.
      */
     public static void main(String[] args) {
         launch();

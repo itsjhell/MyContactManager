@@ -27,8 +27,8 @@ public class Contact {
      * 
      * Viene inizializzata di default una lista vuota.
      * 
-     * @param name nome del contatto.
-     * @param surname cognome del contatto.
+     * @param[in] name nome del contatto.
+     * @param[in] surname cognome del contatto.
      */
     public Contact(String name, String surname) {
         this.name = name;
@@ -99,7 +99,7 @@ public class Contact {
     /**
      * @brief La funzione rimuove un numero di telefono dalla lista del contatto.
      * 
-     * @param number il numero da rimuovere.
+     * @param[in] number il numero da rimuovere.
      */
     public void removeNumber(PhoneNumber number) {
         numbers.remove(number);
@@ -117,8 +117,8 @@ public class Contact {
     /**
      * @brief La funzione aggiunge un nuovo indirizzo email al contatto.
      * 
-     * @pre "email != null" email non deve essere uguale a null.
-     * @pre "!emailAddresses.contains(email)" email non deve essere già presente.
+     * @pre 'email != null' email non deve essere uguale a null.
+     * @pre '!emailAddresses.contains(email)' email non deve essere già presente.
      * 
      * @param[in] email la nuova email da inserire.
      */
@@ -131,7 +131,7 @@ public class Contact {
     /**
      * @brief La funzione rimuove l'email dalla lista del contatto.
      * 
-     * @param email 
+     * @param[in] email l'email che si intende rimuovere 
      */
     public void removeEmail(String email) {
         emailAddresses.remove(email);

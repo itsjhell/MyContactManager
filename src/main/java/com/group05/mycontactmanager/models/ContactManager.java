@@ -20,7 +20,7 @@ public class ContactManager {
     
     /**
      * @brief Crea un nuovo ContactManager con un dato nome.
-     * @param name Il nome associato alla lista di contatti.
+     * @param[in] name Il nome associato alla lista di contatti.
      */
     public ContactManager(String name) {
         this.name = name;
@@ -29,7 +29,7 @@ public class ContactManager {
 
     /**
      * @brief Imposta il nome della lista di contatti.
-     * @param name Il nuovo nome.
+     * @param[in] name Il nuovo nome.
      */
     public void setName(String name) {
         this.name = name;
@@ -37,7 +37,7 @@ public class ContactManager {
 
     /**
      * @brief Imposta la lista di contatti.
-     * @param contactList Una lista di oggetti Contact.
+     * @param[in] contactList Una lista di oggetti Contact.
      */
     public void setContactList(List<Contact> contactList) {
         this.contactList = contactList;
@@ -61,15 +61,15 @@ public class ContactManager {
     
     /**
      * @brief Aggiunge un contatto alla lista (non implementato).
-     * @param contact Il contatto da aggiungere.
+     * @param[in] contact Il contatto da aggiungere.
      */
     public void addContact(Contact contact) {
-        // TODO: Implementare logica per aggiungere un contatto.
+       
     }
     
     /**
      * @brief Rimuove un contatto dalla lista (non implementato).
-     * @param contact Il contatto da rimuovere.
+     * @param[in] contact Il contatto da rimuovere.
      */
     public void removeContact(Contact contact) {
         // TODO: Implementare logica per rimuovere un contatto.

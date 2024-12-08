@@ -17,8 +17,8 @@ public class PhoneNumber {
 
     /**
      * @brief Costruttore per creare un PhoneNumber con prefisso e numero.
-     * @param prefix Il prefisso telefonico.
-     * @param number La parte numerica del telefono.
+     * @param[in] prefix Il prefisso telefonico.
+     * @param[in] number La parte numerica del telefono.
      */
     public PhoneNumber(PhonePrefix prefix, String number) {
         this.prefix = prefix;
@@ -27,7 +27,7 @@ public class PhoneNumber {
 
     /**
      * @brief Imposta il prefisso del numero di telefono.
-     * @param prefix Il nuovo prefisso.
+     * @param[in] prefix Il nuovo prefisso.
      */
     public void setPrefix(PhonePrefix prefix) {
         this.prefix = prefix;
@@ -35,7 +35,7 @@ public class PhoneNumber {
 
     /**
      * @brief Imposta la parte numerica del telefono.
-     * @param number Il nuovo numero.
+     * @param[in] number Il nuovo numero.
      */
     public void setNumber(String number) {
         this.number = number;

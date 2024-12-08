@@ -20,7 +20,7 @@ public class FileManager {
 
     /**
      * @brief Salva i contatti gestiti da un ContactManager su un file.
-     * @param contactManager L'istanza di ContactManager da salvare.
+     * @param[in] contactManager L'istanza di ContactManager da salvare.
      * 
      */
     public static void saveContactManager(ContactManager contactManager) {
@@ -44,8 +44,7 @@ public class FileManager {
     
     /**
      * @brief Esporta i contatti di un ContactManager in un file CSV.
-     * @param contactManager L'istanza di ContactManager da esportare.
-     * 
+     * @param[in] contactManager L'istanza di ContactManager da esportare.
      */
     public static void exportContactsToCSV(ContactManager contactManager) {       
     }
