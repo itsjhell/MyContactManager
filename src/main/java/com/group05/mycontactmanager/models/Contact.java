@@ -1,3 +1,8 @@
+package com.group05.mycontactmanager.models;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @file Contact.java
  * @brief Questo file implementa la scheda del contatto.
@@ -9,11 +14,6 @@
  * @date Dicembre 8, 2024
  * @version 1.0
  */
-package com.group05.mycontactmanager.models;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Contact {
     private String name;
     private String surname;
