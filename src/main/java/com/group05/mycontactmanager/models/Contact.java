@@ -45,7 +45,11 @@ public class Contact {
         this.surname = surname;
         this.numbers = numbers;
         this.emailAddresses = emailAddresses;
-        this.imagePath = imagePath;
+        if(imagePath.equals("") )
+            this.imagePath = "defaultPath";
+        else
+            this.imagePath = imagePath;
+        
         this.notes = notes;
     }
 
