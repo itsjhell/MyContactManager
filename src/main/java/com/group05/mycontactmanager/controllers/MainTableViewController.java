@@ -149,7 +149,7 @@ public class MainTableViewController implements Initializable {
         
         
         //settare il contatto selezionato
-        contact.bindBidirectional((Property<Contact>) contactTable.getSelectionModel().getSelectedItem());
+        //contact.bindBidirectional((Property<Contact>) contactTable.getSelectionModel().getSelectedItem());
         
     }    
 

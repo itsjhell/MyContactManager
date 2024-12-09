@@ -68,7 +68,7 @@ abstract class ContactController {
     @FXML
     private TextArea notesArea;
     
-    protected ObjectProperty<Contact> contact;
+    protected Contact contact;
     protected ObservableList<Contact> contactList;
     
     /**
@@ -88,7 +88,7 @@ abstract class ContactController {
      * @brief Imposta l'ObjectProperty Contact, per legare un contatto al controller.
      * @param[in] contact L'ObjectProperty che contiene il contatto da gestire.
      */
-    public void setContact(ObjectProperty<Contact> contact) {
+    public void setContact(Contact contact) {
         this.contact = contact;
     }
     
@@ -96,7 +96,7 @@ abstract class ContactController {
      * @brief Restituisce l'ObjectProperty legata al contatto.
      * @return L'ObjectProperty contenente il contatto.
      */
-    public ObjectProperty<Contact> getContact() {
+    public Contact getContact() {
         return contact;
     }
 
