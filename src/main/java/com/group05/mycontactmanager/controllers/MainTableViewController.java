@@ -9,7 +9,10 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -139,11 +142,14 @@ public class MainTableViewController implements Initializable {
         });
         contactTable.setItems(sortedContactList);
 
-        //passare il contatto selezionato
         contactList.add(new Contact("Mario", "Rossi", null, null, "", ""));
         contactList.add(new Contact("Riccardo", "Rossi", null, null, "", ""));
         contactList.add(new Contact("Mario", "Verdi", null, null, "", ""));
         contactList.add(new Contact("Mario", "Gialli", null, null, "", ""));
+        
+        
+        //settare il contatto selezionato
+        contact.bindBidirectional((Property<Contact>) contactTable.getSelectionModel().getSelectedItem());
         
     }    
 
