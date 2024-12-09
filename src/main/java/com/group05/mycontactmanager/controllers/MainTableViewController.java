@@ -2,12 +2,17 @@ package com.group05.mycontactmanager.controllers;
 
 import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
+import com.group05.mycontactmanager.models.ContactManager;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +26,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 
 /**
@@ -110,8 +116,32 @@ public class MainTableViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO: Logica di inizializzazione.
         ContactController.setSplitPane(splitPane);
+        
+        surnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
+        nameClm.setCellValueFactory(new PropertyValueFactory("name"));
+           
+        ContactManager contactManager = new ContactManager("Nuova rubrica");
+        contactList = FXCollections.observableArrayList(contactManager.getContactList());
+        // Lista ordinata per cognome-nome da visualizzare nella tabella */
+        SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
+            @Override
+            public int compare(Contact o1, Contact o2) {
+                // Confronto cognome
+                int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
+                if (cmp != 0)
+                    return cmp;
+                // Confronto nome se i cognomi sono uguali
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+        contactTable.setItems(sortedContactList);
+        
+        contactList.add(new Contact("Mario", "Rossi"));
+        contactList.add(new Contact("Riccardo", "Rossi"));
+        contactList.add(new Contact("Mario", "Verdi"));
+        contactList.add(new Contact("Mario", "Gialli"));
+        
     }    
 
     /**
