@@ -270,8 +270,24 @@ public class MainTableViewController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         splitPane.getItems().remove(1);
         splitPane.getItems().add(fxmlLoader.load());
-        ContactController addController = fxmlLoader.getController(); // ottengo l'oggetto controller
-        addController.setContactList(contactList); 
-        addController.setContact(contact);
+        configureController(fxmlLoader.getController());
+    }
+    
+    public void configureController(ContactController c) {
+        if (c instanceof AddContactController) {
+            AddContactController controller = (AddContactController) c;
+            controller.setContactList(contactList); 
+            controller.setContact(contact);
+        }
+        if (c instanceof DetailsContactController) {
+            DetailsContactController controller = (DetailsContactController) c;
+            controller.setContactList(contactList); 
+            controller.setContact(contact);
+        }
+        if (c instanceof EditContactController) {
+            EditContactController controller = (EditContactController) c;
+            controller.setContactList(contactList); 
+            controller.setContact(contact);
+        }
     }
 }
