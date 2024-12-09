@@ -186,6 +186,8 @@ public class MainTableViewController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddContactView" + ".fxml"));
         splitPane.getItems().remove(1);
         splitPane.getItems().add(fxmlLoader.load());
+        AddContactController addController = fxmlLoader.getController(); // ottengo l'oggetto controller
+        addController.setContactList(contactList); 
     }
 
     /**
