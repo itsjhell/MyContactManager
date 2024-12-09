@@ -9,12 +9,16 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableObjectValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -79,7 +83,7 @@ public class MainTableViewController implements Initializable {
     @FXML
     private TableColumn<Contact, CheckBox> checkClm;
     
-    private ObjectProperty<Contact> contact;
+    private Contact contact;
     private ObservableList<Contact> contactList;
     
     /**
@@ -150,6 +154,26 @@ public class MainTableViewController implements Initializable {
         
         //settare il contatto selezionato
         //contact.bindBidirectional((Property<Contact>) contactTable.getSelectionModel().getSelectedItem());
+        /*ObjectBinding<Contact> c = Bindings.createObjectBinding(
+            () -> contactTable.getSelectionModel().getSelectedItem(),
+                contactTable.getSelectionModel().selectedItemProperty()
+        );
+        
+        System.out.println(c.getValue());*/
+        
+        contactTable.setOnMouseClicked(event -> {
+            Contact selectedContact = contactTable.getSelectionModel().getSelectedItem();
+            if (selectedContact != null) {
+                contact = selectedContact;
+                try {
+                    loadNextInterface("DetailsContactView");
+                    System.out.println(contact);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
         
     }    
 
@@ -192,11 +216,7 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void addContactToList(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddContactView" + ".fxml"));
-        splitPane.getItems().remove(1);
-        splitPane.getItems().add(fxmlLoader.load());
-        AddContactController addController = fxmlLoader.getController(); // ottengo l'oggetto controller
-        addController.setContactList(contactList); 
+        loadNextInterface("AddContactView");
     }
 
     /**
@@ -259,5 +279,15 @@ public class MainTableViewController implements Initializable {
      */
     public ObservableList searchByPhoneNumber(StringProperty phone) {
         return null;
+    }
+    
+    public void loadNextInterface(String fxml) throws IOException {
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        splitPane.getItems().remove(1);
+        splitPane.getItems().add(fxmlLoader.load());
+        ContactController addController = fxmlLoader.getController(); // ottengo l'oggetto controller
+        addController.setContactList(contactList); 
+        addController.setContact(contact);
     }
 }
