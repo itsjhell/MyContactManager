@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.StringBinding;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,9 +49,12 @@ public class AddContactController extends ContactController implements Initializ
     public void initialize(URL url, ResourceBundle rb) {
         addButton.setDisable(true);
         prefixMenu1.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
+        prefixMenu2.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
+        prefixMenu3.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
+        
         setupNameBinding();
-       // setupPhoneBinding(prefixMenu1,phoneNumber1);
-        errorNumber.setVisible(false);
+        setupPhoneBinding(prefixMenu1,phoneNumber1,"1) Inserisci un formato corretto.");
+      //  setupPhoneBinding(prefixMenu2,phoneNumber2,"2) Inserisci un formato corretto.");
         setupEmailBinding(emailAddress1);
       //  setupEmailBinding(emailAddress2);
       //  setupEmailBinding(emailAddress3);
@@ -72,17 +76,17 @@ public class AddContactController extends ContactController implements Initializ
         splitPane.getItems().add(fxmlLoader.load());
         
         numbers = new ArrayList();
-        numbers.add(new PhoneNumber(PhonePrefix.OTHERS,phoneNumber1.getText()));
-        numbers.add(new PhoneNumber(PhonePrefix.OTHERS,phoneNumber2.getText()));
-        numbers.add(new PhoneNumber(PhonePrefix.OTHERS,phoneNumber3.getText()));
+        numbers.add(new PhoneNumber(prefixMenu1.getValue(),phoneNumber1.getText()));
+        numbers.add(new PhoneNumber(prefixMenu2.getValue(),phoneNumber2.getText()));
+        numbers.add(new PhoneNumber(prefixMenu3.getValue(),phoneNumber3.getText()));
        
         emailAddresses = new ArrayList();
         emailAddresses.add(emailAddress1.getText());
         emailAddresses.add(emailAddress2.getText());
         emailAddresses.add(emailAddress3.getText());
       
-        contactList.add(new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, "", ""));
-        
+        contactList.add(new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, "", notesArea.getText()));
+        splitPane.getItems().remove(1);
     }
 
     /**
@@ -104,13 +108,18 @@ public class AddContactController extends ContactController implements Initializ
         errorName.visibleProperty().bind(nameBinding.not());
     }
     
-    private void setupPhoneBinding(ComboBox<PhonePrefix> prefix, TextField phoneNumber) {
+    private void setupPhoneBinding(ComboBox<PhonePrefix> prefix, TextField phoneNumber, String errorText) {
         BooleanBinding phoneBinding = Bindings.createBooleanBinding(() -> {
             return Checker.checkNumber(new PhoneNumber(prefix.getValue(), phoneNumber.getText()));
         }, prefix.valueProperty(), phoneNumber.textProperty());
-
+        
+        StringBinding errorBinding = Bindings.createStringBinding(() -> {
+            return errorText;
+        }, phoneBinding);
+        
         // Bind per la label
         errorNumber.visibleProperty().bind(phoneBinding.not());
+        errorNumber.textProperty().bind(errorBinding);
     }
     
     private void setupEmailBinding(TextField emailAddress) {
