@@ -37,7 +37,9 @@ public class Checker {
      */
      public static boolean checkNumber(PhoneNumber number) {
         //Controllo che siano tutte cifre
-         if (number.getPrefix() == null || !number.getNumber().matches("\\d+")) {
+        if (number.getNumber().equals("")) return true; // se l'utente lascia il campo vuoto
+       
+        if (number.getPrefix() == null || !number.getNumber().matches("\\d+")) {
             return false;
         }
         //Controllo sulla lunghezza del numero
