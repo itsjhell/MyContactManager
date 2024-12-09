@@ -68,8 +68,8 @@ abstract class ContactController {
     @FXML
     private TextArea notesArea;
     
-    private ObjectProperty<Contact> contact;
-    private ObservableList<Contact> contactList;
+    protected ObjectProperty<Contact> contact;
+    protected ObservableList<Contact> contactList;
     
     /**
      * @brief SplitPane condiviso tra vari controller per gestire la visualizzazione delle viste.
