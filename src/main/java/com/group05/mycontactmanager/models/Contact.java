@@ -23,18 +23,30 @@ public class Contact {
     private String notes;
 
     /**
+     * @param name
+     * @param surname
+     * @param numbers
+     * @param emailAddresses
+     * @param imagePath
+     * @param notes
+
      * @brief Costruttore di un contatto con due campi obbligatori.
      * 
      * Viene inizializzata di default una lista vuota.
      * 
      * @param[in] name nome del contatto.
      * @param[in] surname cognome del contatto.
+     * @param[in] numbers, la lista di  nome del contatto.
+     * @param[in] surname cognome del contatto.
      */
-    public Contact(String name, String surname) {
+    
+    public Contact(String name, String surname, List<PhoneNumber> numbers, List<String> emailAddresses, String imagePath, String notes) {
         this.name = name;
         this.surname = surname;
-        this.numbers = new ArrayList<>();
-        this.emailAddresses = new ArrayList<>();
+        this.numbers = numbers;
+        this.emailAddresses = emailAddresses;
+        this.imagePath = imagePath;
+        this.notes = notes;
     }
 
     /**
