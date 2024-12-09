@@ -1,6 +1,8 @@
 package com.group05.mycontactmanager.utilities;
 
 import com.group05.mycontactmanager.models.PhoneNumber;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @file Checker.java
@@ -20,7 +22,12 @@ public class Checker {
      * @return true se la validazione è andata a buon fine e false per il contrario.
      */
     public static boolean checkEmail(String email) {
-        return true;
+        if (email.equals("")) return true; // se l'utente lascia il campo vuoto
+       
+        String regex = "^([^@]+)@([^@]+\\.[^@]+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
     
     /**
@@ -28,7 +35,48 @@ public class Checker {
      * @param[in] number L'oggetto PhoneNumber da controllare.
      * @return true se la validazione è andata a buon fine e false per il contrario.
      */
-    public static boolean checkNumber(PhoneNumber number) {
-        return true;
+     public static boolean checkNumber(PhoneNumber number) {
+        //Controllo che siano tutte cifre
+        if (number.getPrefix() == null || !number.getPrefix().toString().matches("\\d+")) {
+            return false;
+        }
+        //Controllo sulla lunghezza del numero
+        int minLength = 0;
+        int maxLength = 0;
+        switch (number.getPrefix()) {
+            case ITALY:
+                minLength = 6;
+                maxLength = 10;
+                break;
+            case USA:
+                minLength = 10;
+                maxLength = 10;
+                break;
+            case UK:
+                minLength = 9;
+                maxLength = 10;
+                break;
+            case FRANCE:
+                minLength = 9;
+                maxLength = 9;
+                break;
+            case GERMANY:
+                minLength = 7;
+                maxLength = 12;
+                break;
+            case PORTUGAL:
+                minLength = 9;
+                maxLength = 12;
+                break;
+            case OTHERS:
+                minLength = 3;
+                maxLength = 12;
+                break;
+            //default può essere omesso poiché nello switch sono già elencati tutti i casi possibili
+        }
+        
+        int length = number.getPrefix().toString().length();
+        return length >= minLength && length <= maxLength;
     }
+    
 }

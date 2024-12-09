@@ -268,7 +268,9 @@ public class MainTableViewController implements Initializable {
     public void loadNextInterface(String fxml) throws IOException {
         
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        splitPane.getItems().remove(1);
+        if (splitPane.getItems().size() > 1) {
+            splitPane.getItems().remove(1);
+        }
         splitPane.getItems().add(fxmlLoader.load());
         ContactController addController = fxmlLoader.getController(); // ottengo l'oggetto controller
         addController.setContactList(contactList); 
