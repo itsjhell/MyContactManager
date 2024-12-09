@@ -1,6 +1,7 @@
 package com.group05.mycontactmanager.controllers;
 
 import com.group05.mycontactmanager.App;
+import com.group05.mycontactmanager.models.Contact;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,7 +36,6 @@ public class AddContactController extends ContactController implements Initializ
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
     }
 
     /**
@@ -51,6 +51,8 @@ public class AddContactController extends ContactController implements Initializ
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView" + ".fxml"));
         splitPane.getItems().remove(1);
         splitPane.getItems().add(fxmlLoader.load());
+        
+        // contactList.add(new Contact(...));
     }
 
     /**
