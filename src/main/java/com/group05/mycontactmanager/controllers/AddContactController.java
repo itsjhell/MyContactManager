@@ -13,6 +13,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 
 /**
@@ -39,6 +41,14 @@ public class AddContactController extends ContactController implements Initializ
     private Button addButton;
     @FXML
     private Button cancelButton;
+    
+    AddContactController(SplitPane splitPane, ObservableList<Contact> contactList) {
+        super();
+        //contactProperty.set(contact);
+        this.contactList = contactList;
+        this.splitPane = splitPane;
+    }
+
 
     /**
      * @brief Inizializza il controller dopo il caricamento della vista.
@@ -71,9 +81,6 @@ public class AddContactController extends ContactController implements Initializ
     @FXML
     @Override
     void executeLeftTask(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView" + ".fxml"));
-        splitPane.getItems().remove(1);
-        splitPane.getItems().add(fxmlLoader.load());
         
         numbers = new ArrayList();
         numbers.add(new PhoneNumber(prefixMenu1.getValue(),phoneNumber1.getText()));
@@ -85,8 +92,16 @@ public class AddContactController extends ContactController implements Initializ
         emailAddresses.add(emailAddress2.getText());
         emailAddresses.add(emailAddress3.getText());
       
-        contactList.add(new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, "", notesArea.getText()));
-        splitPane.getItems().remove(1);
+        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, "", notesArea.getText());
+        contactList.add(contact);
+        
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
+        if (splitPane.getItems().size() > 1)
+            splitPane.getItems().remove(1);
+
+        fxmlLoader.setControllerFactory(param -> new DetailsContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
+        splitPane.getItems().add(fxmlLoader.load());
     }
 
     /**

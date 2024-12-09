@@ -109,7 +109,7 @@ public class MainTableViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ContactController.setSplitPane(splitPane);
+        //ContactController.setSplitPane(splitPane);
         
         surnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
         nameClm.setCellValueFactory(new PropertyValueFactory("name"));
@@ -150,7 +150,12 @@ public class MainTableViewController implements Initializable {
             if (selectedContact != null) {
                 contact = selectedContact;
                 try {
-                    loadNextInterface("DetailsContactView");
+                    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
+                    if (splitPane.getItems().size() > 1)
+                        splitPane.getItems().remove(1);
+
+                    fxmlLoader.setControllerFactory(param -> new DetailsContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
+                    splitPane.getItems().add(fxmlLoader.load());
                     System.out.println(contact);
                 } catch (IOException ex) {
                     Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -200,7 +205,12 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void addContactToList(ActionEvent event) throws IOException {
-        loadNextInterface("AddContactView");
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddContactView.fxml"));
+        if (splitPane.getItems().size() > 1)
+            splitPane.getItems().remove(1);
+
+        fxmlLoader.setControllerFactory(param -> new AddContactController(splitPane, contactList)); // Usa una fabbrica per creare il controller
+        splitPane.getItems().add(fxmlLoader.load());
     }
 
     /**
@@ -267,14 +277,12 @@ public class MainTableViewController implements Initializable {
     
     public void loadNextInterface(String fxml) throws IOException {
         
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        if (splitPane.getItems().size() > 1) {
-            splitPane.getItems().remove(1);
-        }
-        splitPane.getItems().add(fxmlLoader.load());
-        configureController(fxmlLoader.getController());
+        
+        //ContactController controller = fxmlLoader.getController();
+        //controller.setContactList(contactList); 
+        //controller.setContact(contact);
     }
-    
+    /*
     public void configureController(ContactController c) {
         if (c instanceof AddContactController) {
             AddContactController controller = (AddContactController) c;
@@ -291,5 +299,5 @@ public class MainTableViewController implements Initializable {
             controller.setContactList(contactList); 
             controller.setContact(contact);
         }
-    }
+    }*/
 }

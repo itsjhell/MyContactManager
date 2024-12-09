@@ -6,6 +6,9 @@ import com.group05.mycontactmanager.models.PhonePrefix;
 import java.io.IOException;
 import java.util.List;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,7 +43,7 @@ abstract class ContactController {
     @FXML
     protected ImageView contactImage;
     @FXML
-    private Button imageButton;
+     Button imageButton;
     @FXML
     protected ComboBox<PhonePrefix> prefixMenu1;
     @FXML
@@ -48,7 +51,7 @@ abstract class ContactController {
     @FXML
     protected ComboBox<PhonePrefix> prefixMenu3;
     @FXML
-    private Button adderPhoneButton;
+     Button adderPhoneButton;
     @FXML
     protected TextField phoneNumber1;
     @FXML
@@ -58,7 +61,7 @@ abstract class ContactController {
     @FXML
     protected Label errorNumber;
     @FXML
-    private Button adderEmailButton;
+     Button adderEmailButton;
     @FXML
     protected TextField emailAddress1;
     @FXML
@@ -70,54 +73,22 @@ abstract class ContactController {
     @FXML
     protected TextArea notesArea;
     
-    protected Contact contact;
-    protected ObservableList<Contact> contactList;
+    
     protected List<PhoneNumber> numbers;
+    
     protected List<String> emailAddresses;
-    /**
-     * @brief SplitPane condiviso tra vari controller per gestire la visualizzazione delle viste.
-     */
-    protected static SplitPane splitPane;
     
-    /**
-     * @brief Imposta il riferimento allo SplitPane condiviso.
-     * @param[in] sp Il nuovo SplitPane da utilizzare.
-     */
-    public static void setSplitPane(SplitPane sp){
-        splitPane = sp;
-    }
+    protected SplitPane splitPane;
     
-    /**
-     * @brief Imposta l'ObjectProperty Contact, per legare un contatto al controller.
-     * @param[in] contact L'ObjectProperty che contiene il contatto da gestire.
-     */
-    public void setContact(Contact contact) {
-        this.contact = contact;
+    protected ObjectProperty<Contact> contactProperty;
+            
+    protected ObservableList<Contact> contactList;
+            
+    public ContactController() {
+        contactProperty = new SimpleObjectProperty();
+        contactList = FXCollections.observableArrayList();
     }
-    
-    /**
-     * @brief Restituisce l'ObjectProperty legata al contatto.
-     * @return L'ObjectProperty contenente il contatto.
-     */
-    public Contact getContact() {
-        return contact;
-    }
-
-    /**
-     * @brief Imposta la lista dei contatti gestita dal controller.
-     * @param[in] contactList L'ObservableList di contatti.
-     */
-    public void setContactList(ObservableList<Contact> contactList) {
-        this.contactList = contactList;
-    }
-    
-    /**
-     * @brief Restituisce la lista dei contatti gestita dal controller.
-     * @return L'ObservableList di contatti.
-     */
-    public ObservableList<Contact> getContactList() {
-        return contactList;
-    }
+   
     
     /**
      * @brief Carica un'immagine per il contatto.
