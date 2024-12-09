@@ -49,8 +49,7 @@ public class AddContactController extends ContactController implements Initializ
         addButton.setDisable(true);
         prefixMenu1.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
         setupNameBinding();
-       // setupPhoneBinding(prefixMenu1,phoneNumber1);
-        errorNumber.setVisible(false);
+        setupPhoneBinding(prefixMenu1,phoneNumber1);
         setupEmailBinding(emailAddress1);
       //  setupEmailBinding(emailAddress2);
       //  setupEmailBinding(emailAddress3);
