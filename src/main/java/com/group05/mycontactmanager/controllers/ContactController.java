@@ -1,8 +1,10 @@
 package com.group05.mycontactmanager.controllers;
 
 import com.group05.mycontactmanager.models.Contact;
+import com.group05.mycontactmanager.models.PhoneNumber;
 import com.group05.mycontactmanager.models.PhonePrefix;
 import java.io.IOException;
+import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,47 +32,48 @@ import javafx.scene.image.ImageView;
 abstract class ContactController {
     
     @FXML
-    private TextField nameField;
+    protected TextField nameField;
     @FXML
-    private TextField surnameField;
+    protected TextField surnameField;
     @FXML
-    private Label errorName;
+    protected Label errorName;
     @FXML
-    private ImageView contactImage;
+    protected ImageView contactImage;
     @FXML
     private Button imageButton;
     @FXML
-    private ComboBox<PhonePrefix> prefixMenu1;
+    protected ComboBox<PhonePrefix> prefixMenu1;
     @FXML
-    private ComboBox<PhonePrefix> prefixMenu2;
+    protected ComboBox<PhonePrefix> prefixMenu2;
     @FXML
-    private ComboBox<PhonePrefix> prefixMenu3;
+    protected ComboBox<PhonePrefix> prefixMenu3;
     @FXML
     private Button adderPhoneButton;
     @FXML
-    private TextField phoneNumber1;
+    protected TextField phoneNumber1;
     @FXML
-    private TextField phoneNumber2;
+    protected TextField phoneNumber2;
     @FXML
-    private TextField phoneNumber3;
+    protected TextField phoneNumber3;
     @FXML
-    private Label errorNumber;
+    protected Label errorNumber;
     @FXML
     private Button adderEmailButton;
     @FXML
-    private TextField emailAddress1;
+    protected TextField emailAddress1;
     @FXML
-    private TextField emailAddress3;
+    protected TextField emailAddress3;
     @FXML
-    private TextField emailAddress2;
+    protected TextField emailAddress2;
     @FXML
-    private Label errorEmail;
+    protected Label errorEmail;
     @FXML
-    private TextArea notesArea;
+    protected TextArea notesArea;
     
     protected Contact contact;
     protected ObservableList<Contact> contactList;
-    
+    protected List<PhoneNumber> numbers;
+    protected List<String> emailAddresses;
     /**
      * @brief SplitPane condiviso tra vari controller per gestire la visualizzazione delle viste.
      */
