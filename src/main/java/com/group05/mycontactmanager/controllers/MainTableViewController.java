@@ -3,9 +3,11 @@ package com.group05.mycontactmanager.controllers;
 import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.ContactManager;
+import com.group05.mycontactmanager.models.PhoneNumber;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -136,11 +138,12 @@ public class MainTableViewController implements Initializable {
             }
         });
         contactTable.setItems(sortedContactList);
-        
-        contactList.add(new Contact("Mario", "Rossi"));
-        contactList.add(new Contact("Riccardo", "Rossi"));
-        contactList.add(new Contact("Mario", "Verdi"));
-        contactList.add(new Contact("Mario", "Gialli"));
+
+        //passare il contatto selezionato
+        contactList.add(new Contact("Mario", "Rossi", null, null, "", ""));
+        contactList.add(new Contact("Riccardo", "Rossi", null, null, "", ""));
+        contactList.add(new Contact("Mario", "Verdi", null, null, "", ""));
+        contactList.add(new Contact("Mario", "Gialli", null, null, "", ""));
         
     }    
 
