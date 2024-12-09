@@ -111,7 +111,6 @@ public class AddContactController extends ContactController implements Initializ
 
         // Bind per la label
         errorNumber.visibleProperty().bind(phoneBinding.not());
-       // addButton.disableProperty().bind(phoneBinding);   
     }
     
     private void setupEmailBinding(TextField emailAddress) {
@@ -129,7 +128,6 @@ public class AddContactController extends ContactController implements Initializ
             return !errorName.isVisible() && !errorNumber.isVisible() && !errorEmail.isVisible();
         }, errorName.visibleProperty(), errorNumber.visibleProperty(), errorEmail.visibleProperty());
 
-        // Imposta la visibilità di una quarta label (o qualsiasi altro componente) in base alla condizione
         addButton.disableProperty().bind(addBinding.not());   
     }
 }
