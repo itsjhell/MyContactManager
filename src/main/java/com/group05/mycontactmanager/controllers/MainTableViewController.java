@@ -85,22 +85,6 @@ public class MainTableViewController implements Initializable {
     
     private Contact contact;
     private ObservableList<Contact> contactList;
-    
-    /**
-     * @brief Imposta l'ObjectProperty del contatto selezionato.
-     * @param[in] contact L'ObjectProperty contenente il contatto.
-     */
-    public void setContact(ObjectProperty<Contact> contact) {
-        this.contact = contact;
-    }
-    
-    /**
-     * @brief Restituisce l'ObjectProperty del contatto.
-     * @return L'ObjectProperty contenente il contatto.
-     */
-    public ObjectProperty<Contact> getContact() {
-        return contact;
-    }
 
     /**
      * @brief Imposta la lista di contatti.
