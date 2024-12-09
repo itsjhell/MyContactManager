@@ -71,17 +71,17 @@ public class AddContactController extends ContactController implements Initializ
         splitPane.getItems().add(fxmlLoader.load());
         
         numbers = new ArrayList();
-        numbers.add(new PhoneNumber(PhonePrefix.OTHERS,phoneNumber1.getText()));
-        numbers.add(new PhoneNumber(PhonePrefix.OTHERS,phoneNumber2.getText()));
-        numbers.add(new PhoneNumber(PhonePrefix.OTHERS,phoneNumber3.getText()));
+        numbers.add(new PhoneNumber(prefixMenu1.getValue(),phoneNumber1.getText()));
+        numbers.add(new PhoneNumber(prefixMenu2.getValue(),phoneNumber2.getText()));
+        numbers.add(new PhoneNumber(prefixMenu3.getValue(),phoneNumber3.getText()));
        
         emailAddresses = new ArrayList();
         emailAddresses.add(emailAddress1.getText());
         emailAddresses.add(emailAddress2.getText());
         emailAddresses.add(emailAddress3.getText());
       
-        contactList.add(new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, "", ""));
-        
+        contactList.add(new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, "", notesArea.getText()));
+        splitPane.getItems().remove(1);
     }
 
     /**
