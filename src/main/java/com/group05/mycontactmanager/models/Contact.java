@@ -14,7 +14,7 @@ import java.util.List;
  * @date Dicembre 8, 2024
  * @version 1.0
  */
-public class Contact {
+public class Contact implements Cloneable{
     private String name;
     private String surname;
     private List<PhoneNumber> numbers;
@@ -204,4 +204,9 @@ public class Contact {
         sb.append(" Notes: ").append(notes);
         return sb.toString();
     }
+    
+    public Contact clone() {
+        return new Contact(name, surname,  numbers, emailAddresses, imagePath, notes);
+    }
+    
 }

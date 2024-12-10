@@ -3,10 +3,15 @@ package com.group05.mycontactmanager.controllers;
 import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.PhoneNumber;
+import com.group05.mycontactmanager.models.PhonePrefix;
+import com.group05.mycontactmanager.utilities.Checker;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.StringBinding;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +40,8 @@ public class EditContactController extends ContactController implements Initiali
     private Button saveEditsButton;
     @FXML
     private Button cancelEditsButton;
+    
+    private Contact newContact;
 
     EditContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
         super();
@@ -52,10 +59,17 @@ public class EditContactController extends ContactController implements Initiali
     public void initialize(URL url, ResourceBundle rb) {
         fillTextFields(contactProperty.get());
         viewImageSetted(contactProperty.get().getImagePath());
-        configureElements();
         //bindings
             //controlli sui textField
             //tra una copia del contatto e tra i text field
+        newContact = contactProperty.get().clone();
+        //setupNameBinding();
+        //setupPhoneBinding(prefixMenu1,phoneNumber1,"1) Inserisci un formato corretto.");
+        
+        TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
+        setupEmailBinding(emailFields);
+        
+        
     }
 
     /**
@@ -68,6 +82,8 @@ public class EditContactController extends ContactController implements Initiali
     @Override
     void executeLeftTask(ActionEvent event) throws IOException {
         loadDetailsContactInterface();
+        //salvataggio del contatto
+        contactProperty.set(newContact);
         
         
     }
@@ -82,31 +98,7 @@ public class EditContactController extends ContactController implements Initiali
     void executeRightTask(ActionEvent event) {
        
     }
-
-    private void configureElements() {
-        //imposto un effetto visivo e rendo non edistabili i campi
-        notesArea.setEditable(true);
-        TextField[] fields = { nameField, surnameField, phoneNumber1, phoneNumber2, phoneNumber3, emailAddress1, emailAddress2, emailAddress3, };
-        for (TextField field : fields) {
-            field.setEditable(true);
-            field.setOpacity(1.0);
-        }
-        ComboBox[] comboBoxes = { prefixMenu1, prefixMenu2, prefixMenu3 };
-        for (ComboBox combobox : comboBoxes) {
-            combobox.setEditable(true);
-            combobox.setOpacity(1);
-        }
-        //imposto un effetto visivo e rendo non edistabili i campi
-        Label[] labelsToHide = {errorName, errorNumber, errorEmail};
-        for (Label label : labelsToHide)
-            label.setVisible(true);
-        
-        Button[] buttonsToHide = { imageButton, adderPhoneButton, adderEmailButton};
-        for (Button button : buttonsToHide)
-            button.setVisible(true);
     
-    }
-
     private void fillTextFields(Contact contact) {
         //array di TextField per rendere più pulito in caricamento al suo interno
         TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
@@ -135,5 +127,49 @@ public class EditContactController extends ContactController implements Initiali
         // BINDING PER NOTIFICARE IL CONTATTO CHE DEVE PASSARE!
         fxmlLoader.setControllerFactory(param -> new EditContactController(splitPane, contactProperty.get(), contactList)); // Usa una fabbrica per creare il controller
         splitPane.getItems().add(fxmlLoader.load());
+    }
+    
+    private void setupNameBinding() {
+        BooleanBinding nameBinding = Bindings.createBooleanBinding(() -> {
+            return !nameField.getText().isEmpty() || !surnameField.getText().isEmpty();
+        }, nameField.textProperty(), surnameField.textProperty());
+        
+        errorName.visibleProperty().bind(nameBinding.not());
+    }
+    
+    private void setupPhoneBinding(ComboBox<PhonePrefix> prefix, TextField phoneNumber, String errorText) {
+        BooleanBinding phoneBinding = Bindings.createBooleanBinding(() -> {
+            return Checker.checkNumber(new PhoneNumber(prefix.getValue(), phoneNumber.getText()));
+        }, prefix.valueProperty(), phoneNumber.textProperty());
+        
+        StringBinding errorBinding = Bindings.createStringBinding(() -> {
+            return errorText;
+        }, phoneBinding);
+        
+        // Bind per la label e segnalare l'eventuale errore
+        errorNumber.visibleProperty().bind(phoneBinding.not());
+        errorNumber.textProperty().bind(errorBinding);
+    }
+    
+    private void setupEmailBinding(TextField[] emailAddresses) {
+        StringBinding emailBinding = Bindings.createStringBinding(() -> {
+            for(int i = 0; i <emailAddresses.length; i++) {
+                if(Checker.checkEmail(emailAddresses[i].getText()))
+                    return "Email "+i+" ha un formato errato";
+            }
+            return "";
+        }, emailAddresses[0].textProperty(), emailAddresses[1].textProperty(), emailAddresses[2].textProperty());
+
+        // Bind per la label
+        errorEmail.textProperty().bind(emailBinding);
+    }
+
+    private void setupEditBinding() {
+        // Creazione del BooleanBinding che verifica se tutte e tre le label sono visibili
+        BooleanBinding addBinding = Bindings.createBooleanBinding(() -> {
+            return !errorName.isVisible() && !errorNumber.isVisible() && !errorEmail.isVisible();
+        }, errorName.visibleProperty(), errorNumber.visibleProperty(), errorEmail.visibleProperty());
+
+        saveEditsButton.disableProperty().bind(addBinding.not());   
     }
 }

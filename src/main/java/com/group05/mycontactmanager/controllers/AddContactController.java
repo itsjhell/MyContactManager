@@ -62,10 +62,10 @@ public class AddContactController extends ContactController implements Initializ
         prefixMenu2.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
         prefixMenu3.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
         
-        setupNameBinding();
-        setupPhoneBinding(prefixMenu1,phoneNumber1,"1) Inserisci un formato corretto.");
+            setupNameBinding();
+            setupPhoneBinding(prefixMenu1,phoneNumber1,"1) Inserisci un formato corretto.");
       //  setupPhoneBinding(prefixMenu2,phoneNumber2,"2) Inserisci un formato corretto.");
-        setupEmailBinding(emailAddress1);
+        //setupEmailBinding({emailAddress1);
       //  setupEmailBinding(emailAddress2);
       //  setupEmailBinding(emailAddress3);
         setupAddBinding();
