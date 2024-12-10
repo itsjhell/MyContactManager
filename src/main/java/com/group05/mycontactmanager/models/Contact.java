@@ -46,7 +46,7 @@ public class Contact {
         this.numbers = numbers;
         this.emailAddresses = emailAddresses;
         if(imagePath.equals("") )
-            this.imagePath = "defaultPath";
+            this.imagePath = "default.png";
         else
             this.imagePath = imagePath;
         

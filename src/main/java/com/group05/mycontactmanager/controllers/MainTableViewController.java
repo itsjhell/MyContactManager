@@ -6,6 +6,7 @@ import com.group05.mycontactmanager.models.ContactManager;
 import com.group05.mycontactmanager.models.PhoneNumber;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,6 +28,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -35,6 +37,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -93,7 +96,7 @@ public class MainTableViewController implements Initializable {
      * @brief Imposta la lista di contatti.
      * @param[in] contactList L'ObservableList di contatti.
      */
-    public void setContactList(ObservableList<Contact> contactList) {
+  /*public void setContactList(ObservableList<Contact> contactList) {
         this.contactList = contactList;
     }
     
@@ -101,9 +104,9 @@ public class MainTableViewController implements Initializable {
      * @brief Restituisce la lista di contatti.
      * @return L'ObservableList di contatti.
      */
-    public ObservableList<Contact> getContactList() {
+  /*public ObservableList<Contact> getContactList() {
         return contactList;
-    }
+    }*/
 
     /**
      * @brief Inizializza il controller.
@@ -112,6 +115,7 @@ public class MainTableViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Inserimento dei dati in tabella
         iconClm.setCellValueFactory( contactProperty  -> {
             ImageView im = new ImageView();
             im.setId(contactProperty.getValue().getName());
@@ -119,10 +123,18 @@ public class MainTableViewController implements Initializable {
         });
         surnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
         nameClm.setCellValueFactory(new PropertyValueFactory("name"));
-           
+        checkClm.setCellValueFactory(contactProperty  -> {
+            CheckBox cb = new CheckBox();
+            cb.setId(contactProperty.getValue().getName() + "_" + contactProperty.getValue().getSurname()); // ID univoco
+            return new SimpleObjectProperty(cb);
+        });
+        checkClm.setVisible(false);
+
+        // Creazione di un'istanza di ContactManager
         ContactManager contactManager = new ContactManager("Nuova rubrica");
         contactList = FXCollections.observableArrayList(contactManager.getContactList());
-        // Lista ordinata per cognome-nome da visualizzare nella tabella */
+        
+        // Lista ordinata per cognome-nome da visualizzare nella tabella
         SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
             @Override
             public int compare(Contact o1, Contact o2) {
@@ -136,24 +148,27 @@ public class MainTableViewController implements Initializable {
         });
         contactTable.setItems(sortedContactList);
 
+        // Input testing
         contactList.add(new Contact("Mario", "Rossi", null, null, "", ""));
         contactList.add(new Contact("Riccardo", "Rossi", null, null, "", ""));
         contactList.add(new Contact("Mario", "Verdi", null, null, "", ""));
         contactList.add(new Contact("Mario", "Gialli", null, null, "", ""));
         
+        // Selezione di un contatto
         contactTable.setOnMouseClicked(event -> {
             Contact selectedContact = contactTable.getSelectionModel().getSelectedItem();
             if (selectedContact != null) {
                 contact = selectedContact;
                 try {
                     //Caricamento dell'interfaccia Dettaglio contatto
-                    loadAddContact(splitPane, contactList);
+                    loadDetailsContact(splitPane, contact, contactList);
                 } catch (IOException ex) {
                     Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-
+        
+        //contactListName.textProperty().bind( new SimpleStringProperty(contactManager.getName()));
         
     }    
 
@@ -206,6 +221,22 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void selectContacts(ActionEvent event) {
+        checkClm.setVisible(true);
+        // Lista per raccogliere i contatti selezionati
+        /*List<Contact> selectedContacts = new ArrayList<>();
+
+        // Itera sulle righe della TableView
+        for (Node row : contactTable.lookupAll(".table-row-cell")) {
+            // Cerca la CheckBox nella cella corrente
+            CheckBox cb = (CheckBox) row.lookup(".check-box");
+            if (cb != null && cb.isSelected()) {
+                // Recupera il contatto associato alla riga
+                Contact contact = row.getItem();
+                if (contact != null) {
+                    selectedContacts.add(contact);
+                }
+            }
+        }*/
     }
 
     /**

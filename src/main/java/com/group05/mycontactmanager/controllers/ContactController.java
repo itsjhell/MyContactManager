@@ -6,6 +6,8 @@ import com.group05.mycontactmanager.models.PhoneNumber;
 import com.group05.mycontactmanager.models.PhonePrefix;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -107,7 +109,7 @@ abstract class ContactController {
      * @param[in] event L'ActionEvent associato all'azione.
      */
     @FXML
-    private void loadImage(ActionEvent event) {
+    private void loadImage(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
             new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg", "*.gif")
@@ -116,11 +118,12 @@ abstract class ContactController {
         File selectedFile = fileChooser.showOpenDialog(null);
 
         if (selectedFile != null) {
-            // Crea un'immagine dal file selezionato
+            File copiedFile = new File("images", selectedFile.getName());
+            Files.copy(selectedFile.toPath(), copiedFile.toPath(), StandardCopyOption.REPLACE_EXISTING); // crea copia in locale
             Image newImage = new Image(selectedFile.toURI().toString());
-            System.out.println(selectedFile.toURI().toString());
-            // Sostituisci l'immagine nell'ImageView
             contactImage.setImage(newImage);
+            contactProperty.get().setImagePath(selectedFile.toURI().toString());
+            //System.out.println(contactProperty.get().getImagePath());
         }
     }
 
