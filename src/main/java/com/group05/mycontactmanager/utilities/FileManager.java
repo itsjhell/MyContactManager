@@ -16,37 +16,31 @@ import javafx.stage.FileChooser;
  * @date Dicembre 08, 2024
  * @version 1.0
  */
-public class FileManager {
+public interface FileManager {
 
     /**
      * @brief Salva i contatti gestiti da un ContactManager su un file.
      * @param[in] contactManager L'istanza di ContactManager da salvare.
      * 
      */
-    public static void saveContactManager(ContactManager contactManager) {
-    }
+    //public void saveContactManager(ContactManager contactManager);
     
     /**
      * @brief Carica un ContactManager da un file.
      * @return Un'istanza di ContactManager, restituisce null in caso di errore.
      */
-    public static ContactManager loadContactManager() {
-        return null;
-    }
+    //public ContactManager loadContactManager();
     
     /**
      * @brief Importa contatti da un file CSV.
      * @return Un ContactManager con i contatti importati , restituisce null in caso di errore.
      */
-    public static ContactManager importContactsFromCSV() {
-        return null;
-    } 
+    public ContactManager importContactsFromCSV();
     
     /**
      * @brief Esporta i contatti di un ContactManager in un file CSV.
      * @param[in] contactManager L'istanza di ContactManager da esportare.
      */
-    public static void exportContactsToCSV(ContactManager contactManager) {       
-    }
+    public void exportContactsToCSV(ContactManager contactManager);
 }
 

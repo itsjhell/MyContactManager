@@ -1,5 +1,7 @@
 package com.group05.mycontactmanager.models;
 
+import com.group05.mycontactmanager.utilities.FileManager;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
  * @date Dicembre 08,2024
  * @version 1.0
  */
-public class ContactManager {
+public class ContactManager implements Serializable, FileManager{
     private String name;
     private List<Contact> contactList;
     
@@ -82,5 +84,23 @@ public class ContactManager {
     @Override
     public String toString() {
         return null;
+    }
+
+    @Override
+    public ContactManager importContactsFromCSV() {
+        //throw new 
+        return null;
+    }
+
+    @Override
+    public void exportContactsToCSV(ContactManager contactManager) {
+        //throw new 
+    }
+    
+    private void writeObject(String nameFile) {
+        
+    }
+    private void readObject(String nameFile) {
+        
     }
 }
