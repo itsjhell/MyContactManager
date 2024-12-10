@@ -62,10 +62,15 @@ public class AddContactController extends ContactController implements Initializ
         prefixMenu2.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
         prefixMenu3.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
         
+        TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
+        TextField[] phoneNumbers = { phoneNumber1, phoneNumber2, phoneNumber3 };
+        setupButtons(phoneNumbers, adderPhoneButton);
+        setupButtons(emailFields, adderEmailButton);
+        
             setupNameBinding();
-            setupPhoneBinding(prefixMenu1,phoneNumber1,"1) Inserisci un formato corretto.");
+            setupPhoneBinding();
       //  setupPhoneBinding(prefixMenu2,phoneNumber2,"2) Inserisci un formato corretto.");
-        setupEmailBinding();
+        setupEmailBinding(emailFields);
         
         setupAddBinding();
     }
@@ -115,13 +120,18 @@ public class AddContactController extends ContactController implements Initializ
     }
     
     private void setupNameBinding() {
-        BooleanBinding nameBinding = Bindings.createBooleanBinding(() -> {
-            return !nameField.getText().isEmpty() || !surnameField.getText().isEmpty();
+        StringBinding nameBinding = Bindings.createStringBinding(() -> {
+            if (nameField.getText().isEmpty() && surnameField.getText().isEmpty()) 
+                return "Inserisci almeno un nome o un cognome";
+            else
+                return "";
         }, nameField.textProperty(), surnameField.textProperty());
-        
-        errorName.visibleProperty().bind(nameBinding.not());
+
+        // Bind per la label
+        errorName.textProperty().bind(nameBinding);
     }
     
+/*    
     private void setupPhoneBinding(ComboBox<PhonePrefix> prefix, TextField phoneNumber, String errorText) {
         BooleanBinding phoneBinding = Bindings.createBooleanBinding(() -> {
             return Checker.checkNumber(new PhoneNumber(prefix.getValue(), phoneNumber.getText()));
@@ -133,16 +143,34 @@ public class AddContactController extends ContactController implements Initializ
         
         // Bind per la label
         errorNumber.visibleProperty().bind(phoneBinding.not());
-        errorNumber.textProperty().bind(errorBinding);
+        //errorNumber.textProperty().bind(errorBinding);
+        errorNumber.setText("");
+    
+    }
+ */  
+    
+    private void setupPhoneBinding() {
+        StringBinding phoneBinding = Bindings.createStringBinding(() -> {
+            if (!Checker.checkNumber(new PhoneNumber(prefixMenu1.getValue(), phoneNumber1.getText())))
+                return "a";
+            if (!Checker.checkNumber(new PhoneNumber(prefixMenu2.getValue(), phoneNumber2.getText())))
+                return "b";
+            if (!Checker.checkNumber(new PhoneNumber(prefixMenu3.getValue(), phoneNumber3.getText()))) 
+                return "c";
+            return "";
+        }, prefixMenu1.valueProperty(), prefixMenu2.valueProperty(), prefixMenu3.valueProperty(), phoneNumber1.textProperty(), phoneNumber2.textProperty(), phoneNumber3.textProperty());
+        
+        
+        // Bind per la label
+        errorNumber.textProperty().bind(phoneBinding);
+    
     }
     
-    private void setupEmailBinding() {
-        TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
-
+    private void setupEmailBinding(TextField[] emailFields) {
         StringBinding emailBinding = Bindings.createStringBinding(() -> {
             for(int i = 0; i <emailFields.length; i++) {
-                if(Checker.checkEmail(emailFields[i].getText()))
-                    return "Email "+i+" ha un formato errato";
+                if(!Checker.checkEmail(emailFields[i].getText()))
+                    return "Email "+ (i+1) +" ha un formato errato";
             }
             return "";
         }, emailFields[0].textProperty(), emailFields[1].textProperty(), emailFields[2].textProperty());
@@ -154,9 +182,35 @@ public class AddContactController extends ContactController implements Initializ
     private void setupAddBinding() {
         // Creazione del BooleanBinding che verifica se tutte e tre le label sono visibili
         BooleanBinding addBinding = Bindings.createBooleanBinding(() -> {
-            return !errorName.isVisible() && !errorNumber.isVisible() && !errorEmail.isVisible();
-        }, errorName.visibleProperty(), errorNumber.visibleProperty(), errorEmail.visibleProperty());
+            return errorName.getText().equals("") && errorNumber.getText().equals("") && errorEmail.getText().equals("");
+        }, errorName.textProperty(), errorNumber.textProperty(), errorEmail.textProperty());
 
         addButton.disableProperty().bind(addBinding.not());   
     }
+
+    private void setupButtons(TextField[] fields, Button button) {
+        final int[] count = {0};
+        //Integer count = new Integer(0);
+        for(int i = 0; i < 3; i++) {
+            fields[i].setDisable(true);
+        }
+        
+        button.setOnAction(event -> {
+        switch (count[0]) {
+            case 0:
+                fields[0].setDisable(false);
+                break;
+            case 1:
+                fields[1].setDisable(false);
+                break;
+            case 2:
+                fields[2].setDisable(false);
+                break;
+            default:
+                // Non fare nulla dalla quarta pressione in poi
+                return;
+        }
+        count[0]++;
+    });
+}
 }

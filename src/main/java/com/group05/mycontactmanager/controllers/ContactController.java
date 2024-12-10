@@ -51,7 +51,7 @@ abstract class ContactController {
     @FXML
     protected ComboBox<PhonePrefix> prefixMenu3;
     @FXML
-     Button adderPhoneButton;
+    protected Button adderPhoneButton;
     @FXML
     protected TextField phoneNumber1;
     @FXML
@@ -61,7 +61,7 @@ abstract class ContactController {
     @FXML
     protected Label errorNumber;
     @FXML
-     Button adderEmailButton;
+    protected Button adderEmailButton;
     @FXML
     protected TextField emailAddress1;
     @FXML
