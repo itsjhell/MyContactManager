@@ -1,5 +1,6 @@
 package com.group05.mycontactmanager.controllers;
 
+import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.PhoneNumber;
 import com.group05.mycontactmanager.models.PhonePrefix;
@@ -12,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -73,20 +75,29 @@ abstract class ContactController {
     @FXML
     protected TextArea notesArea;
     
-    
-    protected List<PhoneNumber> numbers;
-    
-    protected List<String> emailAddresses;
-    
     protected SplitPane splitPane;
     
     protected ObjectProperty<Contact> contactProperty;
             
     protected ObservableList<Contact> contactList;
-            
-    public ContactController() {
+    
+    protected List<PhoneNumber> numbers;
+    
+    protected List<String> emailAddresses;
+       
+    public ContactController(SplitPane splitPane, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
         contactList = FXCollections.observableArrayList();
+        this.contactList = contactList;
+        this.splitPane = splitPane;
+    }
+    
+    public ContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
+        contactProperty = new SimpleObjectProperty();
+        contactList = FXCollections.observableArrayList();
+        contactProperty.set(contact);
+        this.contactList = contactList;
+        this.splitPane = splitPane;
     }
     /**
      * @brief Carica un'immagine per il contatto.
@@ -127,6 +138,22 @@ abstract class ContactController {
     private void addEmail(ActionEvent event) {
     }
     
+    public void loadDetailsContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
+        if (splitPane.getItems().size() > 1)
+            splitPane.getItems().remove(1);
+        fxmlLoader.setControllerFactory(param -> new DetailsContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
+        splitPane.getItems().add(fxmlLoader.load());
+    }
+    
+    public void loadEditContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("EditContactView.fxml"));
+        if (splitPane.getItems().size() > 1)
+            splitPane.getItems().remove(1);
+        fxmlLoader.setControllerFactory(param -> new EditContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
+        splitPane.getItems().add(fxmlLoader.load());
+    }
+
     /**
      * @brief Metodo astratto che va implementato nella sottoclasse in base alla funzionalità richiesta.
      * @param[in] event L'ActionEvent associato.

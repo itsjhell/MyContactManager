@@ -14,7 +14,7 @@ import java.util.List;
  * @date Dicembre 8, 2024
  * @version 1.0
  */
-public class Contact implements Cloneable{
+public class Contact {
     private String name;
     private String surname;
     private List<PhoneNumber> numbers;

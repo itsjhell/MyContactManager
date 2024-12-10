@@ -45,10 +45,7 @@ public class EditContactController extends ContactController implements Initiali
     //private Contact newContact;
 
     EditContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
-        super();
-        contactProperty.set(contact);
-        this.contactList = contactList;
-        this.splitPane = splitPane;
+        super(splitPane, contact, contactList);
     }
     
     /**

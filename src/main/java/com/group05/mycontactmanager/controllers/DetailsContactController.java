@@ -37,10 +37,7 @@ public class DetailsContactController extends ContactController implements Initi
     private Button deleteButton;    
 
     DetailsContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
-        super();
-        contactProperty.set(contact);
-        this.contactList = contactList;
-        this.splitPane = splitPane;
+        super(splitPane, contact, contactList);
     }
 
     /**
@@ -64,12 +61,7 @@ public class DetailsContactController extends ContactController implements Initi
     @FXML
     @Override
     void executeLeftTask(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("EditContactView.fxml"));
-        if (splitPane.getItems().size() > 1)
-            splitPane.getItems().remove(1);
-
-        fxmlLoader.setControllerFactory(param -> new EditContactController(splitPane, contactProperty.get(), contactList)); // Usa una fabbrica per creare il controller
-        splitPane.getItems().add(fxmlLoader.load());
+        loadEditContact(splitPane, contactProperty.get(), contactList);
     }
 
     /**

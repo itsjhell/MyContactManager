@@ -16,6 +16,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableObjectValue;
@@ -32,11 +33,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * @file MainTableViewController.java
@@ -109,8 +112,11 @@ public class MainTableViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //ContactController.setSplitPane(splitPane);
-        
+        iconClm.setCellValueFactory( contactProperty  -> {
+            ImageView im = new ImageView();
+            im.setId(contactProperty.getValue().getName());
+            return new SimpleObjectProperty(im); 
+        });
         surnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
         nameClm.setCellValueFactory(new PropertyValueFactory("name"));
            
@@ -135,22 +141,13 @@ public class MainTableViewController implements Initializable {
         contactList.add(new Contact("Mario", "Verdi", null, null, "", ""));
         contactList.add(new Contact("Mario", "Gialli", null, null, "", ""));
         
-        
-        //settare il contatto selezionato
-        //contact.bindBidirectional((Property<Contact>) contactTable.getSelectionModel().getSelectedItem());
-        /*ObjectBinding<Contact> c = Bindings.createObjectBinding(
-            () -> contactTable.getSelectionModel().getSelectedItem(),
-                contactTable.getSelectionModel().selectedItemProperty()
-        );
-        
-        System.out.println(c.getValue());*/
-        
         contactTable.setOnMouseClicked(event -> {
             Contact selectedContact = contactTable.getSelectionModel().getSelectedItem();
             if (selectedContact != null) {
                 contact = selectedContact;
                 try {
-                    loadDetailsInterface();
+                    //Caricamento dell'interfaccia Dettaglio contatto
+                    loadAddContact(splitPane, contactList);
                 } catch (IOException ex) {
                     Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -174,6 +171,7 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void loadContactList(ActionEvent event) {
+        
     }
 
     /**
@@ -199,12 +197,7 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void addContactToList(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddContactView.fxml"));
-        if (splitPane.getItems().size() > 1)
-            splitPane.getItems().remove(1);
-
-        fxmlLoader.setControllerFactory(param -> new AddContactController(splitPane, contactList)); // Usa una fabbrica per creare il controller
-        splitPane.getItems().add(fxmlLoader.load());
+        loadAddContact(splitPane, contactList);
     }
 
     /**
@@ -269,30 +262,19 @@ public class MainTableViewController implements Initializable {
         return null;
     }
     
-    public void loadDetailsInterface() throws IOException {
+    private void loadDetailsContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
         if (splitPane.getItems().size() > 1)
             splitPane.getItems().remove(1);
-
         fxmlLoader.setControllerFactory(param -> new DetailsContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
         splitPane.getItems().add(fxmlLoader.load());
     }
-    /*
-    public void configureController(ContactController c) {
-        if (c instanceof AddContactController) {
-            AddContactController controller = (AddContactController) c;
-            controller.setContactList(contactList); 
-            controller.setContact(contact);
-        }
-        if (c instanceof DetailsContactController) {
-            DetailsContactController controller = (DetailsContactController) c;
-            controller.setContactList(contactList); 
-            controller.setContact(contact);
-        }
-        if (c instanceof EditContactController) {
-            EditContactController controller = (EditContactController) c;
-            controller.setContactList(contactList); 
-            controller.setContact(contact);
-        }
-    }*/
+    
+    private void loadAddContact(SplitPane splitPane, ObservableList<Contact> contactList) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddContactView.fxml"));
+        if (splitPane.getItems().size() > 1)
+            splitPane.getItems().remove(1);
+        fxmlLoader.setControllerFactory(param -> new AddContactController(splitPane, contactList)); // Usa una fabbrica per creare il controller
+        splitPane.getItems().add(fxmlLoader.load());
+    }
 }

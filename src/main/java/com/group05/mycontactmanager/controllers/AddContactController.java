@@ -43,10 +43,7 @@ public class AddContactController extends ContactController implements Initializ
     private Button cancelButton;
     
     AddContactController(SplitPane splitPane, ObservableList<Contact> contactList) {
-        super();
-        //contactProperty.set(contact);
-        this.contactList = contactList;
-        this.splitPane = splitPane;
+        super(splitPane, contactList);
     }
 
 
@@ -99,11 +96,10 @@ public class AddContactController extends ContactController implements Initializ
         Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, "", notesArea.getText());
         contactList.add(contact);
         
-        
+        //Caricamento dell'interfaccia
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
         if (splitPane.getItems().size() > 1)
             splitPane.getItems().remove(1);
-
         fxmlLoader.setControllerFactory(param -> new DetailsContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
         splitPane.getItems().add(fxmlLoader.load());
     }
