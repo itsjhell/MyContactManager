@@ -65,8 +65,7 @@ public class AddContactController extends ContactController implements Initializ
             setupNameBinding();
             setupPhoneBinding(prefixMenu1,phoneNumber1,"1) Inserisci un formato corretto.");
       //  setupPhoneBinding(prefixMenu2,phoneNumber2,"2) Inserisci un formato corretto.");
-        TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
-        setupEmailBinding(emailFields);
+        setupEmailBinding();
         
         setupAddBinding();
     }
@@ -137,14 +136,16 @@ public class AddContactController extends ContactController implements Initializ
         errorNumber.textProperty().bind(errorBinding);
     }
     
-    private void setupEmailBinding(TextField[] emailAddresses) {
+    private void setupEmailBinding() {
+        TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
+
         StringBinding emailBinding = Bindings.createStringBinding(() -> {
-            for(int i = 0; i <emailAddresses.length; i++) {
-                if(Checker.checkEmail(emailAddresses[i].getText()))
+            for(int i = 0; i <emailFields.length; i++) {
+                if(Checker.checkEmail(emailFields[i].getText()))
                     return "Email "+i+" ha un formato errato";
             }
             return "";
-        }, emailAddresses[0].textProperty(), emailAddresses[1].textProperty(), emailAddresses[2].textProperty());
+        }, emailFields[0].textProperty(), emailFields[1].textProperty(), emailFields[2].textProperty());
 
         // Bind per la label
         errorEmail.textProperty().bind(emailBinding);
