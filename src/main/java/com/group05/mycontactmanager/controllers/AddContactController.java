@@ -160,10 +160,8 @@ public class AddContactController extends ContactController implements Initializ
             return "";
         }, prefixMenu1.valueProperty(), prefixMenu2.valueProperty(), prefixMenu3.valueProperty(), phoneNumber1.textProperty(), phoneNumber2.textProperty(), phoneNumber3.textProperty());
         
-        
         // Bind per la label
         errorNumber.textProperty().bind(phoneBinding);
-    
     }
     
     private void setupEmailBinding(TextField[] emailFields) {
@@ -211,6 +209,6 @@ public class AddContactController extends ContactController implements Initializ
                 return;
         }
         count[0]++;
-    });
-}
+        });
+    }
 }

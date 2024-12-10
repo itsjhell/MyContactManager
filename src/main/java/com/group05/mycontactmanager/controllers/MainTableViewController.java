@@ -150,13 +150,7 @@ public class MainTableViewController implements Initializable {
             if (selectedContact != null) {
                 contact = selectedContact;
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
-                    if (splitPane.getItems().size() > 1)
-                        splitPane.getItems().remove(1);
-
-                    fxmlLoader.setControllerFactory(param -> new DetailsContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
-                    splitPane.getItems().add(fxmlLoader.load());
-                    System.out.println(contact);
+                    loadDetailsInterface();
                 } catch (IOException ex) {
                     Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -275,12 +269,13 @@ public class MainTableViewController implements Initializable {
         return null;
     }
     
-    public void loadNextInterface(String fxml) throws IOException {
-        
-        
-        //ContactController controller = fxmlLoader.getController();
-        //controller.setContactList(contactList); 
-        //controller.setContact(contact);
+    public void loadDetailsInterface() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
+        if (splitPane.getItems().size() > 1)
+            splitPane.getItems().remove(1);
+
+        fxmlLoader.setControllerFactory(param -> new DetailsContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
+        splitPane.getItems().add(fxmlLoader.load());
     }
     /*
     public void configureController(ContactController c) {
