@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 
 /**
  * @file DetailsContactController.java
@@ -93,6 +94,14 @@ public class DetailsContactController extends ContactController implements Initi
         //caricamento delle email
         for(int i=0; emailAddresses != null && i<emailAddresses.size(); i++)
             emailFields[i].setText(emailAddresses.get(i));
+        
+        try{
+            Image im = new Image(contact.getImagePath());
+            if(im != null)
+                contactImage.setImage(im);   
+        } catch (Exception ex){
+            
+        }
     }
 
     private void configureElements() {
