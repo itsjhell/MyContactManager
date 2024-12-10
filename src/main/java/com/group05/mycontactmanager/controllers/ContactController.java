@@ -4,6 +4,7 @@ import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.PhoneNumber;
 import com.group05.mycontactmanager.models.PhonePrefix;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import javafx.beans.property.ObjectProperty;
@@ -20,7 +21,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
 /**
  * @file ContactController.java
@@ -45,7 +48,7 @@ abstract class ContactController {
     @FXML
     protected ImageView contactImage;
     @FXML
-     Button imageButton;
+    protected Button imageButton;
     @FXML
     protected ComboBox<PhonePrefix> prefixMenu1;
     @FXML
@@ -105,7 +108,20 @@ abstract class ContactController {
      */
     @FXML
     private void loadImage(ActionEvent event) {
-        
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            // Crea un'immagine dal file selezionato
+            Image newImage = new Image(selectedFile.toURI().toString());
+            System.out.println(selectedFile.toURI().toString());
+            // Sostituisci l'immagine nell'ImageView
+            contactImage.setImage(newImage);
+        }
     }
 
     /**
