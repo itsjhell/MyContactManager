@@ -87,15 +87,7 @@ abstract class ContactController {
     public ContactController() {
         contactProperty = new SimpleObjectProperty();
         contactList = FXCollections.observableArrayList();
-        /*
-        TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
-        for (TextField phoneField : phoneFields) {
-            phoneField.setEditable(false);
-            phoneField.setOpacity(0.75);
-        }*/
     }
-   
-    
     /**
      * @brief Carica un'immagine per il contatto.
      * @param[in] event L'ActionEvent associato all'azione.

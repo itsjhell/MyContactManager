@@ -50,19 +50,9 @@ public class DetailsContactController extends ContactController implements Initi
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*     
-        StringBinding nameBinding = Bindings.createStringBinding(() -> {
-            return new SimpleStringProperty(contactProperty.get().getName());
-        }, nameField.textProperty(), contactProperty);
-        
-        nameField.textProperty().bind(nameBinding);*/
-        
-        
         fillTextFields(contactProperty.get());
         viewImageSetted(contactProperty.get().getImagePath());
         configureElements();
-        
-        
     }
 
     /**
@@ -75,11 +65,11 @@ public class DetailsContactController extends ContactController implements Initi
     @Override
     void executeLeftTask(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("EditContactView.fxml"));
-        splitPane.getItems().remove(1);
+        if (splitPane.getItems().size() > 1)
+            splitPane.getItems().remove(1);
 
         fxmlLoader.setControllerFactory(param -> new EditContactController(splitPane, contactProperty.get(), contactList)); // Usa una fabbrica per creare il controller
         splitPane.getItems().add(fxmlLoader.load());
-       
     }
 
     /**
@@ -115,15 +105,15 @@ public class DetailsContactController extends ContactController implements Initi
 
     private void configureElements() {
         //imposto un effetto visivo e rendo non edistabili i campi
-        notesArea.setEditable(false);
+        notesArea.setEditable(true);
         TextField[] fields = { nameField, surnameField, phoneNumber1, phoneNumber2, phoneNumber3, emailAddress1, emailAddress2, emailAddress3, };
         for (TextField field : fields) {
-            field.setEditable(false);
+            field.setDisable(true);
             field.setOpacity(0.75);
         }
         ComboBox[] comboBoxes = { prefixMenu1, prefixMenu2, prefixMenu3 };
         for (ComboBox combobox : comboBoxes) {
-            combobox.setEditable(false);
+            combobox.setDisable(true);
             combobox.setOpacity(0.75);
         }
         
