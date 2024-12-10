@@ -205,6 +205,7 @@ public class AddContactController extends ContactController implements Initializ
                 break;
             case 2:
                 fields[2].setDisable(false);
+                button.setVisible(false);
                 break;
             default:
                 // Non fare nulla dalla quarta pressione in poi
