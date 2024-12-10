@@ -59,7 +59,7 @@ public class DetailsContactController extends ContactController implements Initi
         
         
         fillTextFields(contactProperty.get());
-        
+        viewImageSetted(contactProperty.get().getImagePath());
         configureElements();
         
         
@@ -74,10 +74,11 @@ public class DetailsContactController extends ContactController implements Initi
     @FXML
     @Override
     void executeLeftTask(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("EditContactView" + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("EditContactView.fxml"));
         splitPane.getItems().remove(1);
-        splitPane.getItems().add(fxmlLoader.load());
 
+        fxmlLoader.setControllerFactory(param -> new EditContactController(splitPane, contactProperty.get(), contactList)); // Usa una fabbrica per creare il controller
+        splitPane.getItems().add(fxmlLoader.load());
        
     }
 
@@ -134,5 +135,9 @@ public class DetailsContactController extends ContactController implements Initi
         Button[] buttonsToHide = { imageButton, adderPhoneButton, adderEmailButton};
         for (Button button : buttonsToHide)
             button.setVisible(false);
+    }
+
+    private void viewImageSetted(String imagePath) {
+        contactImage.setId(imagePath);
     }
 }

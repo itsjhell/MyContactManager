@@ -87,6 +87,12 @@ abstract class ContactController {
     public ContactController() {
         contactProperty = new SimpleObjectProperty();
         contactList = FXCollections.observableArrayList();
+        /*
+        TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
+        for (TextField phoneField : phoneFields) {
+            phoneField.setEditable(false);
+            phoneField.setOpacity(0.75);
+        }*/
     }
    
     
@@ -96,6 +102,7 @@ abstract class ContactController {
      */
     @FXML
     private void loadImage(ActionEvent event) {
+        
     }
 
     /**
@@ -112,6 +119,12 @@ abstract class ContactController {
      */
     @FXML
     private void addPhoneNumber(ActionEvent event) {
+        TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
+        for (int i = 0; i < contactList.size(); i++) {
+            phoneFields[i].setEditable(true);
+            phoneFields[i].setOpacity(0.75);
+        }
+        phoneFields[contactList.size()+1].setEditable(true);
     }
 
     /**
