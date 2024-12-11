@@ -56,17 +56,14 @@ public class AddContactController extends ContactController implements Initializ
     public void initialize(URL url, ResourceBundle rb) {
         preloadImage();
         addButton.setDisable(true);
-        prefixMenu1.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
-        prefixMenu2.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
-        prefixMenu3.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
+        setupPrefixMenu();
+        setupNameBinding();
+        setupPhoneBinding();
         
         TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
         TextField[] phoneNumbers = { phoneNumber1, phoneNumber2, phoneNumber3 };
         setupButtons(phoneNumbers, adderPhoneButton);
         setupButtons(emailFields, adderEmailButton);
-        
-        setupNameBinding();
-        setupPhoneBinding();
         setupEmailBinding(emailFields);
         
         setupSaveButtonBinding(addButton);

@@ -249,6 +249,15 @@ abstract class ContactController {
         button.disableProperty().bind(addBinding.not());   
     }
     
+    protected void setupPrefixMenu() {
+        prefixMenu1.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
+        prefixMenu1.getSelectionModel().selectFirst();
+        prefixMenu2.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
+        prefixMenu2.getSelectionModel().selectFirst();
+        prefixMenu3.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
+        prefixMenu3.getSelectionModel().selectFirst();
+    }
+    
     /**
      * @brief Metodo astratto che va implementato nella sottoclasse in base alla funzionalità richiesta.
      * @param[in] event L'ActionEvent associato.

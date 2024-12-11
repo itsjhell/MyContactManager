@@ -57,13 +57,14 @@ public class EditContactController extends ContactController implements Initiali
     public void initialize(URL url, ResourceBundle rb) {
         preloadImage();
         fillTextFields(contactProperty.get());
+        setupPrefixMenu();
+        setupNameBinding();
+        setupPhoneBinding();
       
         TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
         TextField[] phoneNumbers = { phoneNumber1, phoneNumber2, phoneNumber3 };
         setupButtons(phoneNumbers, adderPhoneButton);
         setupButtons(emailFields, adderEmailButton);
-        setupNameBinding();
-        setupPhoneBinding();
         setupEmailBinding(emailFields);
         
         setupSaveButtonBinding(saveEditsButton);
