@@ -1,6 +1,10 @@
 package com.group05.mycontactmanager.models;
 
 import com.group05.mycontactmanager.utilities.FileManager;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,14 +91,42 @@ public class ContactManager implements Serializable, FileManager{
     }
 
     @Override
-    public ContactManager importContactsFromCSV() {
-        //throw new 
+    public ContactManager importContactsFromCSV(String nameFile) {
         return null;
     }
 
     @Override
-    public void exportContactsToCSV(ContactManager contactManager) {
-        //throw new 
+    public void exportContactsToCSV(String nameFile) {
+        try(PrintWriter o = new PrintWriter( new BufferedWriter( new FileWriter(nameFile)))) {
+            for (Contact c : contactList) {
+                o.print(c.getName()+";"+c.getSurname()+";");
+                
+                if(c.getNumbers() != null) {
+                    for(PhoneNumber pn: c.getNumbers()) {
+                        if(pn != null)
+                            o.print(pn.toString());
+                        o.print(";");
+                    }
+                } else {
+                   o.print(";;;");
+                }
+                
+                if(c.getEmailAddresses() != null) {
+                    for(String email: c.getEmailAddresses()) {
+                        if(email != null)
+                            o.print(email.toString());
+                        o.print(";");
+                    }
+                } else {
+                    o.print(";;;");
+                }
+                
+                o.print(c.getImagePath()+";\n");
+            }
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+        
     }
     
     private void writeObject(String nameFile) {

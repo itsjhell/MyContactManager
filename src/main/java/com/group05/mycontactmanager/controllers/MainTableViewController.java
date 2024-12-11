@@ -4,6 +4,7 @@ import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.ContactManager;
 import com.group05.mycontactmanager.models.PhoneNumber;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
 /**
  * @file MainTableViewController.java
@@ -203,6 +205,22 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void exportContacts(ActionEvent event) {
+        
+        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Salva File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
+        // Mostra la finestra di dialogo
+        File selectedFile = fileChooser.showSaveDialog(null);
+        //String[] name = selectedFile.getAbsolutePath().split(".");
+        //COnstruisco il ContactManager
+        ContactManager contactManager = new ContactManager("NomeRubrica");
+        contactManager.setContactList(contactList);
+        
+        if (selectedFile != null) {
+            contactManager.exportContactsToCSV(selectedFile.getAbsolutePath());
+        } else {
+            System.out.println("Salvataggio annullato.");
+        }
+        //Converto l'observableList in un ContactManager.
     }
 
     /**
