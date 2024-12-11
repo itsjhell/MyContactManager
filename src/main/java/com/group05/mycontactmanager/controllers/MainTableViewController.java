@@ -117,9 +117,10 @@ public class MainTableViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Inserimento dei dati in tabella
         iconClm.setCellValueFactory( contactProperty  -> {
-            ImageView im = new ImageView();
-            im.setId(contactProperty.getValue().getName());
-            return new SimpleObjectProperty(im); 
+            Image im = new Image(contactProperty.getValue().getImagePath(), 25, 25, false, false);
+            ImageView imView = new ImageView();
+            imView.setImage(im);
+            return new SimpleObjectProperty(imView); 
         });
         surnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
         nameClm.setCellValueFactory(new PropertyValueFactory("name"));
