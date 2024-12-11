@@ -118,7 +118,7 @@ public class AddContactController extends ContactController implements Initializ
     private void setupNameBinding() {
         StringBinding nameBinding = Bindings.createStringBinding(() -> {
             if (nameField.getText().isEmpty() && surnameField.getText().isEmpty()) 
-                return "Inserisci almeno un nome o un cognome";
+                return "Inserisci nome o cognome";
             else
                 return "";
         }, nameField.textProperty(), surnameField.textProperty());
@@ -130,11 +130,11 @@ public class AddContactController extends ContactController implements Initializ
     private void setupPhoneBinding() {
         StringBinding phoneBinding = Bindings.createStringBinding(() -> {
             if (!Checker.checkNumber(new PhoneNumber(prefixMenu1.getValue(), phoneNumber1.getText())))
-                return "a";
+                return "1) numero in formato errato";
             if (!Checker.checkNumber(new PhoneNumber(prefixMenu2.getValue(), phoneNumber2.getText())))
-                return "b";
+                return "2) numero in formato errato";
             if (!Checker.checkNumber(new PhoneNumber(prefixMenu3.getValue(), phoneNumber3.getText()))) 
-                return "c";
+                return "3) numero in formato errato";
             return "";
         }, prefixMenu1.valueProperty(), prefixMenu2.valueProperty(), prefixMenu3.valueProperty(), phoneNumber1.textProperty(), phoneNumber2.textProperty(), phoneNumber3.textProperty());
         
@@ -146,7 +146,7 @@ public class AddContactController extends ContactController implements Initializ
         StringBinding emailBinding = Bindings.createStringBinding(() -> {
             for(int i = 0; i <emailFields.length; i++) {
                 if(!Checker.checkEmail(emailFields[i].getText()))
-                    return "Email "+ (i+1) +" ha un formato errato";
+                    return (i+1) + ") e-mail in formato errato";
             }
             return "";
         }, emailFields[0].textProperty(), emailFields[1].textProperty(), emailFields[2].textProperty());
