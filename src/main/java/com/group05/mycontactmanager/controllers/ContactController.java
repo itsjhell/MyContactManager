@@ -110,6 +110,7 @@ abstract class ContactController {
     }
     
     protected void preloadImage() {
+        System.out.println(contactProperty.get().getImagePath());
         Image newImage = new Image(contactProperty.get().getImagePath());
         contactImage.setImage(newImage);
     }
@@ -132,7 +133,7 @@ abstract class ContactController {
             Files.copy(selectedFile.toPath(), copiedFile.toPath(), StandardCopyOption.REPLACE_EXISTING); // crea copia in locale
             Image newImage = new Image(selectedFile.toURI().toString());
             contactImage.setImage(newImage);
-            contactProperty.get().setImagePath(copiedFile.toURI().toString());
+            contactProperty.get().setImagePath("images/" + copiedFile.getName());
         }
     }
     
