@@ -35,7 +35,7 @@
                         <Insets right="73.0" />
                      </VBox.margin>
                   </TextField>
-                  <Label fx:id="errorName" prefHeight="21.0" prefWidth="170.0" text="Errore" />
+                  <Label fx:id="errorName" prefHeight="21.0" prefWidth="234.0" text="Errore" />
                </children>
                <HBox.margin>
                   <Insets />
@@ -78,7 +78,7 @@
                         <Insets right="10.0" />
                      </padding>
                   </TextField>
-                  <Label fx:id="errorNumber" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="170.0" text="Errore" />
+                  <Label fx:id="errorNumber" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="210.0" text="Errore" />
                   <Button fx:id="adderPhoneButton" layoutX="184.0" layoutY="36.0" mnemonicParsing="false" onAction="#addPhoneNumber" text="+" AnchorPane.rightAnchor="20.0" />
                   <TextField fx:id="phoneNumber2" layoutX="89.0" layoutY="81.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="128.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="63.0">
                      <padding>
@@ -109,7 +109,7 @@
                         <Insets right="10.0" />
                      </padding>
                   </TextField>
-                  <Label fx:id="errorEmail" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="170.0" text="Errore" />
+                  <Label fx:id="errorEmail" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="210.0" text="Errore" />
                   <TextField fx:id="emailAddress3" layoutX="14.0" layoutY="122.0" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="63.0">
                      <padding>
                         <Insets right="10.0" />
