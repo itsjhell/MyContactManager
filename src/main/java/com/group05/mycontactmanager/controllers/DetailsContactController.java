@@ -48,6 +48,7 @@ public class DetailsContactController extends ContactController implements Initi
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        preloadImage();
         fillTextFields(contactProperty.get());
         viewImageSetted(contactProperty.get().getImagePath());
         configureElements();

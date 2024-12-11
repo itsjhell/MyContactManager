@@ -92,14 +92,14 @@ abstract class ContactController {
        
     public ContactController(SplitPane splitPane, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
-        contactList = FXCollections.observableArrayList();
+        //contactList = FXCollections.observableArrayList();
         this.contactList = contactList;
         this.splitPane = splitPane;
     }
     
     public ContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
-        contactList = FXCollections.observableArrayList();
+        //this.contactList = FXCollections.observableArrayList(contactList);
         contactProperty.set(contact);
         this.contactList = contactList;
         this.splitPane = splitPane;
@@ -122,9 +122,13 @@ abstract class ContactController {
             Files.copy(selectedFile.toPath(), copiedFile.toPath(), StandardCopyOption.REPLACE_EXISTING); // crea copia in locale
             Image newImage = new Image(selectedFile.toURI().toString());
             contactImage.setImage(newImage);
-            contactProperty.get().setImagePath(selectedFile.toURI().toString());
-            //System.out.println(contactProperty.get().getImagePath());
+            contactProperty.get().setImagePath(copiedFile.toURI().toString());
         }
+    }
+    
+    protected void preloadImage() {
+        Image newImage = new Image(contactProperty.get().getImagePath());
+        contactImage.setImage(newImage);
     }
 
     /**

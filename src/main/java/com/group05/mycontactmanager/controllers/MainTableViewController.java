@@ -305,7 +305,7 @@ public class MainTableViewController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddContactView.fxml"));
         if (splitPane.getItems().size() > 1)
             splitPane.getItems().remove(1);
-        fxmlLoader.setControllerFactory(param -> new AddContactController(splitPane, contactList)); // Usa una fabbrica per creare il controller
+        fxmlLoader.setControllerFactory(param -> new AddContactController(splitPane, new Contact("", "", null, null, "", ""), contactList)); // Usa una fabbrica per creare il controller
         splitPane.getItems().add(fxmlLoader.load());
     }
 }

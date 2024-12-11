@@ -42,8 +42,8 @@ public class AddContactController extends ContactController implements Initializ
     @FXML
     private Button cancelButton;
     
-    AddContactController(SplitPane splitPane, ObservableList<Contact> contactList) {
-        super(splitPane, contactList);
+    AddContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
+        super(splitPane, contact, contactList);
     }
 
 
@@ -54,6 +54,7 @@ public class AddContactController extends ContactController implements Initializ
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        preloadImage();
         addButton.setDisable(true);
         prefixMenu1.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
         prefixMenu2.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
@@ -64,9 +65,8 @@ public class AddContactController extends ContactController implements Initializ
         setupButtons(phoneNumbers, adderPhoneButton);
         setupButtons(emailFields, adderEmailButton);
         
-            setupNameBinding();
-            setupPhoneBinding();
-      //  setupPhoneBinding(prefixMenu2,phoneNumber2,"2) Inserisci un formato corretto.");
+        setupNameBinding();
+        setupPhoneBinding();
         setupEmailBinding(emailFields);
         
         setupAddBinding();
@@ -93,7 +93,7 @@ public class AddContactController extends ContactController implements Initializ
         emailAddresses.add(emailAddress2.getText());
         emailAddresses.add(emailAddress3.getText());
       
-        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, "", notesArea.getText());
+        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImagePath(), notesArea.getText());
         contactList.add(contact);
         
         //Caricamento dell'interfaccia
@@ -126,25 +126,7 @@ public class AddContactController extends ContactController implements Initializ
         // Bind per la label
         errorName.textProperty().bind(nameBinding);
     }
-    
-/*    
-    private void setupPhoneBinding(ComboBox<PhonePrefix> prefix, TextField phoneNumber, String errorText) {
-        BooleanBinding phoneBinding = Bindings.createBooleanBinding(() -> {
-            return Checker.checkNumber(new PhoneNumber(prefix.getValue(), phoneNumber.getText()));
-        }, prefix.valueProperty(), phoneNumber.textProperty());
-        
-        StringBinding errorBinding = Bindings.createStringBinding(() -> {
-            return errorText;
-        }, phoneBinding);
-        
-        // Bind per la label
-        errorNumber.visibleProperty().bind(phoneBinding.not());
-        //errorNumber.textProperty().bind(errorBinding);
-        errorNumber.setText("");
-    
-    }
- */  
-    
+
     private void setupPhoneBinding() {
         StringBinding phoneBinding = Bindings.createStringBinding(() -> {
             if (!Checker.checkNumber(new PhoneNumber(prefixMenu1.getValue(), phoneNumber1.getText())))

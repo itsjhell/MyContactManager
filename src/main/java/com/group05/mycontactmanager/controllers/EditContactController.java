@@ -55,30 +55,20 @@ public class EditContactController extends ContactController implements Initiali
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //bindings
-            //controlli sui textField
-            //tra una copia del contatto e tra i text field
-        //newContact = contactProperty.get().clone();
+        preloadImage();
         fillTextFields(contactProperty.get());
-        //setupBindingFields(contactProperty.get());
+        
         viewImageSetted(contactProperty.get().getImagePath());
-        //setupNameBinding();
-        //setupPhoneBinding(prefixMenu1,phoneNumber1,"1) Inserisci un formato corretto.");
+        
         TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
         TextField[] phoneNumbers = { phoneNumber1, phoneNumber2, phoneNumber3 };
-        
         setupButtons(phoneNumbers, adderPhoneButton);
         setupButtons(emailFields, adderEmailButton);
-        
-            setupNameBinding();
-            setupPhoneBinding();
-      //  setupPhoneBinding(prefixMenu2,phoneNumber2,"2) Inserisci un formato corretto.");
+        setupNameBinding();
+        setupPhoneBinding();
         setupEmailBinding(emailFields);
         
         setupAddBinding();
-
-        
-        
     }
 
     /**
@@ -101,7 +91,7 @@ public class EditContactController extends ContactController implements Initiali
         emailAddresses.add(emailAddress2.getText());
         emailAddresses.add(emailAddress3.getText());
         //creo il contatto
-        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, "", notesArea.getText());
+        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImagePath(), notesArea.getText());
         //lo sostituisco
         contactList.remove(contactProperty.get());
         //lo sostituisco
@@ -140,6 +130,7 @@ public class EditContactController extends ContactController implements Initiali
             emailFields[i].setText(emailAddresses.get(i));
     }
 
+    
     private void viewImageSetted(String imagePath) {
         contactImage.setId(imagePath);
     }
