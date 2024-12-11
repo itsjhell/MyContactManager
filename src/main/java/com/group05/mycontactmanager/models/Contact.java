@@ -20,7 +20,7 @@ public class Contact {
     private String surname;
     private List<PhoneNumber> numbers;
     private List<String> emailAddresses;
-    private String imagePath;
+    private String imageName;
     private String notes;
 
     /**
@@ -41,15 +41,15 @@ public class Contact {
      * @param[in] surname cognome del contatto.
      */
     
-    public Contact(String name, String surname, List<PhoneNumber> numbers, List<String> emailAddresses, String imagePath, String notes) {
+    public Contact(String name, String surname, List<PhoneNumber> numbers, List<String> emailAddresses, String imageName, String notes) {
         this.name = name;
         this.surname = surname;
         this.numbers = numbers;
         this.emailAddresses = emailAddresses;
-        if(imagePath.equals("") )
-            this.imagePath = "images/default.png";
+        if(imageName.equals("") )
+            this.imageName = "default.png";
         else
-            this.imagePath = imagePath;
+            this.imageName = imageName;
         
         this.notes = notes;
     }
@@ -160,16 +160,19 @@ public class Contact {
      * @return immagine profilo.
      */
     public String getImagePath() {
-        return imagePath;
+        return "images/" + imageName;
     }
-
+    
+    public String getImageName() {
+        return imageName;
+    }
     /**
      * @brief La funzione imposta il percorso di una nuova immagine profilo del contatto.
      * 
      * @param[in] imagePath nuovo percorso immagine.
      */
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     /**
@@ -201,13 +204,13 @@ public class Contact {
         sb.append(" Surname: ").append(surname);
         sb.append(" Numbers: ").append(numbers);
         sb.append(" Emails: ").append(emailAddresses);
-        sb.append(" Image Path: ").append(imagePath);
+        sb.append(" Image Name: ").append(imageName);
         sb.append(" Notes: ").append(notes);
         return sb.toString();
     }
     
     public Contact clone() {
-        return new Contact(name, surname,  numbers, emailAddresses, imagePath, notes);
+        return new Contact(name, surname,  numbers, emailAddresses, imageName, notes);
     }
     
 }
