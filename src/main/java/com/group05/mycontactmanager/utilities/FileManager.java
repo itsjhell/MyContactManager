@@ -35,7 +35,7 @@ public interface FileManager {
      * @brief Importa contatti da un file CSV.
      * @return Un ContactManager con i contatti importati , restituisce null in caso di errore.
      */
-    public ContactManager importContactsFromCSV(String nameFile);
+    public void importContactsFromCSV(String nameFile);
     
     /**
      * @brief Esporta i contatti di un ContactManager in un file CSV.

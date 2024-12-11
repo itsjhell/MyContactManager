@@ -92,7 +92,10 @@ public class MainTableViewController implements Initializable {
     private TableColumn<Contact, CheckBox> checkClm;
     
     private Contact contact;
+    
     private ObservableList<Contact> contactList;
+    
+    ContactManager contactManager;
 
     /**
      * @brief Imposta la lista di contatti.
@@ -109,6 +112,11 @@ public class MainTableViewController implements Initializable {
   /*public ObservableList<Contact> getContactList() {
         return contactList;
     }*/
+    public MainTableViewController() {
+        // Creazione di un'istanza di ContactManager
+        contactManager = new ContactManager("Nuova rubrica");
+        contactList = FXCollections.observableArrayList(contactManager.getContactList());
+    }
 
     /**
      * @brief Inizializza il controller.
@@ -132,9 +140,6 @@ public class MainTableViewController implements Initializable {
         });
         checkClm.setVisible(false);
 
-        // Creazione di un'istanza di ContactManager
-        ContactManager contactManager = new ContactManager("Nuova rubrica");
-        contactList = FXCollections.observableArrayList(contactManager.getContactList());
         
         // Lista ordinata per cognome-nome da visualizzare nella tabella
         SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
@@ -197,6 +202,33 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void importContacts(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Salva File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
+        // Mostra la finestra di dialogo
+        File selectedFile = fileChooser.showOpenDialog(null);
+        //String[] name = selectedFile.getAbsolutePath().split(".");
+        //COnstruisco il ContactManager
+        ContactManager newContactManager = new ContactManager("prova");
+        
+        if (selectedFile != null) {
+            newContactManager.importContactsFromCSV(selectedFile.getAbsolutePath());
+        } else {
+            System.out.println("Salvataggio annullato.");
+        }
+        
+        // Lista ordinata per cognome-nome da visualizzare nella tabella
+        SortedList<Contact> sortedContactList = new SortedList(FXCollections.observableArrayList(newContactManager.getContactList()), new Comparator<Contact>() { 
+            @Override
+            public int compare(Contact o1, Contact o2) {
+                // Confronto cognome
+                int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
+                if (cmp != 0)
+                    return cmp;
+                // Confronto nome se i cognomi sono uguali
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+        contactTable.setItems(sortedContactList);
     }
 
     /**
@@ -212,7 +244,7 @@ public class MainTableViewController implements Initializable {
         File selectedFile = fileChooser.showSaveDialog(null);
         //String[] name = selectedFile.getAbsolutePath().split(".");
         //COnstruisco il ContactManager
-        ContactManager contactManager = new ContactManager("NomeRubrica");
+
         contactManager.setContactList(contactList);
         
         if (selectedFile != null) {

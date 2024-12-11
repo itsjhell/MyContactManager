@@ -1,13 +1,16 @@
 package com.group05.mycontactmanager.models;
 
 import com.group05.mycontactmanager.utilities.FileManager;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @file ContactManager.java
@@ -91,37 +94,99 @@ public class ContactManager implements Serializable, FileManager{
     }
 
     @Override
-    public ContactManager importContactsFromCSV(String nameFile) {
-        return null;
-    }
+    public void importContactsFromCSV(String nameFile) {
+        try (Scanner i = new Scanner(new BufferedReader(new FileReader(nameFile)))) {
+            i.useDelimiter(";\n*");
+            while (i.hasNextLine()) {
+                String line = i.nextLine().trim();
+                // Gestisci righe vuote o malformattate
+                if (line.isEmpty())
+                    continue;
+                
+                List<PhoneNumber> numbers = new ArrayList<>();
+                List<String> emailAddresses = new ArrayList<>();
+                String[] fields = line.split("; ");
+                
+                // Verifica che ci siano abbastanza campi
+                if (fields.length < 9) {
+                    System.out.println("Riga formattata male e ignorata: " + line);
+                    continue;
+                }
 
+                // Componimento degli array numbers
+                for (int j = 2; j < 5; j++) {
+                    if (!fields[j].isEmpty()) {
+                        String[] phoneNumberFields = fields[j].trim().split(" ");
+                        if (phoneNumberFields.length == 2) {
+                            try {
+                                PhonePrefix prefix = PhonePrefix.fromString(phoneNumberFields[0]);
+                                String number = phoneNumberFields[1];
+                                numbers.add(new PhoneNumber(prefix, number));
+                            } catch (Exception e) {
+                                System.out.println("Errore nel parsing del numero di telefono: " + fields[j]);
+                            }
+                        } else {
+                            System.out.println("Formato non valido per il numero di telefono: " + fields[j]);
+                        }
+                    }
+                }
+
+                // Componimento degli array emailAddresses
+                for (int j = 5; j < 8; j++) {
+                    if (j < fields.length && !fields[j].isEmpty()) {
+                        emailAddresses.add(fields[j].trim());
+                    }
+                }
+
+                // Creazione del contatto
+                try {
+                    this.contactList.add(new Contact(
+                        fields[0], // Nome
+                        fields[1], // Cognome
+                        numbers, 
+                        emailAddresses, 
+                        fields[8], // Indirizzo
+                        fields[9]  // Note
+                    ));
+                    System.out.println("Ho caricato un contatto: " + fields[0] + " " + fields[1]);
+                } catch (Exception e) {
+                    System.out.println("Errore nella creazione del contatto: " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Errore durante la lettura del file: " + e.getMessage());
+        }
+    }
+    
+    // stampa nome; cognome; pref1 numero1; pref2 numero2; pref3 numero3; email1; email2; email3; imagePath; note;\n 
     @Override
     public void exportContactsToCSV(String nameFile) {
         try(PrintWriter o = new PrintWriter( new BufferedWriter( new FileWriter(nameFile)))) {
             for (Contact c : contactList) {
-                o.print(c.getName()+";"+c.getSurname()+";");
+                o.print(c.getName()+"; "+c.getSurname()+"; ");
                 
                 if(c.getNumbers() != null) {
                     for(PhoneNumber pn: c.getNumbers()) {
                         if(pn != null)
                             o.print(pn.toString());
-                        o.print(";");
+                        o.print("; ");
                     }
                 } else {
-                   o.print(";;;");
+                   o.print("; ; ; ");
                 }
                 
                 if(c.getEmailAddresses() != null) {
                     for(String email: c.getEmailAddresses()) {
                         if(email != null)
                             o.print(email.toString());
-                        o.print(";");
+                        o.print("; ");
                     }
                 } else {
-                    o.print(";;;");
+                    o.print("; ; ; ");
                 }
                 
-                o.print(c.getImagePath()+";\n");
+                o.print(c.getImagePath()+"; ");
+                o.print(c.getNotes()+";\n");
             }
         }catch(IOException e){
             System.out.println(e.getMessage());
