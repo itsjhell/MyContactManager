@@ -96,38 +96,37 @@ public class ContactManager implements Serializable, FileManager{
     @Override
     public void importContactsFromCSV(String nameFile) {
         try (Scanner i = new Scanner(new BufferedReader(new FileReader(nameFile)))) {
-            i.useDelimiter(";\n*");
+            i.useDelimiter(";");
             while (i.hasNextLine()) {
                 String line = i.nextLine().trim();
+                //System.out.println("HO LETTO LA RIGA: " + line);
                 // Gestisci righe vuote o malformattate
                 if (line.isEmpty())
                     continue;
                 
                 List<PhoneNumber> numbers = new ArrayList<>();
                 List<String> emailAddresses = new ArrayList<>();
-                String[] fields = line.split("; ");
+                String[] fields = line.trim().split(";");
                 
                 // Verifica che ci siano abbastanza campi
-                if (fields.length < 9) {
+                if (fields.length < 10) {
                     System.out.println("Riga formattata male e ignorata: " + line);
                     continue;
                 }
 
                 // Componimento degli array numbers
                 for (int j = 2; j < 5; j++) {
-                    if (!fields[j].isEmpty()) {
+                    if (!fields[j].equals("-")){
                         String[] phoneNumberFields = fields[j].trim().split(" ");
-                        if (phoneNumberFields.length == 2) {
-                            try {
-                                PhonePrefix prefix = PhonePrefix.fromString(phoneNumberFields[0]);
-                                String number = phoneNumberFields[1];
-                                numbers.add(new PhoneNumber(prefix, number));
-                            } catch (Exception e) {
-                                System.out.println("Errore nel parsing del numero di telefono: " + fields[j]);
-                            }
-                        } else {
-                            System.out.println("Formato non valido per il numero di telefono: " + fields[j]);
+                        try {
+                            PhonePrefix prefix = PhonePrefix.fromString(phoneNumberFields[0]);
+                            String number = phoneNumberFields[1];
+                            numbers.add(new PhoneNumber(prefix, number));
+                        } catch (Exception e) {
+                            System.out.println("Errore nel parsing del numero di telefono: " + fields[j]);
                         }
+                    } else {
+                        numbers.add(new PhoneNumber(PhonePrefix.fromString(fields[j]), ""));
                     }
                 }
 
@@ -140,15 +139,16 @@ public class ContactManager implements Serializable, FileManager{
 
                 // Creazione del contatto
                 try {
+                    //System.out.println("Sto provado a creare il contatto: " + fields[0] + fields[1] + numbers + emailAddresses + fields[8] + fields[9]);
                     this.contactList.add(new Contact(
                         fields[0], // Nome
                         fields[1], // Cognome
                         numbers, 
                         emailAddresses, 
-                        fields[8], // Indirizzo
+                        fields[8], // NomeImmagine
                         fields[9]  // Note
                     ));
-                    System.out.println("Ho caricato un contatto: " + fields[0] + " " + fields[1]);
+                    //System.out.println("OK sono riuscito a caricare: " + fields[0] + " " + fields[1]);
                 } catch (Exception e) {
                     System.out.println("Errore nella creazione del contatto: " + line);
                 }
@@ -163,30 +163,34 @@ public class ContactManager implements Serializable, FileManager{
     public void exportContactsToCSV(String nameFile) {
         try(PrintWriter o = new PrintWriter( new BufferedWriter( new FileWriter(nameFile)))) {
             for (Contact c : contactList) {
-                o.print(c.getName()+"; "+c.getSurname()+"; ");
-                
+                //nome;cognome;
+                o.print(c.getName()+";"+c.getSurname()+";");
+                //number1;number2;number3;
                 if(c.getNumbers() != null) {
                     for(PhoneNumber pn: c.getNumbers()) {
-                        if(pn != null)
-                            o.print(pn.toString());
-                        o.print("; ");
+                        if(pn != null && pn.getPrefix() != null) {
+                            o.print(pn.toString()+";");
+                        }
+                        else {
+                            o.print("-;");
+                        }
                     }
                 } else {
-                   o.print("; ; ; ");
+                   o.print("-;-;-;");
                 }
-                
+                //email1;email2;email3;
                 if(c.getEmailAddresses() != null) {
                     for(String email: c.getEmailAddresses()) {
                         if(email != null)
                             o.print(email.toString());
-                        o.print("; ");
+                        o.print(";");
                     }
                 } else {
-                    o.print("; ; ; ");
+                    o.print(";;;");
                 }
-                
-                o.print(c.getImagePath()+"; ");
-                o.print(c.getNotes()+";\n");
+                //imagePath;notes;
+                o.print(c.getImageName()+";");
+                o.print(c.getNotes()+" ;\n");
             }
         }catch(IOException e){
             System.out.println(e.getMessage());
