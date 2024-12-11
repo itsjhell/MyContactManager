@@ -4,11 +4,15 @@ import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.PhoneNumber;
 import com.group05.mycontactmanager.models.PhonePrefix;
+import com.group05.mycontactmanager.utilities.Checker;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -104,6 +108,12 @@ abstract class ContactController {
         this.contactList = contactList;
         this.splitPane = splitPane;
     }
+    
+    protected void preloadImage() {
+        Image newImage = new Image(contactProperty.get().getImagePath());
+        contactImage.setImage(newImage);
+    }
+    
     /**
      * @brief Carica un'immagine per il contatto.
      * @param[in] event L'ActionEvent associato all'azione.
@@ -126,11 +136,6 @@ abstract class ContactController {
         }
     }
     
-    protected void preloadImage() {
-        Image newImage = new Image(contactProperty.get().getImagePath());
-        contactImage.setImage(newImage);
-    }
-
     /**
      * @brief Sceglie il prefisso telefonico.
      * @param[in] event L'ActionEvent associato alla scelta del prefisso.
@@ -176,7 +181,74 @@ abstract class ContactController {
         fxmlLoader.setControllerFactory(param -> new EditContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
         splitPane.getItems().add(fxmlLoader.load());
     }
+    
+    protected void fillTextFields(Contact contact) {
+        //array di TextField per rendere più pulito in caricamento al suo interno
+        TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
+        TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
+        List<PhoneNumber> numbers = contact.getNumbers();
+        List<String> emailAddresses = contact.getEmailAddresses();
+        //caricamento dei campi
+        nameField.setText(contact.getName());
+        surnameField.setText(contact.getSurname());
+        notesArea.setText(contact.getNotes());
+        //caricamento dei numeri
+        for(int i=0; numbers != null && i<numbers.size(); i++)
+            phoneFields[i].setText(numbers.get(i).getNumber());
+        //caricamento delle email
+        for(int i=0; emailAddresses != null && i<emailAddresses.size(); i++)
+            emailFields[i].setText(emailAddresses.get(i));
+    }
+    
+    protected void setupNameBinding() {
+        StringBinding nameBinding = Bindings.createStringBinding(() -> {
+            if (nameField.getText().isEmpty() && surnameField.getText().isEmpty()) 
+                return "Inserisci nome o cognome";
+            else
+                return "";
+        }, nameField.textProperty(), surnameField.textProperty());
 
+        // Bind per la label
+        errorName.textProperty().bind(nameBinding);
+    }
+    
+    protected void setupPhoneBinding() {
+        StringBinding phoneBinding = Bindings.createStringBinding(() -> {
+            if (!Checker.checkNumber(new PhoneNumber(prefixMenu1.getValue(), phoneNumber1.getText())))
+                return "1) numero in formato errato";
+            if (!Checker.checkNumber(new PhoneNumber(prefixMenu2.getValue(), phoneNumber2.getText())))
+                return "2) numero in formato errato";
+            if (!Checker.checkNumber(new PhoneNumber(prefixMenu3.getValue(), phoneNumber3.getText()))) 
+                return "3) numero in formato errato";
+            return "";
+        }, prefixMenu1.valueProperty(), prefixMenu2.valueProperty(), prefixMenu3.valueProperty(), phoneNumber1.textProperty(), phoneNumber2.textProperty(), phoneNumber3.textProperty());
+        
+        // Bind per la label
+        errorNumber.textProperty().bind(phoneBinding);
+    }
+    
+    protected void setupEmailBinding(TextField[] emailFields) {
+        StringBinding emailBinding = Bindings.createStringBinding(() -> {
+            for(int i = 0; i <emailFields.length; i++) {
+                if(!Checker.checkEmail(emailFields[i].getText()))
+                    return (i+1) + ") e-mail in formato errato";
+            }
+            return "";
+        }, emailFields[0].textProperty(), emailFields[1].textProperty(), emailFields[2].textProperty());
+
+        // Bind per la label
+        errorEmail.textProperty().bind(emailBinding);
+    }
+    
+    protected void setupSaveButtonBinding(Button button) {
+        // Creazione del BooleanBinding che verifica se tutte e tre le label sono visibili
+        BooleanBinding addBinding = Bindings.createBooleanBinding(() -> {
+            return errorName.getText().equals("") && errorNumber.getText().equals("") && errorEmail.getText().equals("");
+        }, errorName.textProperty(), errorNumber.textProperty(), errorEmail.textProperty());
+
+        button.disableProperty().bind(addBinding.not());   
+    }
+    
     /**
      * @brief Metodo astratto che va implementato nella sottoclasse in base alla funzionalità richiesta.
      * @param[in] event L'ActionEvent associato.

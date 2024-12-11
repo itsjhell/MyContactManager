@@ -57,9 +57,7 @@ public class EditContactController extends ContactController implements Initiali
     public void initialize(URL url, ResourceBundle rb) {
         preloadImage();
         fillTextFields(contactProperty.get());
-        
-        viewImageSetted(contactProperty.get().getImagePath());
-        
+      
         TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
         TextField[] phoneNumbers = { phoneNumber1, phoneNumber2, phoneNumber3 };
         setupButtons(phoneNumbers, adderPhoneButton);
@@ -68,7 +66,7 @@ public class EditContactController extends ContactController implements Initiali
         setupPhoneBinding();
         setupEmailBinding(emailFields);
         
-        setupAddBinding();
+        setupSaveButtonBinding(saveEditsButton);
     }
 
     /**
@@ -98,7 +96,7 @@ public class EditContactController extends ContactController implements Initiali
         contactProperty.set(contact);
         contactList.add(contact);
         //carcio la prossima interfaccia
-        loadDetailsInterface();        
+        loadDetailsContact(splitPane, contactProperty.get(), contactList);        
     }
 
     /**
@@ -109,94 +107,7 @@ public class EditContactController extends ContactController implements Initiali
     @FXML
     @Override
     void executeRightTask(ActionEvent event) {
-       
-    }
-    
-    private void fillTextFields(Contact contact) {
-        //array di TextField per rendere più pulito in caricamento al suo interno
-        TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
-        TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
-        List<PhoneNumber> numbers = contact.getNumbers();
-        List<String> emailAddresses = contact.getEmailAddresses();
-        //caricamento dei campi
-        nameField.setText(contact.getName());
-        surnameField.setText(contact.getSurname());
-        notesArea.setText(contact.getNotes());
-        //caricamento dei numeri
-        for(int i=0; numbers != null && i<numbers.size(); i++)
-            phoneFields[i].setText(numbers.get(i).getNumber());
-        //caricamento delle email
-        for(int i=0; emailAddresses != null && i<emailAddresses.size(); i++)
-            emailFields[i].setText(emailAddresses.get(i));
-    }
-
-    
-    private void viewImageSetted(String imagePath) {
-        contactImage.setId(imagePath);
-    }
-    
-    private void setupNameBinding() {
-        StringBinding nameBinding = Bindings.createStringBinding(() -> {
-            if (nameField.getText().isEmpty() && surnameField.getText().isEmpty()) 
-                return "Inserisci nome o cognome";
-            else
-                return "";
-        }, nameField.textProperty(), surnameField.textProperty());
-
-        // Bind per la label
-        errorName.textProperty().bind(nameBinding);
-    }
-    
-    
-    private void setupPhoneBinding() {
-        StringBinding phoneBinding = Bindings.createStringBinding(() -> {
-            if (!Checker.checkNumber(new PhoneNumber(prefixMenu1.getValue(), phoneNumber1.getText())))
-                return "1) numero in formato errato";
-            if (!Checker.checkNumber(new PhoneNumber(prefixMenu2.getValue(), phoneNumber2.getText())))
-                return "2) numero in formato errato";
-            if (!Checker.checkNumber(new PhoneNumber(prefixMenu3.getValue(), phoneNumber3.getText()))) 
-                return "3) numero in formato errato";
-            return "";
-        }, prefixMenu1.valueProperty(), prefixMenu2.valueProperty(), prefixMenu3.valueProperty(), phoneNumber1.textProperty(), phoneNumber2.textProperty(), phoneNumber3.textProperty());
-        
-        // Bind per la label
-        errorNumber.textProperty().bind(phoneBinding);
-    }
-    
-    private void setupEmailBinding(TextField[] emailFields) {
-        StringBinding emailBinding = Bindings.createStringBinding(() -> {
-            for(int i = 0; i <emailFields.length; i++) {
-                if(!Checker.checkEmail(emailFields[i].getText()))
-                     return (i+1) + ") e-mail in formato errato";
-            }
-            return "";
-        }, emailFields[0].textProperty(), emailFields[1].textProperty(), emailFields[2].textProperty());
-
-        // Bind per la label
-        errorEmail.textProperty().bind(emailBinding);
-    }
-
-    private void setupEditBinding() {
-        // Creazione del BooleanBinding che verifica che nessuna label segnali errori per salvare
-        //FATTA DA GIOVA
-    }
-    
-    public void loadDetailsInterface() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
-        if (splitPane.getItems().size() > 1)
-            splitPane.getItems().remove(1);
-
-        fxmlLoader.setControllerFactory(param -> new DetailsContactController(splitPane, contactProperty.get(), contactList)); // Usa una fabbrica per creare il controller
-        splitPane.getItems().add(fxmlLoader.load());
-    }
-    
-    private void setupAddBinding() {
-        // Creazione del BooleanBinding che verifica se tutte e tre le label sono visibili
-        BooleanBinding addBinding = Bindings.createBooleanBinding(() -> {
-            return errorName.getText().equals("") && errorNumber.getText().equals("") && errorEmail.getText().equals("");
-        }, errorName.textProperty(), errorNumber.textProperty(), errorEmail.textProperty());
-
-        saveEditsButton.disableProperty().bind(addBinding.not());   
+        splitPane.getItems().remove(1);
     }
     
     private void setupButtons(TextField[] fields, Button button) {

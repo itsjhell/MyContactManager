@@ -50,7 +50,6 @@ public class DetailsContactController extends ContactController implements Initi
     public void initialize(URL url, ResourceBundle rb) {
         preloadImage();
         fillTextFields(contactProperty.get());
-        viewImageSetted(contactProperty.get().getImagePath());
         configureElements();
     }
 
@@ -79,44 +78,19 @@ public class DetailsContactController extends ContactController implements Initi
         
     }
 
-    private void fillTextFields(Contact contact) {
-        //array di TextField per rendere più pulito in caricamento al suo interno
-        TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
-        TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
-        List<PhoneNumber> numbers = contact.getNumbers();
-        List<String> emailAddresses = contact.getEmailAddresses();
-        //caricamento dei campi
-        nameField.setText(contact.getName());
-        surnameField.setText(contact.getSurname());
-        notesArea.setText(contact.getNotes());
-        //caricamento dei numeri
-        for(int i=0; numbers != null && i<numbers.size(); i++)
-            phoneFields[i].setText(numbers.get(i).getNumber());
-        //caricamento delle email
-        for(int i=0; emailAddresses != null && i<emailAddresses.size(); i++)
-            emailFields[i].setText(emailAddresses.get(i));
-        
-        try{
-            Image im = new Image(contact.getImagePath());
-            if(im != null)
-                contactImage.setImage(im);   
-        } catch (Exception ex){
-            
-        }
-    }
-
     private void configureElements() {
         //imposto un effetto visivo e rendo non edistabili i campi
-        notesArea.setEditable(true);
+        notesArea.setEditable(false);
+        
         TextField[] fields = { nameField, surnameField, phoneNumber1, phoneNumber2, phoneNumber3, emailAddress1, emailAddress2, emailAddress3, };
         for (TextField field : fields) {
             field.setDisable(true);
-            field.setOpacity(0.75);
+            field.setOpacity(1);
         }
         ComboBox[] comboBoxes = { prefixMenu1, prefixMenu2, prefixMenu3 };
         for (ComboBox combobox : comboBoxes) {
             combobox.setDisable(true);
-            combobox.setOpacity(0.75);
+            combobox.setOpacity(1);
         }
         
         //imposto un effetto visivo e rendo non edistabili i campi

@@ -69,7 +69,7 @@ public class AddContactController extends ContactController implements Initializ
         setupPhoneBinding();
         setupEmailBinding(emailFields);
         
-        setupAddBinding();
+        setupSaveButtonBinding(addButton);
     }
 
     /**
@@ -96,12 +96,7 @@ public class AddContactController extends ContactController implements Initializ
         Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImagePath(), notesArea.getText());
         contactList.add(contact);
         
-        //Caricamento dell'interfaccia
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
-        if (splitPane.getItems().size() > 1)
-            splitPane.getItems().remove(1);
-        fxmlLoader.setControllerFactory(param -> new DetailsContactController(splitPane, contact, contactList)); // Usa una fabbrica per creare il controller
-        splitPane.getItems().add(fxmlLoader.load());
+        loadDetailsContact(splitPane, contact, contactList);
     }
 
     /**
@@ -114,56 +109,7 @@ public class AddContactController extends ContactController implements Initializ
     void executeRightTask(ActionEvent event) {
         splitPane.getItems().remove(1);
     }
-    
-    private void setupNameBinding() {
-        StringBinding nameBinding = Bindings.createStringBinding(() -> {
-            if (nameField.getText().isEmpty() && surnameField.getText().isEmpty()) 
-                return "Inserisci nome o cognome";
-            else
-                return "";
-        }, nameField.textProperty(), surnameField.textProperty());
-
-        // Bind per la label
-        errorName.textProperty().bind(nameBinding);
-    }
-
-    private void setupPhoneBinding() {
-        StringBinding phoneBinding = Bindings.createStringBinding(() -> {
-            if (!Checker.checkNumber(new PhoneNumber(prefixMenu1.getValue(), phoneNumber1.getText())))
-                return "1) numero in formato errato";
-            if (!Checker.checkNumber(new PhoneNumber(prefixMenu2.getValue(), phoneNumber2.getText())))
-                return "2) numero in formato errato";
-            if (!Checker.checkNumber(new PhoneNumber(prefixMenu3.getValue(), phoneNumber3.getText()))) 
-                return "3) numero in formato errato";
-            return "";
-        }, prefixMenu1.valueProperty(), prefixMenu2.valueProperty(), prefixMenu3.valueProperty(), phoneNumber1.textProperty(), phoneNumber2.textProperty(), phoneNumber3.textProperty());
-        
-        // Bind per la label
-        errorNumber.textProperty().bind(phoneBinding);
-    }
-    
-    private void setupEmailBinding(TextField[] emailFields) {
-        StringBinding emailBinding = Bindings.createStringBinding(() -> {
-            for(int i = 0; i <emailFields.length; i++) {
-                if(!Checker.checkEmail(emailFields[i].getText()))
-                    return (i+1) + ") e-mail in formato errato";
-            }
-            return "";
-        }, emailFields[0].textProperty(), emailFields[1].textProperty(), emailFields[2].textProperty());
-
-        // Bind per la label
-        errorEmail.textProperty().bind(emailBinding);
-    }
-
-    private void setupAddBinding() {
-        // Creazione del BooleanBinding che verifica se tutte e tre le label sono visibili
-        BooleanBinding addBinding = Bindings.createBooleanBinding(() -> {
-            return errorName.getText().equals("") && errorNumber.getText().equals("") && errorEmail.getText().equals("");
-        }, errorName.textProperty(), errorNumber.textProperty(), errorEmail.textProperty());
-
-        addButton.disableProperty().bind(addBinding.not());   
-    }
-
+ 
     private void setupButtons(TextField[] fields, Button button) {
         final int[] count = {0};
         //Integer count = new Integer(0);
