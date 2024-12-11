@@ -2,6 +2,7 @@ package com.group05.mycontactmanager.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.image.Image;
 
 /**
  * @file Contact.java
@@ -46,7 +47,7 @@ public class Contact {
         this.numbers = numbers;
         this.emailAddresses = emailAddresses;
         if(imagePath.equals("") )
-            this.imagePath = "default.png";
+            this.imagePath = "images/default.png";
         else
             this.imagePath = imagePath;
         
