@@ -4,6 +4,7 @@ import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.ContactManager;
 import com.group05.mycontactmanager.models.PhoneNumber;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
 /**
  * @file MainTableViewController.java
@@ -90,7 +92,10 @@ public class MainTableViewController implements Initializable {
     private TableColumn<Contact, CheckBox> checkClm;
     
     private Contact contact;
+    
     private ObservableList<Contact> contactList;
+    
+    ContactManager contactManager;
 
     /**
      * @brief Imposta la lista di contatti.
@@ -107,6 +112,11 @@ public class MainTableViewController implements Initializable {
   /*public ObservableList<Contact> getContactList() {
         return contactList;
     }*/
+    public MainTableViewController() {
+        // Creazione di un'istanza di ContactManager
+        contactManager = new ContactManager("Nuova rubrica");
+        contactList = FXCollections.observableArrayList(contactManager.getContactList());
+    }
 
     /**
      * @brief Inizializza il controller.
@@ -131,9 +141,6 @@ public class MainTableViewController implements Initializable {
         });
         checkClm.setVisible(false);
 
-        // Creazione di un'istanza di ContactManager
-        ContactManager contactManager = new ContactManager("Nuova rubrica");
-        contactList = FXCollections.observableArrayList(contactManager.getContactList());
         
         // Lista ordinata per cognome-nome da visualizzare nella tabella
         SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
@@ -196,6 +203,33 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void importContacts(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Salva File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
+        // Mostra la finestra di dialogo
+        File selectedFile = fileChooser.showOpenDialog(null);
+        //String[] name = selectedFile.getAbsolutePath().split(".");
+        //COnstruisco il ContactManager
+        ContactManager newContactManager = new ContactManager("prova");
+        
+        if (selectedFile != null) {
+            newContactManager.importContactsFromCSV(selectedFile.getAbsolutePath());
+        } else {
+            System.out.println("Salvataggio annullato.");
+        }
+        
+        // Lista ordinata per cognome-nome da visualizzare nella tabella
+        SortedList<Contact> sortedContactList = new SortedList(FXCollections.observableArrayList(newContactManager.getContactList()), new Comparator<Contact>() { 
+            @Override
+            public int compare(Contact o1, Contact o2) {
+                // Confronto cognome
+                int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
+                if (cmp != 0)
+                    return cmp;
+                // Confronto nome se i cognomi sono uguali
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+        contactTable.setItems(sortedContactList);
     }
 
     /**
@@ -204,6 +238,22 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void exportContacts(ActionEvent event) {
+        
+        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Salva File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
+        // Mostra la finestra di dialogo
+        File selectedFile = fileChooser.showSaveDialog(null);
+        //String[] name = selectedFile.getAbsolutePath().split(".");
+        //COnstruisco il ContactManager
+
+        contactManager.setContactList(contactList);
+        
+        if (selectedFile != null) {
+            contactManager.exportContactsToCSV(selectedFile.getAbsolutePath());
+        } else {
+            System.out.println("Salvataggio annullato.");
+        }
+        //Converto l'observableList in un ContactManager.
     }
 
     /**

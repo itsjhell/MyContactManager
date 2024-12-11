@@ -30,6 +30,13 @@ public enum PhonePrefix {
         this.prefix = prefix;
     }
 
+    public static PhonePrefix fromString (String strPrefix) {
+        for (PhonePrefix p: PhonePrefix.values()) {
+            if(p.prefix.equals(strPrefix))
+            return p;
+        }
+        return OTHERS;
+    }
     /**
      * @brief Restituisce la stringa del prefisso.
      * @return La stringa associata al prefisso.
