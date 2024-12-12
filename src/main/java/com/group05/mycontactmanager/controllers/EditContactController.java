@@ -64,8 +64,8 @@ public class EditContactController extends ContactController implements Initiali
       
         TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
         TextField[] phoneNumbers = { phoneNumber1, phoneNumber2, phoneNumber3 };
-        setupButtons(phoneNumbers, adderPhoneButton);
-        setupButtons(emailFields, adderEmailButton);
+        setupButtons(phoneNumbers, adderPhoneButton, errorNumber);
+        setupButtons(emailFields, adderEmailButton, errorEmail);
         setupEmailBinding(emailFields);
         
         setupSaveButtonBinding(saveEditsButton);
@@ -116,7 +116,7 @@ public class EditContactController extends ContactController implements Initiali
         loadDetailsContact(splitPane, contactProperty.get(), contactList);        
     }
     
-    private void setupButtons(TextField[] fields, Button button) {
+    private void setupButtons(TextField[] fields, Button button, Label error) {
         final int[] count= {0};
         while(!fields[count[0]].getText().equals("")) {
             count[0]++;
@@ -132,9 +132,17 @@ public class EditContactController extends ContactController implements Initiali
                     fields[0].setDisable(false);
                     break;
                 case 1:
+                    if(fields[0].getText().equals("") || !error.getText().equals("")) {
+                        count[0]--;
+                        break;
+                    }
                     fields[1].setDisable(false);
                     break;
                 case 2:
+                    if(fields[1].getText().equals("") || !error.getText().equals("")) {
+                        count[0]--;
+                        break;
+                    }
                     fields[2].setDisable(false);
                     button.setVisible(false);
                     break;

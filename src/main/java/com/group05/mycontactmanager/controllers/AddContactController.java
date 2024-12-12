@@ -62,8 +62,8 @@ public class AddContactController extends ContactController implements Initializ
         
         TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
         TextField[] phoneNumbers = { phoneNumber1, phoneNumber2, phoneNumber3 };
-        setupButtons(phoneNumbers, adderPhoneButton);
-        setupButtons(emailFields, adderEmailButton);
+        setupButtons(phoneNumbers, adderPhoneButton, errorNumber);
+        setupButtons(emailFields, adderEmailButton, errorEmail);
         setupEmailBinding(emailFields);
         
         setupSaveButtonBinding(addButton);
@@ -81,6 +81,7 @@ public class AddContactController extends ContactController implements Initializ
     void executeLeftTask(ActionEvent event) throws IOException {
         
         numbers = new ArrayList();
+        
         numbers.add(new PhoneNumber(prefixMenu1.getValue(),phoneNumber1.getText()));
         numbers.add(new PhoneNumber(prefixMenu2.getValue(),phoneNumber2.getText()));
         numbers.add(new PhoneNumber(prefixMenu3.getValue(),phoneNumber3.getText()));
@@ -109,7 +110,7 @@ public class AddContactController extends ContactController implements Initializ
         splitPane.getItems().remove(1);
     }
  
-    private void setupButtons(TextField[] fields, Button button) {
+    private void setupButtons(TextField[] fields, Button button, Label error) {
         final int[] count = {0};
         //Integer count = new Integer(0);
         for(int i = 0; i < 3; i++) {
@@ -126,10 +127,18 @@ public class AddContactController extends ContactController implements Initializ
                 prefixMenu1.setDisable(false);
                 break;
             case 1:
+                if(fields[0].getText().equals("") || !error.getText().equals("")) {
+                    count[0]--;
+                    break;
+                }
                 fields[1].setDisable(false);
                 prefixMenu2.setDisable(false); 
                 break;
             case 2:
+                if(fields[1].getText().equals("") || !error.getText().equals("")) {
+                    count[0]--;
+                    break;
+                }
                 fields[2].setDisable(false);
                 prefixMenu3.setDisable(false);
                 button.setVisible(false);
