@@ -91,8 +91,6 @@ public class AddContactController extends ContactController implements Initializ
         emailAddresses.add(emailAddress3.getText());
       
         Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImageName(), notesArea.getText());
-        // DA AGGIUSTARE
-        // Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactApp.getImageName(), notesArea.getText());
         contactList.add(contact);
         
         loadDetailsContact(splitPane, contact, contactList);
@@ -106,6 +104,7 @@ public class AddContactController extends ContactController implements Initializ
     @FXML
     @Override
     void executeRightTask(ActionEvent event) {
+        contactProperty.get().setImageName(imageNameApp);
         splitPane.getItems().remove(1);
     }
  

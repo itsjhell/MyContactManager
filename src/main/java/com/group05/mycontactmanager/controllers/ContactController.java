@@ -86,7 +86,8 @@ abstract class ContactController {
     
     protected SplitPane splitPane;
     
-    protected Contact contactApp;
+    //protected Contact contactApp;
+    protected String imageNameApp;
     
     protected ObjectProperty<Contact> contactProperty;
             
@@ -107,10 +108,11 @@ abstract class ContactController {
     public ContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
         //this.contactList = FXCollections.observableArrayList(contactList);
-        contactApp = new Contact("", "", null, null, "", "");
+        //contactApp = new Contact("", "", null, null, "", "");
         contactProperty.set(contact);
         this.contactList = contactList;
         this.splitPane = splitPane;
+        imageNameApp = contactProperty.get().getImageName();
     }
     
     protected void preloadImage() {
@@ -137,7 +139,7 @@ abstract class ContactController {
             Image newImage = new Image(selectedFile.toURI().toString());
             contactImage.setImage(newImage);
             contactProperty.get().setImageName(copiedFile.getName());
-            // contactApp.setImageName(copiedFile.getName());  DA AGGIUSTARE
+            //imageNameApp = copiedFile.getName();
         }
     }
     
