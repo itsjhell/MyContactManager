@@ -28,7 +28,7 @@ public class Contact {
      * @param surname
      * @param numbers
      * @param emailAddresses
-     * @param imagePath
+     * @param imageName
      * @param notes
 
      * @brief Costruttore di un contatto con due campi obbligatori.

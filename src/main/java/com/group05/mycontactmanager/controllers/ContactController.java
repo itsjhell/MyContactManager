@@ -86,6 +86,8 @@ abstract class ContactController {
     
     protected SplitPane splitPane;
     
+    protected Contact contactApp;
+    
     protected ObjectProperty<Contact> contactProperty;
             
     protected ObservableList<Contact> contactList;
@@ -96,6 +98,7 @@ abstract class ContactController {
        
     public ContactController(SplitPane splitPane, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
+        //contactApp = new Contact("", "", null, null, "", "");
         //contactList = FXCollections.observableArrayList();
         this.contactList = contactList;
         this.splitPane = splitPane;
@@ -104,6 +107,7 @@ abstract class ContactController {
     public ContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
         //this.contactList = FXCollections.observableArrayList(contactList);
+        contactApp = new Contact("", "", null, null, "", "");
         contactProperty.set(contact);
         this.contactList = contactList;
         this.splitPane = splitPane;
@@ -132,7 +136,7 @@ abstract class ContactController {
             Files.copy(selectedFile.toPath(), copiedFile.toPath(), StandardCopyOption.REPLACE_EXISTING); // crea copia in locale
             Image newImage = new Image(selectedFile.toURI().toString());
             contactImage.setImage(newImage);
-            contactProperty.get().setImageName(copiedFile.getName());
+            contactApp.setImageName(copiedFile.getName());
         }
     }
     

@@ -90,7 +90,7 @@ public class EditContactController extends ContactController implements Initiali
         emailAddresses.add(emailAddress2.getText());
         emailAddresses.add(emailAddress3.getText());
         //creo il contatto
-        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImageName(), notesArea.getText());
+        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactApp.getImagePath(), notesArea.getText());
         //lo sostituisco
         contactList.remove(contactProperty.get());
         //lo sostituisco

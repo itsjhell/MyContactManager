@@ -203,7 +203,7 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void importContacts(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Salva File");
+        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Importa rubrica...");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
         // Mostra la finestra di dialogo
         File selectedFile = fileChooser.showOpenDialog(null);
@@ -213,23 +213,23 @@ public class MainTableViewController implements Initializable {
         
         if (selectedFile != null) {
             newContactManager.importContactsFromCSV(selectedFile.getAbsolutePath());
+            contactList = FXCollections.observableArrayList(newContactManager.getContactList());
+            // Lista ordinata per cognome-nome da visualizzare nella tabella
+            SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
+                @Override
+                public int compare(Contact o1, Contact o2) {
+                    // Confronto cognome
+                    int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
+                    if (cmp != 0)
+                        return cmp;
+                    // Confronto nome se i cognomi sono uguali
+                    return o1.getName().compareToIgnoreCase(o2.getName());
+                }
+            });
+            contactTable.setItems(sortedContactList);
         } else {
             System.out.println("Salvataggio annullato.");
         }
-        
-        // Lista ordinata per cognome-nome da visualizzare nella tabella
-        SortedList<Contact> sortedContactList = new SortedList(FXCollections.observableArrayList(newContactManager.getContactList()), new Comparator<Contact>() { 
-            @Override
-            public int compare(Contact o1, Contact o2) {
-                // Confronto cognome
-                int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
-                if (cmp != 0)
-                    return cmp;
-                // Confronto nome se i cognomi sono uguali
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
-        contactTable.setItems(sortedContactList);
     }
 
     /**
@@ -239,7 +239,7 @@ public class MainTableViewController implements Initializable {
     @FXML
     private void exportContacts(ActionEvent event) {
         
-        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Salva File");
+        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Esporta rubrica...");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
         // Mostra la finestra di dialogo
         File selectedFile = fileChooser.showSaveDialog(null);
