@@ -63,7 +63,7 @@ public class MainTableViewController implements Initializable {
     @FXML
     private SplitPane splitPane;
     @FXML
-    private Label contactListName; //--> textfield
+    private TextField contactListName;
     @FXML
     private Button addButton;
     @FXML
@@ -136,9 +136,7 @@ public class MainTableViewController implements Initializable {
         surnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
         nameClm.setCellValueFactory(new PropertyValueFactory("name"));
         
-        phoneClm.setCellValueFactory(contactProperty  -> {
-            return new SimpleStringProperty(contactProperty.getValue().getFirstNumber()); 
-        });
+        phoneClm.setCellValueFactory(new PropertyValueFactory("firstNumber"));
         
         checkClm.setCellValueFactory(contactProperty  -> {
             CheckBox cb = new CheckBox();
@@ -183,8 +181,8 @@ public class MainTableViewController implements Initializable {
             }
         });
         
-        contactListName.textProperty().bind( new SimpleStringProperty(contactManager.getName()));
-        
+        //contactListName.textProperty().bindBidirectional( new SimpleStringProperty(contactManager.getName()));
+        contactListName.setText(contactManager.getName());
     }    
 
     /**
@@ -193,12 +191,16 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void saveContactList(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Salva rubrica...");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Salva rubrica...");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.bin"));
         // Mostra la finestra di dialogo
         File selectedFile = fileChooser.showSaveDialog(null);
+        
+        //configuro la ContactManager da salvare
         ArrayList<Contact> serializableList = new ArrayList<>(contactList);
         contactManager.setContactList(serializableList);
+        contactManager.setName(contactListName.getText());
         
         if (selectedFile != null) {
             contactManager.writeObject(selectedFile.getAbsolutePath());
@@ -269,8 +271,8 @@ public class MainTableViewController implements Initializable {
             String headerText = "Importando una nuova rubrica potresti perdere quella attuale";
             String contentText = "Assicurati di aver salvato la rubrica corrente prima se non desideri perderla"; 
             if(showConfirmationAlert(title, headerText, contentText)) {
-                newContactManager.importContactsFromCSV(selectedFile.getAbsolutePath());
-                contactList = FXCollections.observableArrayList(newContactManager.getContactList());
+                contactManager.importContactsFromCSV(selectedFile.getAbsolutePath());
+                contactList = FXCollections.observableArrayList(contactManager.getContactList());
                 // Lista ordinata per cognome-nome da visualizzare nella tabella
                 SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
                     @Override

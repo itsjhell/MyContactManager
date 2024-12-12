@@ -101,9 +101,9 @@ public class Contact implements Serializable{
     }
     
      public String getFirstNumber() {
-        if (numbers == null) return "";
+        if (numbers == null || numbers.isEmpty()) return "";
         if (numbers.get(0) == null) return "";
-        if (numbers.get(0).getNumber() == "") return "";
+        if (numbers.get(0).getNumber().equals("")) return "";
         return numbers.get(0).toString();
     }
 
