@@ -90,7 +90,7 @@ public class EditContactController extends ContactController implements Initiali
         emailAddresses.add(emailAddress2.getText());
         emailAddresses.add(emailAddress3.getText());
         //creo il contatto
-        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactApp.getImagePath(), notesArea.getText());
+        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, imageNameApp, notesArea.getText());
         //lo sostituisco
         contactList.remove(contactProperty.get());
         //lo sostituisco
@@ -108,6 +108,7 @@ public class EditContactController extends ContactController implements Initiali
     @FXML
     @Override
     void executeRightTask(ActionEvent event) {
+        //contactProperty.get().setImageName(imageNameApp);
         splitPane.getItems().remove(1);
     }
     
