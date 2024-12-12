@@ -90,7 +90,9 @@ public class AddContactController extends ContactController implements Initializ
         emailAddresses.add(emailAddress2.getText());
         emailAddresses.add(emailAddress3.getText());
       
-        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactApp.getImageName(), notesArea.getText());
+        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImageName(), notesArea.getText());
+        // DA AGGIUSTARE
+        // Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactApp.getImageName(), notesArea.getText());
         contactList.add(contact);
         
         loadDetailsContact(splitPane, contact, contactList);
@@ -113,17 +115,23 @@ public class AddContactController extends ContactController implements Initializ
         for(int i = 0; i < 3; i++) {
             fields[i].setDisable(true);
         }
+        prefixMenu1.setDisable(true); 
+        prefixMenu2.setDisable(true); 
+        prefixMenu3.setDisable(true);
         
         button.setOnAction(event -> {
         switch (count[0]) {
             case 0:
                 fields[0].setDisable(false);
+                prefixMenu1.setDisable(false);
                 break;
             case 1:
                 fields[1].setDisable(false);
+                prefixMenu2.setDisable(false); 
                 break;
             case 2:
                 fields[2].setDisable(false);
+                prefixMenu3.setDisable(false);
                 button.setVisible(false);
                 break;
             default:

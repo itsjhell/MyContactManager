@@ -1,7 +1,16 @@
-/* Importa il font */
-@font-face {
-    font-family: "HelveticaThin";
-    src: url("../fonts/HelveticaNeueMedium.otf");
+@font-face{
+    -fx-font-family: "Montserrat Light";
+    src: url("../fonts/Montserrat-Light.ttf");
+}
+
+@font-face{
+    -fx-font-family: "Montserrat SemiBold";
+    src: url("../fonts/Montserrat-SemiBold.ttf");
+}
+
+@font-face{
+    -fx-font-family: "Montserrat Medium";
+    src: url("../fonts/Montserrat-Medium.ttf");
 }
 
 #background {
@@ -10,13 +19,13 @@
 
 /* Stile per tutte le Label */
 .label {
-    -fx-font-family: "HelveticaThin";
+    -fx-font-family: "Montserrat Medium";
     -fx-font-size: 16px;
 }
 
 #titleLabel {
+    -fx-font-family: "Montserrat SemiBold";
     -fx-font-size: 55px;
-    -fx-font-family: "HelveticaThin";
     -fx-text-fill: #ffffff;
 }
 
@@ -50,3 +59,97 @@
     -fx-font-weight: bold;
     -fx-background-radius: 20px;
 }
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: transparent;
+ }
+
+ .table-view {
+	-fx-border-color: transparent;
+	-fx-background-color: transparent; 
+}
+.table-view .column-header-background,
+.table-view .column-header-background .filler,
+.table-view .corner {
+	-fx-background-color: transparent;
+}
+
+.table-view .column-header {
+	-fx-background-color: #dfdfdf;
+	-fx-border-color: transparent;
+}
+.table-view .column-header .label{
+	-fx-font-weight: bold; 
+	-fx-alignment: center;
+    /* -fx-text-fill: #1360ad; */
+}
+
+.table-row-cell:filled {
+	-fx-background-color: transparent;
+}
+.table-row-cell:empty {
+	-fx-background-color: transparent;
+}
+
+.table-row-cell:filled:selected {
+    -fx-background-color: #eaeaea;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+}
+.table-row-cell:filled .table-cell {
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+}
+.table-row-cell:filled:selected .table-cell {
+    -fx-text-fill: black;
+    -fx-font-size: 17.5px;
+}
+.table-row-cell:filled:selected .table-cell .image-view {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+.table-view .cell:filled{
+  -fx-cell-size: 30;
+  -fx-alignment: center-left;
+}
+
+.table-view #iconClm .cell:filled{
+    /* overwritten in SceneBuilder */
+  }
+
+.check-box-table-cell > .check-box:selected .box .mark {
+  -fx-background-color: white;
+}
+.check-box-table-cell > .check-box:selected .box{
+  -fx-background-color: -fx-accent-color;
+}
+
+.text-field {
+    -fx-background-color: -fx-text-box-border, #ffffff ;
+    -fx-background-insets: 0, 0 0 1  ;
+    -fx-background-radius: 10px ;
+    -fx-font-size:15px;
+}
+.text-field:focused {
+    -fx-background-color: -fx-focus-color, #eef6ff ;
+}
+
+
+.combo-box-base  
+{
+    -fx-background-color: -fx-text-box-border, #ffffff ;
+    -fx-background-insets: 0, 0 0 1  ;
+    -fx-background-radius: 10px ;
+}
+
+
+.combo-box-base:focused {
+    -fx-background-color: -fx-text-box-border, #ffffff ;
+    -fx-background-insets: 0, 0 0 1  ;
+    -fx-background-radius: 10px ;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: .6;
+} 

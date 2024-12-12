@@ -77,7 +77,7 @@
                      </padding>
                   </Label>
                   <ComboBox fx:id="prefixMenu1" layoutX="-75.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#choosePrefix" prefHeight="25.0" prefWidth="45.0" AnchorPane.leftAnchor="0.0" />
-                  <TextField fx:id="phoneNumber1" layoutX="14.0" layoutY="36.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="128.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="63.0">
+                  <TextField fx:id="phoneNumber1" layoutX="50.0" layoutY="36.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="155.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="63.0">
                      <padding>
                         <Insets right="10.0" />
                      </padding>
