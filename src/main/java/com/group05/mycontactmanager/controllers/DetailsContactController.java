@@ -12,7 +12,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -73,9 +75,21 @@ public class DetailsContactController extends ContactController implements Initi
     @FXML
     @Override
     void executeRightTask(ActionEvent event) {
-        contactList.remove(contactProperty.get());
-        splitPane.getItems().remove(1);
-        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Attenzione");
+        alert.setHeaderText("Sei sicuro di voler rimuovere il contatto?");
+
+        ButtonType okButton = new ButtonType("Conferma"); 
+        ButtonType cancelButton = new ButtonType("Annulla"); 
+        alert.getButtonTypes().setAll(okButton, cancelButton); 
+
+        // Mostra l'alert e ottieni la risposta
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+        if (result == okButton) {
+            contactList.remove(contactProperty.get());
+            splitPane.getItems().remove(1);
+        }
     }
 
     private void configureElements() {

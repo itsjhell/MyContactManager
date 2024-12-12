@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -91,8 +92,8 @@ public class EditContactController extends ContactController implements Initiali
         emailAddresses.add(emailAddress3.getText());
         
         //creo il contatto
-        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImageName(), notesArea.getText());
-        //Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, imageNameApp, notesArea.getText());
+        //Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImageName(), notesArea.getText());
+        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, imageNameApp, notesArea.getText());
         //lo sostituisco
         contactList.remove(contactProperty.get());
         //lo sostituisco
@@ -109,9 +110,10 @@ public class EditContactController extends ContactController implements Initiali
      */
     @FXML
     @Override
-    void executeRightTask(ActionEvent event) {
+    void executeRightTask(ActionEvent event) throws IOException {
         //contactProperty.get().setImageName(imageNameApp);
         splitPane.getItems().remove(1);
+        loadDetailsContact(splitPane, contactProperty.get(), contactList);        
     }
     
     private void setupButtons(TextField[] fields, Button button) {

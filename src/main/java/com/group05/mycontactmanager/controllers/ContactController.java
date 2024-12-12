@@ -138,8 +138,8 @@ abstract class ContactController {
             Files.copy(selectedFile.toPath(), copiedFile.toPath(), StandardCopyOption.REPLACE_EXISTING); // crea copia in locale
             Image newImage = new Image(selectedFile.toURI().toString());
             contactImage.setImage(newImage);
-            contactProperty.get().setImageName(copiedFile.getName());
-            //imageNameApp = copiedFile.getName();
+            // contactProperty.get().setImageName(copiedFile.getName());
+            imageNameApp = copiedFile.getName();
         }
     }
     
