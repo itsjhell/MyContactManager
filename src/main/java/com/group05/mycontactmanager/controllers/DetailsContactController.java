@@ -77,13 +77,13 @@ public class DetailsContactController extends ContactController implements Initi
     void executeRightTask(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Attenzione");
-        alert.setHeaderText("Sei sicuro di voler rimuovere il contatto?");
-
+        alert.setHeaderText("Confermi di voler rimuovere il contatto?");
+        alert.setGraphic(null);
+        
         ButtonType okButton = new ButtonType("Conferma"); 
         ButtonType cancelButton = new ButtonType("Annulla"); 
-        alert.getButtonTypes().setAll(okButton, cancelButton); 
-
-        // Mostra l'alert e ottieni la risposta
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+        
         ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
 
         if (result == okButton) {
