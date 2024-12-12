@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -62,7 +63,7 @@ public class MainTableViewController implements Initializable {
     @FXML
     private SplitPane splitPane;
     @FXML
-    private Label contactListName;
+    private Label contactListName; //--> textfield
     @FXML
     private Button addButton;
     @FXML
@@ -168,7 +169,7 @@ public class MainTableViewController implements Initializable {
         contactList.add(new Contact("Mario", "Gialli", null, null, "", ""));
         
         // Selezione di un contatto
-        contactTable.setOnMouseClicked(event -> {
+        contactTable.setOnMouseClicked( event -> {
             Contact selectedContact = contactTable.getSelectionModel().getSelectedItem();
             if (selectedContact != null) {
                 contact = selectedContact;
@@ -182,7 +183,7 @@ public class MainTableViewController implements Initializable {
             }
         });
         
-        //contactListName.textProperty().bind( new SimpleStringProperty(contactManager.getName()));
+        contactListName.textProperty().bind( new SimpleStringProperty(contactManager.getName()));
         
     }    
 
@@ -219,29 +220,33 @@ public class MainTableViewController implements Initializable {
         //String[] name = selectedFile.getAbsolutePath().split(".");
         
         if (selectedFile != null) {
-            //Construisco il ContactManager
-            ContactManager loadedManager = new ContactManager("Rubrica su cui ricarico");
-            loadedManager.readObject(selectedFile.getAbsolutePath());
-            showErrorAlert("Sto per caricare la rubrica: " + loadedManager.getContactList().toString()); //SOSTITUIBILE CON UN AVVISO SE ANNULLARE O MENO
-
-            //La nuova istanza di ContactManager va depositata
-            contactList = FXCollections.observableArrayList(loadedManager.getContactList());
-            // Lista ordinata per cognome-nome da visualizzare nella tabella
-            SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
-                @Override
-                public int compare(Contact o1, Contact o2) {
-                    // Confronto cognome
-                    int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
-                    if (cmp != 0)
-                        return cmp;
-                    // Confronto nome se i cognomi sono uguali
-                    return o1.getName().compareToIgnoreCase(o2.getName());
-                }
-            });
-            contactTable.setItems(sortedContactList);
-        } else {
-            showErrorAlert("Caricamento rubrica annullato.");
+            //WARNING
+            String title = "Vuoi procedere?";
+            String headerText = "Caricando una nuova rubrica potresti perdere quella attuale";
+            String contentText = "Assicurati di aver salvato la rubrica corrente prima se non desideri perderla"; 
+            if(showConfirmationAlert(title, headerText, contentText)) {
+                ContactManager contactManager = new ContactManager("Rubrica su cui ricarico");
+                contactManager.readObject(selectedFile.getAbsolutePath());
+                //La nuova istanza di ContactManager va depositata
+                contactList = FXCollections.observableArrayList(contactManager.getContactList());
+                // Lista ordinata per cognome-nome da visualizzare nella tabella
+                SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
+                    @Override
+                    public int compare(Contact o1, Contact o2) {
+                        // Confronto cognome
+                        int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
+                        if (cmp != 0)
+                            return cmp;
+                        // Confronto nome se i cognomi sono uguali
+                        return o1.getName().compareToIgnoreCase(o2.getName());
+                    }
+                });
+                contactTable.setItems(sortedContactList);
+                return;
+            }
         }
+        showErrorAlert("Caricamento rubrica annullato.");
+     
     }
 
     /**
@@ -259,24 +264,30 @@ public class MainTableViewController implements Initializable {
         ContactManager newContactManager = new ContactManager("prova");
         
         if (selectedFile != null) {
-            newContactManager.importContactsFromCSV(selectedFile.getAbsolutePath());
-            contactList = FXCollections.observableArrayList(newContactManager.getContactList());
-            // Lista ordinata per cognome-nome da visualizzare nella tabella
-            SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
-                @Override
-                public int compare(Contact o1, Contact o2) {
-                    // Confronto cognome
-                    int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
-                    if (cmp != 0)
-                        return cmp;
-                    // Confronto nome se i cognomi sono uguali
-                    return o1.getName().compareToIgnoreCase(o2.getName());
-                }
-            });
-            contactTable.setItems(sortedContactList);
-        } else {
-            showErrorAlert("Importazione rubrica annullata.");
+            //WARNING
+            String title = "Vuoi procedere?";
+            String headerText = "Importando una nuova rubrica potresti perdere quella attuale";
+            String contentText = "Assicurati di aver salvato la rubrica corrente prima se non desideri perderla"; 
+            if(showConfirmationAlert(title, headerText, contentText)) {
+                newContactManager.importContactsFromCSV(selectedFile.getAbsolutePath());
+                contactList = FXCollections.observableArrayList(newContactManager.getContactList());
+                // Lista ordinata per cognome-nome da visualizzare nella tabella
+                SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
+                    @Override
+                    public int compare(Contact o1, Contact o2) {
+                        // Confronto cognome
+                        int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
+                        if (cmp != 0)
+                            return cmp;
+                        // Confronto nome se i cognomi sono uguali
+                        return o1.getName().compareToIgnoreCase(o2.getName());
+                    }
+                });
+                contactTable.setItems(sortedContactList);
+                return;
+            }
         }
+        showErrorAlert("Importazione rubrica annullata.");
     }
 
     /**
@@ -415,4 +426,20 @@ public class MainTableViewController implements Initializable {
 
         alert.showAndWait();
     }
+    
+    private boolean showConfirmationAlert(String title, String headerText, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.setGraphic(null);
+
+        ButtonType okButton = new ButtonType("Conferma");
+        ButtonType cancelButton = new ButtonType("Annulla");
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+        return result == okButton;
+    }    
 }
