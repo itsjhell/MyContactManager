@@ -7,16 +7,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group05.mycontactmanager.controllers.MainTableViewController">
+<AnchorPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1250.0" stylesheets="@stylesheets/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group05.mycontactmanager.controllers.MainTableViewController">
    <children>
-      <MenuBar>
+      <MenuBar id="fileMenu">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem fx:id="saveContactListButton" mnemonicParsing="false" onAction="#saveContactList" text="Salva..." />
-                  <MenuItem fx:id="loadContactListButton" mnemonicParsing="false" onAction="#loadContactList" text="Carica..." />
-                  <MenuItem fx:id="importContactsButton" mnemonicParsing="false" onAction="#importContacts" text="Importa Contatti..." />
-                  <MenuItem fx:id="exportContactsButton" mnemonicParsing="false" onAction="#exportContacts" text="Esporta Contatti..." />
+                  <MenuItem id="fileMenuButton1" fx:id="saveContactListButton" mnemonicParsing="false" onAction="#saveContactList" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Salva..." />
+                  <MenuItem id="fileMenuButton2" fx:id="loadContactListButton" mnemonicParsing="false" onAction="#loadContactList" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Carica..." />
+                  <MenuItem id="fileMenuButton3" fx:id="importContactsButton" mnemonicParsing="false" onAction="#importContacts" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Importa Contatti..." />
+                  <MenuItem id="fileMenuButton4" fx:id="exportContactsButton" mnemonicParsing="false" onAction="#exportContacts" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Esporta Contatti..." />
                </items>
             </Menu>
          </menus>
@@ -27,7 +27,7 @@
                <children>
                   <AnchorPane prefHeight="123.0" prefWidth="621.0">
                      <children>
-                        <Label fx:id="contactListName" layoutX="256.0" layoutY="5.0" prefHeight="21.0" prefWidth="95.0" text="Nome Rubrica" textAlignment="CENTER">
+                        <Label fx:id="contactListName" layoutX="256.0" layoutY="5.0" prefHeight="25.0" prefWidth="113.0" text="Nome Rubrica" textAlignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -36,14 +36,14 @@
                         <Button fx:id="selectButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#selectContacts" prefHeight="57.0" prefWidth="95.0" text="Seleziona" textAlignment="CENTER" wrapText="true" />
                         <ComboBox fx:id="searchParameter" layoutX="128.0" layoutY="34.0" onAction="#chooseSearchParameter" prefHeight="31.0" prefWidth="73.0" />
                         <TextField fx:id="searchField" layoutX="207.0" layoutY="34.0" prefHeight="31.0" prefWidth="269.0" />
-                        <Label layoutX="128.0" layoutY="16.0" prefHeight="21.0" prefWidth="95.0" text="Cerca per..." textAlignment="CENTER">
+                        <Label layoutX="128.0" layoutY="9.0" prefHeight="21.0" prefWidth="95.0" text="Cerca per..." textAlignment="CENTER">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
-                  <TableView fx:id="contactTable" prefHeight="730.0" prefWidth="603.0">
+                  <TableView id="table" fx:id="contactTable" prefHeight="730.0" prefWidth="603.0">
                      <columns>
                         <TableColumn fx:id="iconClm" prefWidth="58.0" text="Icona" />
                         <TableColumn fx:id="surnameClm" prefWidth="143.0" text="Cognome" />
@@ -57,7 +57,7 @@
             <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" />
          </items>
       </SplitPane>
-      <Label layoutX="450.0" layoutY="33.0" text="MyContactManager">
+      <Label id="titleLabel" alignment="CENTER" layoutX="450.0" layoutY="33.0" text="MyContactManager" textAlignment="CENTER" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font size="40.0" />
          </font>

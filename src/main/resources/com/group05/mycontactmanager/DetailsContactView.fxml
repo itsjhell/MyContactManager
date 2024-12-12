@@ -8,12 +8,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group05.mycontactmanager.controllers.DetailsContactController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" stylesheets="@stylesheets/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group05.mycontactmanager.controllers.DetailsContactController">
    <children>
-      <Label prefHeight="32.0" prefWidth="137.0" text="Dettagli Contatto">
+      <Label prefHeight="35.0" prefWidth="187.0" text="Dettagli Contatto">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
+         <VBox.margin>
+            <Insets left="10.0" />
+         </VBox.margin>
       </Label>
       <HBox alignment="CENTER_LEFT" prefHeight="209.0" prefWidth="499.0" spacing="20.0">
          <children>
@@ -35,7 +38,7 @@
                         <Insets right="73.0" />
                      </VBox.margin>
                   </TextField>
-                  <Label fx:id="errorName" prefHeight="21.0" prefWidth="170.0" text="Errore" />
+                  <Label id="errorLabel" fx:id="errorName" prefHeight="21.0" prefWidth="170.0" text="Errore" />
                </children>
                <HBox.margin>
                   <Insets />
@@ -67,9 +70,9 @@
          <children>
             <AnchorPane prefHeight="174.0" prefWidth="207.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label layoutX="14.0" layoutY="5.0" prefHeight="31.0" prefWidth="146.0" text="Numero di telefono" textAlignment="CENTER">
+                  <Label layoutX="14.0" layoutY="5.0" prefHeight="35.0" prefWidth="187.0" text="Numero di telefono" textAlignment="CENTER" AnchorPane.leftAnchor="0.0">
                      <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
                   <ComboBox fx:id="prefixMenu1" layoutX="-75.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#choosePrefix" prefHeight="25.0" prefWidth="45.0" AnchorPane.leftAnchor="0.0" />
@@ -78,7 +81,7 @@
                         <Insets right="10.0" />
                      </padding>
                   </TextField>
-                  <Label fx:id="errorNumber" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="170.0" text="Errore" />
+                  <Label id="errorLabel" fx:id="errorNumber" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="170.0" text="Errore" AnchorPane.leftAnchor="0.0" />
                   <Button fx:id="adderPhoneButton" layoutX="184.0" layoutY="36.0" mnemonicParsing="false" onAction="#addPhoneNumber" text="+" AnchorPane.rightAnchor="20.0" />
                   <TextField fx:id="phoneNumber2" layoutX="89.0" layoutY="81.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="128.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="63.0">
                      <padding>
@@ -99,9 +102,9 @@
             </AnchorPane>
             <AnchorPane layoutX="60.0" layoutY="10.0" prefHeight="184.0" prefWidth="241.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label layoutX="14.0" layoutY="5.0" prefHeight="31.0" prefWidth="146.0" text="Indirizzo e-mail " textAlignment="CENTER">
+                  <Label layoutX="14.0" layoutY="5.0" prefHeight="31.0" prefWidth="146.0" text="Indirizzo e-mail " textAlignment="CENTER" AnchorPane.leftAnchor="0.0">
                      <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
                   <TextField fx:id="emailAddress1" layoutX="14.0" layoutY="36.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="63.0">
@@ -109,7 +112,7 @@
                         <Insets right="10.0" />
                      </padding>
                   </TextField>
-                  <Label fx:id="errorEmail" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="170.0" text="Errore" />
+                  <Label id="errorLabel" fx:id="errorEmail" layoutX="14.0" layoutY="153.0" prefHeight="21.0" prefWidth="170.0" text="Errore" AnchorPane.leftAnchor="0.0" />
                   <TextField fx:id="emailAddress3" layoutX="14.0" layoutY="122.0" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="63.0">
                      <padding>
                         <Insets right="10.0" />

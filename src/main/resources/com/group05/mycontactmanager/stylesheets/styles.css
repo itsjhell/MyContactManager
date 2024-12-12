@@ -1,0 +1,52 @@
+/* Importa il font */
+@font-face {
+    font-family: "HelveticaThin";
+    src: url("../fonts/HelveticaNeueMedium.otf");
+}
+
+#background {
+    -fx-background-color: #2178cf;
+}
+
+/* Stile per tutte le Label */
+.label {
+    -fx-font-family: "HelveticaThin";
+    -fx-font-size: 16px;
+}
+
+#titleLabel {
+    -fx-font-size: 55px;
+    -fx-font-family: "HelveticaThin";
+    -fx-text-fill: #ffffff;
+}
+
+#errorLabel {
+    -fx-text-fill: #940000;
+}
+
+#fileMenu {
+    -fx-background-color: #1360ad;
+    
+}
+
+#fileMenu .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+#fileMenuButton1 {
+    -fx-text-fill: #000000;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+
+.button {
+    -fx-background-color: #2178cf;
+    -fx-text-fill: #ffffff;
+    
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+}
