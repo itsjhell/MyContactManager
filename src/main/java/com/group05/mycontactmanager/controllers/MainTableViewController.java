@@ -3,25 +3,17 @@ package com.group05.mycontactmanager.controllers;
 import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.ContactManager;
-import com.group05.mycontactmanager.models.PhoneNumber;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.binding.Binding;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableObjectValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -29,16 +21,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -129,7 +120,14 @@ public class MainTableViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Inserimento dei dati in tabella
         iconClm.setCellValueFactory( contactProperty  -> {
-            Image im = new Image(contactProperty.getValue().getImagePath(), 25, 25, false, false);
+            File file = new File(contactProperty.getValue().getImagePath());
+            Image im;
+            if (file.exists())
+                im = new Image(contactProperty.getValue().getImagePath(), 25, 25, false, false);
+            else
+                im = new Image("images/default.png", 25, 25, false, false);
+            //contactImage.setImage(newImage);
+            //Image im = new Image(contactProperty.getValue().getImagePath(), 25, 25, false, false);
             ImageView imView = new ImageView();
             imView.setImage(im);
             return new SimpleObjectProperty(imView); 
@@ -177,6 +175,7 @@ public class MainTableViewController implements Initializable {
                 try {
                     //Caricamento dell'interfaccia Dettaglio contatto
                     loadDetailsContact(splitPane, contact, contactList);
+                    System.out.println(contact.getImagePath());
                 } catch (IOException ex) {
                     Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -193,6 +192,18 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void saveContactList(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Salva rubrica...");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.bin"));
+        // Mostra la finestra di dialogo
+        File selectedFile = fileChooser.showSaveDialog(null);
+        ArrayList<Contact> serializableList = new ArrayList<>(contactList);
+        contactManager.setContactList(serializableList);
+        
+        if (selectedFile != null) {
+            contactManager.writeObject(selectedFile.getAbsolutePath());
+        } else {
+            showErrorAlert("Salvataggio rubrica annullato.");
+        }
     }
 
     /**
@@ -201,7 +212,36 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void loadContactList(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Carica rubrica...");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.bin"));
+        // Mostra la finestra di dialogo
+        File selectedFile = fileChooser.showOpenDialog(null);
+        //String[] name = selectedFile.getAbsolutePath().split(".");
         
+        if (selectedFile != null) {
+            //Construisco il ContactManager
+            ContactManager loadedManager = new ContactManager("Rubrica su cui ricarico");
+            loadedManager.readObject(selectedFile.getAbsolutePath());
+            showErrorAlert("Sto per caricare la rubrica: " + loadedManager.getContactList().toString()); //SOSTITUIBILE CON UN AVVISO SE ANNULLARE O MENO
+
+            //La nuova istanza di ContactManager va depositata
+            contactList = FXCollections.observableArrayList(loadedManager.getContactList());
+            // Lista ordinata per cognome-nome da visualizzare nella tabella
+            SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
+                @Override
+                public int compare(Contact o1, Contact o2) {
+                    // Confronto cognome
+                    int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
+                    if (cmp != 0)
+                        return cmp;
+                    // Confronto nome se i cognomi sono uguali
+                    return o1.getName().compareToIgnoreCase(o2.getName());
+                }
+            });
+            contactTable.setItems(sortedContactList);
+        } else {
+            showErrorAlert("Caricamento rubrica annullato.");
+        }
     }
 
     /**
@@ -235,7 +275,7 @@ public class MainTableViewController implements Initializable {
             });
             contactTable.setItems(sortedContactList);
         } else {
-            System.out.println("Salvataggio annullato.");
+            showErrorAlert("Importazione rubrica annullata.");
         }
     }
 
@@ -258,7 +298,7 @@ public class MainTableViewController implements Initializable {
         if (selectedFile != null) {
             contactManager.exportContactsToCSV(selectedFile.getAbsolutePath());
         } else {
-            System.out.println("Salvataggio annullato.");
+            showErrorAlert("Esportazione rubrica annullata.");
         }
         //Converto l'observableList in un ContactManager.
     }
@@ -365,5 +405,14 @@ public class MainTableViewController implements Initializable {
             splitPane.getItems().remove(1);
         fxmlLoader.setControllerFactory(param -> new AddContactController(splitPane, new Contact("", "", null, null, "", ""), contactList)); // Usa una fabbrica per creare il controller
         splitPane.getItems().add(fxmlLoader.load());
+    }
+    
+    private void showErrorAlert(String errorMessage) {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Errore");
+        alert.setHeaderText("Si è verificato un errore");
+        alert.setContentText(errorMessage);
+
+        alert.showAndWait();
     }
 }

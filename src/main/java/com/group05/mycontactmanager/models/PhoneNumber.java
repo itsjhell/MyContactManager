@@ -1,5 +1,7 @@
 package com.group05.mycontactmanager.models;
 
+import java.io.Serializable;
+
 /**
  * @file PhoneNumber.java
  * @brief Classe che rappresenta un numero di telefono con prefisso.
@@ -11,7 +13,7 @@ package com.group05.mycontactmanager.models;
  * @date Dicembre 08, 2024
  * @version 1.0
  */
-public class PhoneNumber {
+public class PhoneNumber implements Serializable{
     private PhonePrefix prefix;
     private String number;
 

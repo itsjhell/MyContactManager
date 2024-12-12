@@ -116,7 +116,17 @@ abstract class ContactController {
     }
     
     protected void preloadImage() {
-        Image newImage = new Image(contactProperty.get().getImagePath());
+        // HO PROVATO CREARE UN CONTATTO CON UN IMMAGINE E POI SALVARE LA RUBRICA CHE LO CONTINE
+            // SUCCESSIVAMENTE CARICANDO LA RUBRICA SALVATA SE NON VIENE TROVATA L'IMMAGINE CAUSA UN'ECCEZIONE
+        // QUINDI CONTROLLO SE SI TROVA IL FILE
+            // SE NON SI TROVA CARICO L'IMMAGINE DI DEFAULT <-- SAR
+        File file = new File(contactProperty.get().getImagePath());
+        Image newImage;
+        if (file.exists()) {
+            newImage = new Image(contactProperty.get().getImagePath());
+        } else {
+            newImage = new Image("images/default.png");
+        }
         contactImage.setImage(newImage);
     }
     

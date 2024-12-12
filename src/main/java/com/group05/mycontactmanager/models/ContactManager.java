@@ -1,16 +1,24 @@
 package com.group05.mycontactmanager.models;
 
 import com.group05.mycontactmanager.utilities.FileManager;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @file ContactManager.java
@@ -193,10 +201,29 @@ public class ContactManager implements Serializable, FileManager{
         
     }
     
-    private void writeObject(String nameFile) {
+    public void writeObject(String nameFile) {
+        try(ObjectOutputStream o = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(nameFile)))){
+            o.writeObject(this);
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
         
     }
-    private void readObject(String nameFile) {
+    public void readObject(String nameFile) {
         
+        try(ObjectInputStream o = new ObjectInputStream(new BufferedInputStream(new FileInputStream(nameFile))) ) {
+            Object obj = o.readObject();
+            if (obj instanceof ContactManager) {
+                // Copia i campi da `loaded` a `this`
+                ContactManager loadedContactManager = (ContactManager) obj;
+                this.contactList = loadedContactManager.getContactList();
+                this.name = loadedContactManager.getName();
+            }
+        }catch(IOException ex){
+            System.out.println(ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+            //Logger.getLogger(ContactManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

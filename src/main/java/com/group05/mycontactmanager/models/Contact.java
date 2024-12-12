@@ -1,5 +1,6 @@
 package com.group05.mycontactmanager.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
@@ -15,7 +16,7 @@ import javafx.scene.image.Image;
  * @date Dicembre 8, 2024
  * @version 1.0
  */
-public class Contact {
+public class Contact implements Serializable{
     private String name;
     private String surname;
     private List<PhoneNumber> numbers;
