@@ -116,7 +116,7 @@ public class ContactManager implements Serializable, FileManager{
 
                 // Componimento degli array numbers
                 for (int j = 2; j < 5; j++) {
-                    if (!fields[j].equals("-")){
+                    if (!fields[j].equals("- ")){
                         String[] phoneNumberFields = fields[j].trim().split(" ");
                         try {
                             PhonePrefix prefix = PhonePrefix.fromString(phoneNumberFields[0]);
@@ -132,9 +132,7 @@ public class ContactManager implements Serializable, FileManager{
 
                 // Componimento degli array emailAddresses
                 for (int j = 5; j < 8; j++) {
-                    if (j < fields.length && !fields[j].isEmpty()) {
-                        emailAddresses.add(fields[j].trim());
-                    }
+                    emailAddresses.add(fields[j]);
                 }
 
                 // Creazione del contatto
@@ -170,9 +168,6 @@ public class ContactManager implements Serializable, FileManager{
                     for(PhoneNumber pn: c.getNumbers()) {
                         if(pn != null && pn.getPrefix() != null) {
                             o.print(pn.toString()+";");
-                        }
-                        else {
-                            o.print("-;");
                         }
                     }
                 } else {
