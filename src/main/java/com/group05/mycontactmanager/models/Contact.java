@@ -98,6 +98,13 @@ public class Contact {
     public List<PhoneNumber> getNumbers() {
         return numbers;
     }
+    
+     public String getFirstNumber() {
+        if (numbers == null) return "";
+        if (numbers.get(0) == null) return "";
+        if (numbers.get(0).getNumber() == "") return "";
+        return numbers.get(0).toString();
+    }
 
     /**
      * @brief La funzione aggiunge un nuovo numero di telefono al contatto.

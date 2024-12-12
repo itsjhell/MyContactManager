@@ -48,7 +48,7 @@
                         <TableColumn id="iconClm" fx:id="iconClm" prefWidth="58.0" style="-fx-alignment: center;" text="Icona" />
                         <TableColumn fx:id="surnameClm" prefWidth="143.0" text="Cognome" />
                         <TableColumn fx:id="nameClm" prefWidth="157.0" text="Nome" />
-                        <TableColumn prefWidth="202.0" />
+                        <TableColumn fx:id="phoneClm" prefWidth="202.0" text="Numero di telefono" />
                         <TableColumn fx:id="checkClm" prefWidth="37.0" style="-fx-alignment: center;" text="✓" />
                      </columns>
                   </TableView>

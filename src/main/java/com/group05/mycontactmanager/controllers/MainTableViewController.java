@@ -89,6 +89,8 @@ public class MainTableViewController implements Initializable {
     @FXML
     private TableColumn<Contact, String> nameClm;
     @FXML
+    private TableColumn<Contact, String> phoneClm;
+    @FXML
     private TableColumn<Contact, CheckBox> checkClm;
     
     private Contact contact;
@@ -134,6 +136,11 @@ public class MainTableViewController implements Initializable {
         });
         surnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
         nameClm.setCellValueFactory(new PropertyValueFactory("name"));
+        
+        phoneClm.setCellValueFactory(contactProperty  -> {
+            return new SimpleStringProperty(contactProperty.getValue().getFirstNumber()); 
+        });
+        
         checkClm.setCellValueFactory(contactProperty  -> {
             CheckBox cb = new CheckBox();
             cb.setId(contactProperty.getValue().getName() + "_" + contactProperty.getValue().getSurname()); // ID univoco
