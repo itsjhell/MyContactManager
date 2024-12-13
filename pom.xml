@@ -68,6 +68,16 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0</version>
+            <configuration>
+                <includes>
+                    <include>**/*Test.java</include>
+                </includes>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
     <profiles>
@@ -87,6 +97,12 @@
                     <artifactId>javafx-fxml</artifactId>
                     <version>11</version>
                 </dependency>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter</artifactId>
+                        <version>5.10.0</version>
+                        <scope>test</scope>
+                    </dependency>
             </dependencies>
         </profile>
     </profiles>
