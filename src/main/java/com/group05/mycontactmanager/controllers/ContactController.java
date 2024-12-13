@@ -210,6 +210,9 @@ abstract class ContactController {
         surnameField.setText(contact.getSurname());
         notesArea.setText(contact.getNotes());
         //caricamento dei numeri
+        prefixMenu1.getSelectionModel().select(numbers.get(0).getPrefix());
+        prefixMenu2.getSelectionModel().select(numbers.get(1).getPrefix());
+        prefixMenu3.getSelectionModel().select(numbers.get(2).getPrefix());
         for(int i=0; numbers != null && i<numbers.size(); i++)
             phoneFields[i].setText(numbers.get(i).getNumber());
         //caricamento delle email

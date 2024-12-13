@@ -57,8 +57,8 @@ public class EditContactController extends ContactController implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         preloadImage();
-        fillTextFields(contactProperty.get());
         setupPrefixMenu();
+        fillTextFields(contactProperty.get());
         setupNameBinding();
         setupPhoneBinding();
       

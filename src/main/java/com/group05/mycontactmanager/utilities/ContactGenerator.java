@@ -34,13 +34,17 @@ public class ContactGenerator {
             String surname = surnames[random.nextInt(surnames.length)];
             
             List<PhoneNumber> numbers = new ArrayList<>();
-            for (int j = 0; j < random.nextInt(3) + 1; j++) {
-                numbers.add(new PhoneNumber(prefixes[random.nextInt(prefixes.length)], phoneNumbers[random.nextInt(phoneNumbers.length)]));
+            for (int j = 0; j < 3; j++) {
+                int k = random.nextInt(2);
+                if (k == 0) numbers.add(new PhoneNumber(""));
+                else numbers.add(new PhoneNumber(prefixes[random.nextInt(prefixes.length)], phoneNumbers[random.nextInt(phoneNumbers.length)]));
             }
             
             List<String> emails = new ArrayList<>();
-            for (int j = 0; j < random.nextInt(2) + 1; j++) {
-                emails.add(name.toLowerCase() + surname.toLowerCase() + random.nextInt(1000) + domains[random.nextInt(domains.length)]);
+            for (int j = 0; j < 3; j++) {
+                int k = random.nextInt(2);
+                if (k == 0) emails.add("");
+                else emails.add(name.toLowerCase() + surname.toLowerCase() + random.nextInt(1000) + domains[random.nextInt(domains.length)]);
             }
             
             String imageName = "profile" + (random.nextInt(5) + 1) + ".png";
