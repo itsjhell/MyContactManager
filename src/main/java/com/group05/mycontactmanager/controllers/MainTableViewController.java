@@ -36,6 +36,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 /**
@@ -120,6 +121,9 @@ public class MainTableViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Inserimento dei dati in tabella
+        splitPane.setDividerPositions(0.5);
+        splitPane.addEventFilter(MouseEvent.MOUSE_DRAGGED, event -> event.consume());
+        
         iconClm.setCellValueFactory( contactProperty  -> {
             File file = new File(contactProperty.getValue().getImagePath());
             Image im;
