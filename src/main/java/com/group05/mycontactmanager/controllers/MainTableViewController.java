@@ -37,6 +37,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 /**
@@ -85,6 +86,15 @@ public class MainTableViewController implements Initializable {
     private TableColumn<Contact, String> phoneClm;
     @FXML
     private TableColumn<Contact, CheckBox> checkClm;
+    @FXML
+    private AnchorPane rightPane;
+    @FXML
+    private TableView<Contact> selectedTable;
+    @FXML
+    private TableColumn<Contact, String> selectedSurnameClm;
+    @FXML
+    private TableColumn<Contact, String> selectedNameClm;
+    
     
     private Contact contact;
     
