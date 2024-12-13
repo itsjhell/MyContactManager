@@ -234,15 +234,15 @@ abstract class ContactController {
     }
     
     protected void setupPhoneBinding() {
+        ComboBox<PhonePrefix>[] prefixMenus = new ComboBox[]{ prefixMenu1, prefixMenu2, prefixMenu3 }; 
+        TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
         StringBinding phoneBinding = Bindings.createStringBinding(() -> {
-            if (!Checker.checkNumber(new PhoneNumber(prefixMenu1.getValue(), phoneNumber1.getText())))
-                return "1) numero in formato errato";
-            if (!Checker.checkNumber(new PhoneNumber(prefixMenu2.getValue(), phoneNumber2.getText())))
-                return "2) numero in formato errato";
-            if (!Checker.checkNumber(new PhoneNumber(prefixMenu3.getValue(), phoneNumber3.getText()))) 
-                return "3) numero in formato errato";
+            for(int i = 0; i <prefixMenus.length; i++) {
+                if (!Checker.checkNumber(new PhoneNumber(prefixMenus[i].getValue(), phoneFields[i].getText())))
+                    return (i+1) + ") numero in formato errato";
+            }
             return "";
-        }, prefixMenu1.valueProperty(), prefixMenu2.valueProperty(), prefixMenu3.valueProperty(), phoneNumber1.textProperty(), phoneNumber2.textProperty(), phoneNumber3.textProperty());
+        }, prefixMenus[0].valueProperty(), prefixMenus[1].valueProperty(), prefixMenus[2].valueProperty(), phoneFields[0].textProperty(), phoneFields[1].textProperty(), phoneFields[2].textProperty());
         
         // Bind per la label
         errorNumber.textProperty().bind(phoneBinding);

@@ -66,6 +66,7 @@ public class EditContactController extends ContactController implements Initiali
         TextField[] phoneNumbers = { phoneNumber1, phoneNumber2, phoneNumber3 };
         setupButtons(phoneNumbers, adderPhoneButton, errorNumber);
         setupButtons(emailFields, adderEmailButton, errorEmail);
+        loadPrefixMenu(phoneNumbers);
         setupEmailBinding(emailFields);
         
         setupSaveButtonBinding(saveEditsButton);
@@ -117,14 +118,18 @@ public class EditContactController extends ContactController implements Initiali
     }
     
     private void setupButtons(TextField[] fields, Button button, Label error) {
+        
         final int[] count= {0};
-        while(count[0]<fields.length && !fields[count[0]].getText().equals("")) {
-            count[0]++;
+        while(count[0]<3 && !fields[count[0]].getText().equals("")) {
+                count[0]++;
         }
+        
         //Integer count = new Integer(0);
         for(int i = count[0]; i < 3; i++) {
             fields[i].setDisable(true);
         }
+        
+        if (count[0] == 3) button.setVisible(false);
         
         button.setOnAction(event -> {
             switch (count[0]) {
@@ -133,15 +138,13 @@ public class EditContactController extends ContactController implements Initiali
                     break;
                 case 1:
                     if(fields[0].getText().equals("") || !error.getText().equals("")) {
-                        count[0]--;
-                        break;
+                        return;
                     }
                     fields[1].setDisable(false);
                     break;
                 case 2:
                     if(fields[1].getText().equals("") || !error.getText().equals("")) {
-                        count[0]--;
-                        break;
+                        return;
                     }
                     fields[2].setDisable(false);
                     button.setVisible(false);
@@ -152,5 +155,13 @@ public class EditContactController extends ContactController implements Initiali
             }
             count[0]++;
         });
+    }
+    
+    private void loadPrefixMenu(TextField[] phoneNumbers) {
+        ComboBox<PhonePrefix>[] prefixMenus = new ComboBox[]{ prefixMenu1, prefixMenu2, prefixMenu3 };
+        for (int i = 0; i < 3; i++) {
+            int index = i; // deve essere finale per lambda
+            prefixMenus[index].disableProperty().bind(phoneNumbers[index].disableProperty());
+        }
     }
 }
