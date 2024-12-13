@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.group05.mycontactmanager.models;
 
 import org.junit.jupiter.api.AfterEach;
@@ -13,8 +9,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *
+ *@file PhoneNumberTest.java
+ *@brief Classe di test per PhoneNumber
+ * 
  * @author group05
+ * @date Dicembre 13,2024
+ * @version 1.0
  */
 public class PhoneNumberTest {
     
