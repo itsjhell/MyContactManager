@@ -203,6 +203,7 @@ abstract class ContactController {
         //array di TextField per rendere più pulito in caricamento al suo interno
         TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
         TextField[] emailFields = { emailAddress1, emailAddress2, emailAddress3 };
+        ComboBox<PhonePrefix>[] prefixMenus = new ComboBox[]{ prefixMenu1, prefixMenu2, prefixMenu3 };
         List<PhoneNumber> numbers = contact.getNumbers();
         List<String> emailAddresses = contact.getEmailAddresses();
         //caricamento dei campi
@@ -210,11 +211,11 @@ abstract class ContactController {
         surnameField.setText(contact.getSurname());
         notesArea.setText(contact.getNotes());
         //caricamento dei numeri
-        prefixMenu1.getSelectionModel().select(numbers.get(0).getPrefix());
-        prefixMenu2.getSelectionModel().select(numbers.get(1).getPrefix());
-        prefixMenu3.getSelectionModel().select(numbers.get(2).getPrefix());
-        for(int i=0; numbers != null && i<numbers.size(); i++)
+        for(int i=0; numbers != null && i<numbers.size(); i++) {
+            prefixMenus[i].getSelectionModel().select(numbers.get(i).getPrefix());
             phoneFields[i].setText(numbers.get(i).getNumber());
+        }
+            
         //caricamento delle email
         for(int i=0; emailAddresses != null && i<emailAddresses.size(); i++)
             emailFields[i].setText(emailAddresses.get(i));
