@@ -49,6 +49,7 @@ public class AddContactController extends ContactController implements Initializ
 
     /**
      * @brief Inizializza il controller dopo il caricamento della vista.
+     *
      * @param[in] url L'URL utilizzato per risolvere percorsi relativi.
      * @param[in] rb Il ResourceBundle per l'internazionalizzazione.
      */
@@ -71,7 +72,8 @@ public class AddContactController extends ContactController implements Initializ
 
     /**
      * @brief Azione associata al "compito sinistro" (LeftTask).
-     *        Aggiunge il connatto alla lista e ne permette visualizzazione dei dettagli.
+     * 
+     * Aggiunge il contatto alla lista e ne permette visualizzazione dei dettagli.
      * 
      * @param[in] event L'evento ActionEvent generato dall'interfaccia.
      * @throws IOException In caso di errore nel caricamento della nuova vista FXML.
