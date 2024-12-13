@@ -14,9 +14,13 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -43,6 +47,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 
 /**
  * @file MainTableViewController.java
@@ -74,6 +79,10 @@ public class MainTableViewController implements Initializable {
     private Button addButton;
     @FXML
     private Button selectButton;
+    @FXML
+    private Button cancelSelectionButton;
+    @FXML
+    private Button deleteAllButton;
     @FXML
     private ComboBox<String> searchParameter;
     @FXML
@@ -134,10 +143,10 @@ public class MainTableViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Inserimento dei dati in tabella
+            // Inserimento dei dati in tabella
         splitPane.setDividerPositions(0.5);
         splitPane.addEventFilter(MouseEvent.MOUSE_DRAGGED, event -> event.consume());
-        
+            //ICONA
         iconClm.setCellValueFactory( contactProperty  -> {
             File file = new File(contactProperty.getValue().getImagePath());
             Image im;
@@ -151,20 +160,26 @@ public class MainTableViewController implements Initializable {
             imView.setImage(im);
             return new SimpleObjectProperty(imView); 
         });
+            //NOMINATIVI
         surnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
         nameClm.setCellValueFactory(new PropertyValueFactory("name"));
-        
+            //NUMERI
         phoneClm.setCellValueFactory(new PropertyValueFactory("firstNumber"));
-        
-        checkClm.setCellValueFactory(contactProperty  -> {
+            //CHECK
+        checkClm.setCellValueFactory((TableColumn.CellDataFeatures<Contact, CheckBox> contactProperty) -> {
             CheckBox cb = new CheckBox();
-            cb.setId(contactProperty.getValue().getName() + "_" + contactProperty.getValue().getSurname()); // ID univoco
+            //cb.setOnMouseClicked( () ->splitPane.getItems().set(1, rightPane));
+            cb.selectedProperty().bindBidirectional(contactProperty.getValue().isSelected());
             return new SimpleObjectProperty(cb);
         });
         checkClm.setVisible(false);
+        
+            //TEST RUBRICA
         contactList.setAll(ContactGenerator.generateRandomContacts(15));
+            //CONFIGURAZIONE DELLA TABLE LIST
         setupTableList();
-
+            
+            //SELEZIONE DI UN CONTATTO
         contactTable.setOnMouseClicked( event -> {
             Contact selectedContact = contactTable.getSelectionModel().getSelectedItem();
             if (selectedContact != null) {
@@ -172,7 +187,7 @@ public class MainTableViewController implements Initializable {
                 try {
                     //Caricamento dell'interfaccia Dettaglio contatto
                     loadDetailsContact(splitPane, contact, contactList);
-                    System.out.println(contact.getImagePath());
+                    System.out.println(contact.isSelected());
                 } catch (IOException ex) {
                     Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -389,22 +404,47 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void selectContacts(ActionEvent event) {
+            //CHECK
+        /*checkClm.setCellValueFactory(contactProperty  -> {
+            CheckBox cb = new CheckBox();
+            //cb.setOnMouseClicked( () -> splitPane.getItems().add(rightPane));
+            cb.selectedProperty().bind(contactProperty.getValue().isSelected());
+            return new SimpleObjectProperty(cb);
+        });*/
         checkClm.setVisible(true);
-        // Lista per raccogliere i contatti selezionati
-        /*List<Contact> selectedContacts = new ArrayList<>();
+            //DISABILITO L'AVVIO DI ALTRE FUNZIONALITA' DURANTE LA SELEZIONE MULTIPLA
+        addButton.setDisable(true);
+        selectButton.setDisable(true);
+            //LISTA DI CONTATTI SELEZIONATI DA VISUALIZZARE IN TABELLA
+        FilteredList<Contact> selectedContacts = new FilteredList<>(contactList);
+            System.out.println("Lista inizializzata: "+selectedContacts); //DEBUG
+        selectedContacts.setPredicate(contact -> contact.isSelected().get());
+            System.out.println("Lista filtrata: "+selectedContacts); //DEBUG
+        ObservableList<Contact> selectedContactsList = FXCollections.observableArrayList(selectedContacts);
+            System.out.println("List: "+selectedContactsList); //DEBUG
+        
+            //CONFIGURAZIONE NUOVA TABELLA PER I CONTATTI SELEZIONATI
+        selectedSurnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
+        selectedNameClm.setCellValueFactory(new PropertyValueFactory("name"));
+        selectedTable.setItems(selectedContacts);
+        
+            //ANNULLAMENTO DELL'OPERAZIONE
+        cancelSelectionButton.setOnAction(e -> {
+            checkClm.setVisible(false);
+            splitPane.getItems().remove(rightPane);
+                System.out.println(selectedContacts); //DEBUG
+            addButton.setDisable(false);
+            selectButton.setDisable(false);
+        });
+            //CONFERMA DELL'OPERAZIONE
+        deleteAllButton.setOnAction(e -> {
+            contactList.remove(selectedContacts);
+            splitPane.getItems().remove(rightPane);
+                System.out.println(selectedContacts); //DEBUG
+            addButton.setDisable(false);
+            selectButton.setDisable(false);
+        });
 
-        // Itera sulle righe della TableView
-        for (Node row : contactTable.lookupAll(".table-row-cell")) {
-            // Cerca la CheckBox nella cella corrente
-            CheckBox cb = (CheckBox) row.lookup(".check-box");
-            if (cb != null && cb.isSelected()) {
-                // Recupera il contatto associato alla riga
-                Contact contact = row.getItem();
-                if (contact != null) {
-                    selectedContacts.add(contact);
-                }
-            }
-        }*/
     }
 
     /**
