@@ -3,6 +3,8 @@ package com.group05.mycontactmanager.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.image.Image;
 
 /**
@@ -23,6 +25,8 @@ public class Contact implements Serializable{
     private List<String> emailAddresses;
     private String imageName;
     private String notes;
+    private transient BooleanProperty selected;
+
 
     /**
      * @param name
@@ -53,6 +57,8 @@ public class Contact implements Serializable{
             this.imageName = imageName;
         
         this.notes = notes;
+        selected = new SimpleBooleanProperty(false);
+        
     }
 
     /**
@@ -201,6 +207,15 @@ public class Contact implements Serializable{
         this.notes = notes;
     }
 
+    
+    public BooleanProperty isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected.set(selected);
+    }
+    
     /**
      * @brief Fornisce una rappresentazione testuale del contatto.
      * @return Una stringa contenente nome, cognome, numeri di telefono, email, percorso immagine e note.
