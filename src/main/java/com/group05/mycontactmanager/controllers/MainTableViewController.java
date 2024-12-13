@@ -3,6 +3,8 @@ package com.group05.mycontactmanager.controllers;
 import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.ContactManager;
+import com.group05.mycontactmanager.models.PhoneNumber;
+import com.group05.mycontactmanager.utilities.ContactGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -11,11 +13,13 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -158,29 +162,9 @@ public class MainTableViewController implements Initializable {
             return new SimpleObjectProperty(cb);
         });
         checkClm.setVisible(false);
+        contactList.setAll(ContactGenerator.generateRandomContacts(15));
+        setupTableList();
 
-        
-        // Lista ordinata per cognome-nome da visualizzare nella tabella
-        SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
-            @Override
-            public int compare(Contact o1, Contact o2) {
-                // Confronto cognome
-                int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
-                if (cmp != 0)
-                    return cmp;
-                // Confronto nome se i cognomi sono uguali
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
-        contactTable.setItems(sortedContactList);
-
-        // Input testing
-        contactList.add(new Contact("Mario", "Rossi", null, null, "", ""));
-        contactList.add(new Contact("Riccardo", "Rossi", null, null, "", ""));
-        contactList.add(new Contact("Mario", "Verdi", null, null, "", ""));
-        contactList.add(new Contact("Mario", "Gialli", null, null, "", ""));
-        
-        // Selezione di un contatto
         contactTable.setOnMouseClicked( event -> {
             Contact selectedContact = contactTable.getSelectionModel().getSelectedItem();
             if (selectedContact != null) {
@@ -197,7 +181,78 @@ public class MainTableViewController implements Initializable {
         
         //contactListName.textProperty().bindBidirectional( new SimpleStringProperty(contactManager.getName()));
         contactListName.setText(contactManager.getName());
+        
+        searchParameter.getItems().addAll("Cognome", "Nome", "Cognome e nome", "Telefono", "E-mail");
+        searchParameter.setValue("Cognome");
     }    
+    
+    private void setupTableList() {
+        FilteredList<Contact> filteredContactList = new FilteredList<>(contactList);
+
+        filteredContactList.predicateProperty().bind(
+            Bindings.createObjectBinding(() ->
+                contact -> {
+                    String filter = searchField.getText();
+                    if (filter == null || filter.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = filter.toLowerCase();
+                    int selectedFilter = searchParameter.getSelectionModel().getSelectedIndex();
+                    switch (selectedFilter) {
+                        case 0: // filtro per cognome
+                            return contact.getSurname().toLowerCase().contains(lowerCaseFilter);
+                        case 1: // filtro per nome
+                            return contact.getName().toLowerCase().contains(lowerCaseFilter);
+                        case 2: // Filtro per cognome e nome (separati da spazio)
+                                String[] filterParts = lowerCaseFilter.split("\\s+"); // Dividi il filtro in parti (nome e cognome)
+
+                                // Se ci sono due parti nel filtro
+                                if (filterParts.length == 2) {
+                                    String firstPart = filterParts[0];
+                                    String secondPart = filterParts[1];
+
+                                    // Controlla se una parte corrisponde al cognome e l'altra al nome (o viceversa)
+                                    return (contact.getSurname().toLowerCase().contains(firstPart) && contact.getName().toLowerCase().contains(secondPart)) ||
+                                           (contact.getSurname().toLowerCase().contains(secondPart) && contact.getName().toLowerCase().contains(firstPart));
+                                } else {
+                                    // Se il filtro è solo una parte (cognome o nome)
+                                    return contact.getSurname().toLowerCase().contains(lowerCaseFilter) ||
+                                           contact.getName().toLowerCase().contains(lowerCaseFilter);
+                                }
+                        case 3: // filtro per numero di telefono
+                            if (contact.getNumbers() == null) return false;
+                            for (PhoneNumber number : contact.getNumbers()) {
+                                if (number.toString().contains(lowerCaseFilter)) {
+                                    return true; // se uno dei numeri corrisponde
+                                }
+                            }
+                            return false;
+                        case 4: // filtro per email
+                            if (contact.getEmailAddresses() == null) return false;
+                            for (String email : contact.getEmailAddresses()) {
+                                if (email.toLowerCase().contains(lowerCaseFilter)) {
+                                    return true; // se una delle email corrisponde
+                                }
+                            }
+                            return false; // Nessuna email corrisponde al filtro
+                        default:
+                            return true; // Mostra tutti i contatti se non è selezionato nulla
+                    }
+                }, searchField.textProperty(), searchParameter.valueProperty()));
+        
+        SortedList<Contact> sortedContactList = new SortedList<>(filteredContactList, new Comparator<Contact>() { 
+            @Override
+            public int compare(Contact o1, Contact o2) {
+                // Confronto cognome
+                int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
+                if (cmp != 0)
+                    return cmp;
+                // Confronto nome se i cognomi sono uguali
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+        contactTable.setItems(sortedContactList);
+    }
 
     /**
      * @brief Salva la lista dei contatti su file.

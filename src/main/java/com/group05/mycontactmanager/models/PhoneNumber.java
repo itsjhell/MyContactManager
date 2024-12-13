@@ -26,6 +26,11 @@ public class PhoneNumber implements Serializable{
         this.prefix = prefix;
         this.number = number;
     }
+    
+    public PhoneNumber(String number) {
+        this.prefix = PhonePrefix.OTHERS;
+        this.number = number;
+    }
 
     /**
      * @brief Imposta il prefisso del numero di telefono.

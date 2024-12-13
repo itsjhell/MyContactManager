@@ -118,7 +118,7 @@ public class EditContactController extends ContactController implements Initiali
     
     private void setupButtons(TextField[] fields, Button button, Label error) {
         final int[] count= {0};
-        while(count[0]+1<fields.length && !fields[count[0]].getText().equals("")) {
+        while(count[0]<fields.length && !fields[count[0]].getText().equals("")) {
             count[0]++;
         }
         //Integer count = new Integer(0);
