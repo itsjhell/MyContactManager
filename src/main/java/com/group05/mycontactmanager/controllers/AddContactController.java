@@ -111,20 +111,20 @@ public class AddContactController extends ContactController implements Initializ
     }
  
     private void setupButtons(TextField[] fields, Button button, Label error) {
+        ComboBox<PhonePrefix>[] prefixMenus = new ComboBox[]{ prefixMenu1, prefixMenu2, prefixMenu3 };
+        
         final int[] count = {0};
         //Integer count = new Integer(0);
         for(int i = 0; i < 3; i++) {
             fields[i].setDisable(true);
+            prefixMenus[i].setDisable(true);
         }
-        prefixMenu1.setDisable(true); 
-        prefixMenu2.setDisable(true); 
-        prefixMenu3.setDisable(true);
         
         button.setOnAction(event -> {
         switch (count[0]) {
             case 0:
                 fields[0].setDisable(false);
-                prefixMenu1.setDisable(false);
+                prefixMenus[0].setDisable(false);
                 break;
             case 1:
                 if(fields[0].getText().equals("") || !error.getText().equals("")) {
@@ -132,7 +132,7 @@ public class AddContactController extends ContactController implements Initializ
                     break;
                 }
                 fields[1].setDisable(false);
-                prefixMenu2.setDisable(false); 
+                prefixMenus[1].setDisable(false); 
                 break;
             case 2:
                 if(fields[1].getText().equals("") || !error.getText().equals("")) {
@@ -140,7 +140,7 @@ public class AddContactController extends ContactController implements Initializ
                     break;
                 }
                 fields[2].setDisable(false);
-                prefixMenu3.setDisable(false);
+                prefixMenus[2].setDisable(false);
                 button.setVisible(false);
                 break;
             default:
