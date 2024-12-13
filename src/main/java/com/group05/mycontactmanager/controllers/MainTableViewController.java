@@ -118,7 +118,9 @@ public class MainTableViewController implements Initializable {
     
     private ObservableList<Contact> contactList;
     
-    ContactManager contactManager;
+    private ContactManager contactManager;
+    
+    private FilteredList<Contact> selectedContacts;
 
     /**
      * @brief Imposta la lista di contatti.
@@ -139,6 +141,7 @@ public class MainTableViewController implements Initializable {
         // Creazione di un'istanza di ContactManager
         contactManager = new ContactManager("Nuova rubrica");
         contactList = FXCollections.observableArrayList(contactManager.getContactList());
+        selectedContacts = new FilteredList<>(contactList);
     }
 
     /**
@@ -174,17 +177,25 @@ public class MainTableViewController implements Initializable {
         checkClm.setCellValueFactory((contactProperty) -> {
             CheckBox cb = new CheckBox();
             ObjectProperty obj = new SimpleObjectProperty<>(cb);
-            // Listener per il click sul CheckBox
+            //HANDLER DELL'EVENTO: CLICK SU UNA CHECKBOX
             cb.setOnMouseClicked((MouseEvent event) -> {
+                selectedContacts = new FilteredList<>(contactList);     //1. PRENDE CONTACTLIST PER INTERA
+                selectedContacts.setPredicate(contact -> {              //2. FILTRA LA LISTA CON I CONTATTI SELEZIONATI
+                    return contact.isSelected().get();
+                });
+                //CONFIGURAZIONE TABELLA SELEZIONATI
+                selectedSurnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
+                selectedNameClm.setCellValueFactory(new PropertyValueFactory("name"));
+                selectedTable.setItems(selectedContacts);
+                //VA RICARICATO IL RIGHTPANE PER TENERE SOTTO CONTROLLO TUTTE LE SELEZIONI;
                 if(splitPane.getItems().size()>1)
                     splitPane.getItems().remove(1);
                 splitPane.getItems().add(rightPane);
             });
-            cb.selectedProperty().bindBidirectional(contactProperty.getValue().isSelected());
-            return obj;
+            cb.selectedProperty().bindBidirectional(contactProperty.getValue().isSelected());   //COLLEGAMENTO TRA VALORE DELLA CHECKBOX E PROPRIETA' selected DI CONTACT   
+            return obj; //CARICA LA CHECKBOX NELLA COLONNA
         });
-
-        checkClm.setVisible(false);
+        checkClm.setVisible(false); //IMPOSTATA INVISIBILE (TORNERA' VISIBILE CON LA FUNZIONE SELEZIONA ATTIVA)
         
             //TEST RUBRICA
         contactList.setAll(ContactGenerator.generateRandomContacts(15));
@@ -199,7 +210,7 @@ public class MainTableViewController implements Initializable {
                 try {
                     //Caricamento dell'interfaccia Dettaglio contatto
                     loadDetailsContact(splitPane, contact, contactList);
-                    System.out.println(contact.isSelected());
+                    //System.out.println(contact.isSelected()); //DEBUG
                 } catch (IOException ex) {
                     Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -416,7 +427,6 @@ public class MainTableViewController implements Initializable {
      */
     @FXML
     private void selectContacts(ActionEvent event) {
-        
             //RENDO VISIBILI LE CHECKBOX DI OGNI CONTATTO
         checkClm.setVisible(true);
             //DISABILITO L'AVVIO DI ALTRE FUNZIONALITA' DURANTE LA SELEZIONE MULTIPLA
@@ -426,34 +436,28 @@ public class MainTableViewController implements Initializable {
         if(splitPane.getItems().size()>1)
             splitPane.getItems().remove(1);
         splitPane.getItems().add(rightPane);
-            
-            //LISTA DI CONTATTI SELEZIONATI DA VISUALIZZARE IN TABELLA
-        FilteredList<Contact> selectedContacts = new FilteredList<>(contactList);
-        selectedContacts.setPredicate(contact -> contact.isSelected().get());
-        // Aggiorno mediante binding la lista dei selezionati
         
-        //Bindings.bindContent(selectedContacts, contactList);
-        //Bindings.bindContentBidirectional(selectedContacts, contactList);
         
-        System.out.println("Lista inizializzata: "+selectedContacts); //DEBUG
+            //CONFERMA DELL'OPERAZIONE DI ELIMINAZIONE
+        deleteAllButton.setOnAction(e -> {
+            checkClm.setVisible(false);
+            splitPane.getItems().remove(rightPane);
+                System.out.println(selectedContacts); //DEBUG
 
-        selectedTable.setItems(selectedContacts);
-        
-        /*FilteredList<Contact> selectedContacts = new FilteredList<>(contactList);
-        //    System.out.println("Lista inizializzata: "+selectedContacts); //DEBUG
-        selectedContacts.setPredicate(contact -> contact.isSelected().get());
-            System.out.println("Lista filtrata: "+selectedContacts); //DEBUG
-        //ObservableList<Contact> selectedContactsList = FXCollections.observableArrayList(selectedContacts);
-        //    System.out.println("List: "+selectedContactsList); //DEBUG
-        */
-        
-        
-        
-            //CONFIGURAZIONE NUOVA TABELLA PER I CONTATTI SELEZIONATI
-        selectedSurnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
-        selectedNameClm.setCellValueFactory(new PropertyValueFactory("name"));
-        selectedTable.setItems(selectedContacts);
-        
+            List<Contact> toRemove = new ArrayList<>();
+            Iterator<Contact> iterator = selectedContacts.iterator();
+            while (iterator.hasNext()) {
+                Contact contact = iterator.next();
+                if (contactList.contains(contact)) {
+                    toRemove.add(contact);  // Aggiungi gli elementi da rimuovere
+                }
+            }
+            // Rimuovi gli elementi dalla contactList
+            contactList.removeAll(toRemove);
+
+            addButton.setDisable(false);
+            selectButton.setDisable(false);
+        });
             //ANNULLAMENTO DELL'OPERAZIONE
         cancelSelectionButton.setOnAction(e -> {
             checkClm.setVisible(false);
@@ -467,27 +471,7 @@ public class MainTableViewController implements Initializable {
             addButton.setDisable(false);
             selectButton.setDisable(false);
         });
-            //CONFERMA DELL'OPERAZIONE
-        deleteAllButton.setOnAction(e -> {
-            checkClm.setVisible(false);
-            splitPane.getItems().remove(rightPane);
-                System.out.println(selectedContacts); //DEBUG
             
-            List<Contact> toRemove = new ArrayList<>();
-            Iterator<Contact> iterator = selectedContacts.iterator();
-            while (iterator.hasNext()) {
-                Contact contact = iterator.next();
-                if (contactList.contains(contact)) {
-                    toRemove.add(contact);  // Aggiungi gli elementi da rimuovere
-                }
-            }
-            // Rimuovi gli elementi dalla contactList
-            contactList.removeAll(toRemove);
-            
-            addButton.setDisable(false);
-            selectButton.setDisable(false);
-        });
-
     }
 
     /**
