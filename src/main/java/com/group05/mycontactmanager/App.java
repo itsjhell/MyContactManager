@@ -39,9 +39,9 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("MainTableView"), 1250, 800);
+        scene = new Scene(loadFXML("MainTableView"), 1300, 800);
         stage.setScene(scene);
-        stage.setMinWidth(1250); 
+        stage.setMinWidth(1300); 
         stage.setMinHeight(800); 
         stage.setTitle("MyContactManager");
         stage.show();
