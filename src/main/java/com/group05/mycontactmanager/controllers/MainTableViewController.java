@@ -151,10 +151,13 @@ public class MainTableViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-            // Inserimento dei dati in tabella
+            //rifinimento Layout
         splitPane.setDividerPositions(0.5);
         splitPane.addEventFilter(MouseEvent.MOUSE_DRAGGED, event -> event.consume());
         splitPane.getItems().remove(rightPane); // rimuove tabella selezionati
+        
+        // Inserimento dei dati in tabella
+//            //PLACE HOLDER PER TABELLE SE VUOTE
         contactTable.setPlaceholder(new Label("Nessun contatto in rubrica"));
         selectedTable.setPlaceholder(new Label("Nessun contatto selezionato"));
             //ICONA
@@ -165,8 +168,6 @@ public class MainTableViewController implements Initializable {
                 im = new Image(contactProperty.getValue().getImagePath(), 25, 25, false, false);
             else
                 im = new Image("images/default.png", 25, 25, false, false);
-            //contactImage.setImage(newImage);
-            //Image im = new Image(contactProperty.getValue().getImagePath(), 25, 25, false, false);
             ImageView imView = new ImageView();
             imView.setImage(im);
             return new SimpleObjectProperty(imView); 
@@ -429,27 +430,33 @@ public class MainTableViewController implements Initializable {
             splitPane.getItems().remove(1);
         splitPane.getItems().add(rightPane);
         
-        
             //CONFERMA DELL'OPERAZIONE DI ELIMINAZIONE
         deleteAllButton.setOnAction(e -> {
-            checkClm.setVisible(false);
-            splitPane.getItems().remove(rightPane);
-                System.out.println(selectedContacts); //DEBUG
+            if(selectedContacts.isEmpty() || selectedContacts==null)
+                showErrorAlert("Non hai selezionato nessun contatto");
+            else{
+                if(showConfirmationAlert("Attenzione", "Stai per eliminare definitivamente questi contatti.", "Clicca 'Conferma' per procedere, 'Annulla' per rivedere la tua decisione")) {
+                    checkClm.setVisible(false);
+                    splitPane.getItems().remove(rightPane);
+                    System.out.println(selectedContacts); //DEBUG
 
-            List<Contact> toRemove = new ArrayList<>();
-            Iterator<Contact> iterator = selectedContacts.iterator();
-            while (iterator.hasNext()) {
-                Contact contact = iterator.next();
-                if (contactList.contains(contact)) {
-                    toRemove.add(contact);  // Aggiungi gli elementi da rimuovere
+                    List<Contact> toRemove = new ArrayList<>();
+                    Iterator<Contact> iterator = selectedContacts.iterator();
+                    while (iterator.hasNext()) {
+                        Contact contact = iterator.next();
+                        if (contactList.contains(contact)) {
+                            toRemove.add(contact);  //Aggiungi gli elementi da rimuovere
+                        }
+                    }
+                    // Rimuovi gli elementi dalla contactList
+                    contactList.removeAll(toRemove);
+
+                    addButton.setDisable(false);
+                    selectButton.setDisable(false);
                 }
             }
-            // Rimuovi gli elementi dalla contactList
-            contactList.removeAll(toRemove);
-
-            addButton.setDisable(false);
-            selectButton.setDisable(false);
         });
+        
             //ANNULLAMENTO DELL'OPERAZIONE
         cancelSelectionButton.setOnAction(e -> {
             checkClm.setVisible(false);
