@@ -1,22 +1,15 @@
 package com.group05.mycontactmanager.controllers;
 
-import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.PhoneNumber;
 import com.group05.mycontactmanager.models.PhonePrefix;
-import com.group05.mycontactmanager.utilities.Checker;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.StringBinding;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -82,18 +75,24 @@ public class AddContactController extends ContactController implements Initializ
     @Override
     void executeLeftTask(ActionEvent event) throws IOException {
         
-        numbers = new ArrayList();
+        numbers = new ArrayList<PhoneNumber>();
+        if(!phoneNumber1.getText().equals(""))
+            numbers.add(new PhoneNumber(prefixMenu1.getValue(),phoneNumber1.getText()));
+        if(!phoneNumber2.getText().equals(""))
+            numbers.add(new PhoneNumber(prefixMenu2.getValue(),phoneNumber2.getText()));
+        if(!phoneNumber3.getText().equals(""))
+            numbers.add(new PhoneNumber(prefixMenu3.getValue(),phoneNumber3.getText()));
+        while(numbers.size() < 3)  numbers.add(new PhoneNumber(PhonePrefix.fromString("-"),""));
         
-        numbers.add(new PhoneNumber(prefixMenu1.getValue(),phoneNumber1.getText()));
-        numbers.add(new PhoneNumber(prefixMenu2.getValue(),phoneNumber2.getText()));
-        numbers.add(new PhoneNumber(prefixMenu3.getValue(),phoneNumber3.getText()));
-       
         emailAddresses = new ArrayList();
-        emailAddresses.add(emailAddress1.getText());
-        emailAddresses.add(emailAddress2.getText());
-        emailAddresses.add(emailAddress3.getText());
-      
-        //Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImageName(), notesArea.getText());
+        if(!emailAddress1.getText().equals(""))
+            emailAddresses.add(emailAddress1.getText());
+        if(!emailAddress2.getText().equals(""))
+            emailAddresses.add(emailAddress2.getText());
+        if(!emailAddress3.getText().equals(""))
+            emailAddresses.add(emailAddress3.getText());
+        while(emailAddresses.size() < 3)  emailAddresses.add("");
+        
         Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, imageNameApp, notesArea.getText());
         contactList.add(contact);
         

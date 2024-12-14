@@ -1,9 +1,5 @@
 package com.group05.mycontactmanager.utilities;
 
-import com.group05.mycontactmanager.models.Contact;
-import com.group05.mycontactmanager.models.ContactManager;
-import javafx.stage.FileChooser;
-
 /**
  * @file FileManager.java
  * @brief Classe di utilità per il salvataggio e il caricamento di contatti su file.
@@ -32,14 +28,14 @@ public interface FileManager {
     //public ContactManager loadContactManager();
     
     /**
+     * @param nameFile
      * @brief Importa contatti da un file CSV.
-     * @return Un ContactManager con i contatti importati , restituisce null in caso di errore.
      */
     public void importContactsFromCSV(String nameFile);
     
     /**
+     * @param nameFile
      * @brief Esporta i contatti di un ContactManager in un file CSV.
-     * @param[in] contactManager L'istanza di ContactManager da esportare.
      */
     public void exportContactsToCSV(String nameFile);
 }

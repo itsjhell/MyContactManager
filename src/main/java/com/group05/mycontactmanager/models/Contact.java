@@ -1,11 +1,9 @@
 package com.group05.mycontactmanager.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.image.Image;
 
 /**
  * @file Contact.java

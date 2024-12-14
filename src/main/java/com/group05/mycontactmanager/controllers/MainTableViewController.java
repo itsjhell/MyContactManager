@@ -16,21 +16,14 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.ListBinding;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -52,7 +45,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import javafx.util.Callback;
 
 /**
  * @file MainTableViewController.java
@@ -122,26 +114,14 @@ public class MainTableViewController implements Initializable {
     
     private FilteredList<Contact> selectedContacts;
 
-    /**
-     * @brief Imposta la lista di contatti.
-     * @param[in] contactList L'ObservableList di contatti.
-     */
-  /*public void setContactList(ObservableList<Contact> contactList) {
-        this.contactList = contactList;
-    }
-    
-    /**
-     * @brief Restituisce la lista di contatti.
-     * @return L'ObservableList di contatti.
-     */
-  /*public ObservableList<Contact> getContactList() {
-        return contactList;
-    }*/
     public MainTableViewController() {
         // Creazione di un'istanza di ContactManager
         contactManager = new ContactManager("Nuova rubrica");
         contactList = FXCollections.observableArrayList(contactManager.getContactList());
         selectedContacts = new FilteredList<>(contactList);
+        selectedContacts.setPredicate(contact1 -> {
+                    return contact1.isSelected().get();
+                });
     }
 
     /**
@@ -157,7 +137,7 @@ public class MainTableViewController implements Initializable {
         splitPane.getItems().remove(rightPane); // rimuove tabella selezionati
         
         // Inserimento dei dati in tabella
-//            //PLACE HOLDER PER TABELLE SE VUOTE
+            //PLACE HOLDER PER TABELLE SE VUOTE
         contactTable.setPlaceholder(new Label("Nessun contatto in rubrica"));
         selectedTable.setPlaceholder(new Label("Nessun contatto selezionato"));
             //ICONA
@@ -194,9 +174,9 @@ public class MainTableViewController implements Initializable {
                 try {
                     //Caricamento dell'interfaccia Dettaglio contatto
                     loadDetailsContact(splitPane, contact, contactList);
-                    System.out.println(contact.isSelected()); //DEBUG
+                    //System.out.println(contact.isSelected()); //DEBUG
                 } catch (IOException ex) {
-                    Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex.getMessage()); //DEBUG
                 }
             }
         });
@@ -318,7 +298,7 @@ public class MainTableViewController implements Initializable {
             String headerText = "Caricando una nuova rubrica potresti perdere quella attuale";
             String contentText = "Assicurati di aver salvato la rubrica corrente prima se non desideri perderla"; 
             if(showConfirmationAlert(title, headerText, contentText)) {
-                ContactManager contactManager = new ContactManager("Rubrica su cui ricarico");
+                contactManager = new ContactManager("Rubrica su cui ricarico");
                 contactManager.readObject(selectedFile.getAbsolutePath());
                 for(Contact c: contactManager.getContactList()) {
                     c.resetSelectedProperty();
