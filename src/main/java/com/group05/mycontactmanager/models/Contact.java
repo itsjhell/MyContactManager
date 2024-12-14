@@ -235,5 +235,9 @@ public class Contact implements Serializable{
     public Contact clone() {
         return new Contact(name, surname,  numbers, emailAddresses, imageName, notes);
     }
+
+    public void resetSelectedProperty() {
+        selected = new SimpleBooleanProperty(false);
+    }
     
 }

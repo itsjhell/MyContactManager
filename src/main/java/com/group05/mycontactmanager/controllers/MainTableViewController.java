@@ -178,31 +178,11 @@ public class MainTableViewController implements Initializable {
             //NUMERI
         phoneClm.setCellValueFactory(new PropertyValueFactory("firstNumber"));
             //CHECK
-        checkClm.setCellValueFactory((contactProperty) -> {
-            CheckBox cb = new CheckBox();
-            ObjectProperty obj = new SimpleObjectProperty<>(cb);
-            //HANDLER DELL'EVENTO: CLICK SU UNA CHECKBOX
-            cb.setOnMouseClicked((MouseEvent event) -> {
-                selectedContacts = new FilteredList<>(contactList);     //1. PRENDE CONTACTLIST PER INTERA
-                selectedContacts.setPredicate(contact -> {              //2. FILTRA LA LISTA CON I CONTATTI SELEZIONATI
-                    return contact.isSelected().get();
-                });
-                //CONFIGURAZIONE TABELLA SELEZIONATI
-                selectedSurnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
-                selectedNameClm.setCellValueFactory(new PropertyValueFactory("name"));
-                selectedTable.setItems(selectedContacts);
-                //VA RICARICATO IL RIGHTPANE PER TENERE SOTTO CONTROLLO TUTTE LE SELEZIONI;
-                if(splitPane.getItems().size()>1)
-                    splitPane.getItems().remove(1);
-                splitPane.getItems().add(rightPane);
-            });
-            cb.selectedProperty().bindBidirectional(contactProperty.getValue().isSelected());   //COLLEGAMENTO TRA VALORE DELLA CHECKBOX E PROPRIETA' selected DI CONTACT   
-            return obj; //CARICA LA CHECKBOX NELLA COLONNA
-        });
-        checkClm.setVisible(false); //IMPOSTATA INVISIBILE (TORNERA' VISIBILE CON LA FUNZIONE SELEZIONA ATTIVA)
+        multipleContactSelection();
+        
         
             //TEST RUBRICA
-        //contactList.setAll(ContactGenerator.generateRandomContacts(15));
+        contactList.setAll(ContactGenerator.generateRandomContacts(15));
             //CONFIGURAZIONE DELLA TABLE LIST
         setupTableList();
             
@@ -214,7 +194,7 @@ public class MainTableViewController implements Initializable {
                 try {
                     //Caricamento dell'interfaccia Dettaglio contatto
                     loadDetailsContact(splitPane, contact, contactList);
-                    //System.out.println(contact.isSelected()); //DEBUG
+                    System.out.println(contact.isSelected()); //DEBUG
                 } catch (IOException ex) {
                     Logger.getLogger(MainTableViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -340,6 +320,9 @@ public class MainTableViewController implements Initializable {
             if(showConfirmationAlert(title, headerText, contentText)) {
                 ContactManager contactManager = new ContactManager("Rubrica su cui ricarico");
                 contactManager.readObject(selectedFile.getAbsolutePath());
+                for(Contact c: contactManager.getContactList()) {
+                    c.resetSelectedProperty();
+                }
                 //La nuova istanza di ContactManager va depositata
                 contactList = FXCollections.observableArrayList(contactManager.getContactList());
                 // Lista ordinata per cognome-nome da visualizzare nella tabella
@@ -412,65 +395,6 @@ public class MainTableViewController implements Initializable {
     @FXML
     private void addContactToList(ActionEvent event) throws IOException {
         loadAddContact(splitPane, contactList);
-    }
-
-    /**
-     * @brief Seleziona i contatti.
-     * @param[in] event L'ActionEvent associato.
-     */
-    @FXML
-    private void selectContacts(ActionEvent event) {
-            //RENDO VISIBILI LE CHECKBOX DI OGNI CONTATTO
-        checkClm.setVisible(true);
-            //DISABILITO L'AVVIO DI ALTRE FUNZIONALITA' DURANTE LA SELEZIONE MULTIPLA
-        addButton.setDisable(true);
-        selectButton.setDisable(true);
-            //CARICO L'APPOSITO PANE
-        if(splitPane.getItems().size()>1)
-            splitPane.getItems().remove(1);
-        splitPane.getItems().add(rightPane);
-        
-            //CONFERMA DELL'OPERAZIONE DI ELIMINAZIONE
-        deleteAllButton.setOnAction(e -> {
-            if(selectedContacts.isEmpty() || selectedContacts==null)
-                showErrorAlert("Non hai selezionato nessun contatto");
-            else{
-                if(showConfirmationAlert("Attenzione", "Stai per eliminare definitivamente questi contatti.", "Clicca 'Conferma' per procedere, 'Annulla' per rivedere la tua decisione")) {
-                    checkClm.setVisible(false);
-                    splitPane.getItems().remove(rightPane);
-                    System.out.println(selectedContacts); //DEBUG
-
-                    List<Contact> toRemove = new ArrayList<>();
-                    Iterator<Contact> iterator = selectedContacts.iterator();
-                    while (iterator.hasNext()) {
-                        Contact contact = iterator.next();
-                        if (contactList.contains(contact)) {
-                            toRemove.add(contact);  //Aggiungi gli elementi da rimuovere
-                        }
-                    }
-                    // Rimuovi gli elementi dalla contactList
-                    contactList.removeAll(toRemove);
-
-                    addButton.setDisable(false);
-                    selectButton.setDisable(false);
-                }
-            }
-        });
-        
-            //ANNULLAMENTO DELL'OPERAZIONE
-        cancelSelectionButton.setOnAction(e -> {
-            checkClm.setVisible(false);
-            splitPane.getItems().remove(rightPane);
-                System.out.println(selectedContacts); //DEBUG
-            for (Contact contact : selectedContacts) {
-                if (contactList.contains(contact)) {
-                    contact.isSelected().set(false);
-                }
-            }
-            addButton.setDisable(false);
-            selectButton.setDisable(false);
-        });
-            
     }
 
     /**
@@ -567,4 +491,83 @@ public class MainTableViewController implements Initializable {
 
         return result == okButton;
     }    
+
+    private void multipleContactSelection() {
+        checkClm.setCellValueFactory((contactProperty) -> {
+            CheckBox cb = new CheckBox();
+            ObjectProperty obj = new SimpleObjectProperty<>(cb);
+            //HANDLER DELL'EVENTO: CLICK SU UNA CHECKBOX
+            cb.setOnMouseClicked((MouseEvent event) -> {
+                selectedContacts = new FilteredList<>(contactList);     //1. PRENDE CONTACTLIST PER INTERA
+                selectedContacts.setPredicate(contact -> {              //2. FILTRA LA LISTA CON I CONTATTI SELEZIONATI
+                    return contact.isSelected().get();
+                });
+                //CONFIGURAZIONE TABELLA SELEZIONATI
+                selectedSurnameClm.setCellValueFactory(new PropertyValueFactory("surname"));
+                selectedNameClm.setCellValueFactory(new PropertyValueFactory("name"));
+                selectedTable.setItems(selectedContacts);
+                //VA RICARICATO IL RIGHTPANE PER TENERE SOTTO CONTROLLO TUTTE LE SELEZIONI;
+                if(splitPane.getItems().size()>1)
+                    splitPane.getItems().remove(1);
+                splitPane.getItems().add(rightPane);
+            });
+            cb.selectedProperty().bindBidirectional(contactProperty.getValue().isSelected());   //COLLEGAMENTO TRA VALORE DELLA CHECKBOX E PROPRIETA' selected DI CONTACT   
+            return obj; //CARICA LA CHECKBOX NELLA COLONNA
+        });
+        checkClm.setVisible(false); //IMPOSTATA INVISIBILE (TORNERA' VISIBILE CON LA FUNZIONE SELEZIONA ATTIVA)
+        
+            //Avvio funzionalità seleziona
+        selectButton.setOnMouseClicked((MouseEvent event) -> {
+                //RENDO VISIBILI LE CHECKBOX DI OGNI CONTATTO
+            checkClm.setVisible(true);
+                //DISABILITO L'AVVIO DI ALTRE FUNZIONALITA' DURANTE LA SELEZIONE MULTIPLA
+            addButton.setDisable(true);
+            selectButton.setDisable(true);
+                //CARICO L'APPOSITO PANE
+            if(splitPane.getItems().size()>1)
+                splitPane.getItems().remove(1);
+            splitPane.getItems().add(rightPane);
+
+                //CONFERMA DELL'OPERAZIONE DI ELIMINAZIONE
+            deleteAllButton.setOnAction(e -> {
+                if(selectedContacts.isEmpty() || selectedContacts==null)
+                    showErrorAlert("Non hai selezionato nessun contatto");
+                else{
+                    if(showConfirmationAlert("Attenzione", "Stai per eliminare definitivamente questi contatti.", "Clicca 'Conferma' per procedere, 'Annulla' per rivedere la tua decisione")) {
+                        checkClm.setVisible(false);
+                        splitPane.getItems().remove(rightPane);
+                        System.out.println(selectedContacts); //DEBUG
+
+                        List<Contact> toRemove = new ArrayList<>();
+                        Iterator<Contact> iterator = selectedContacts.iterator();
+                        while (iterator.hasNext()) {
+                            Contact contact = iterator.next();
+                            if (contactList.contains(contact)) {
+                                toRemove.add(contact);  //Aggiungi gli elementi da rimuovere
+                            }
+                        }
+                        // Rimuovi gli elementi dalla contactList
+                        contactList.removeAll(toRemove);
+
+                        addButton.setDisable(false);
+                        selectButton.setDisable(false);
+                    }
+                }
+            });
+
+                //ANNULLAMENTO DELL'OPERAZIONE
+            cancelSelectionButton.setOnAction(e -> {
+                checkClm.setVisible(false);
+                splitPane.getItems().remove(rightPane);
+                    System.out.println(selectedContacts); //DEBUG
+                for (Contact contact : selectedContacts) {
+                    if (contactList.contains(contact)) {
+                        contact.isSelected().set(false);
+                    }
+                }
+                addButton.setDisable(false);
+                selectButton.setDisable(false);
+            });
+        });
+    }
 }
