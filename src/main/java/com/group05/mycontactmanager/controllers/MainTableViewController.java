@@ -342,18 +342,7 @@ public class MainTableViewController implements Initializable {
                 //La nuova istanza di ContactManager va depositata
                 contactList = FXCollections.observableArrayList(contactManager.getContactList());
                 // Lista ordinata per cognome-nome da visualizzare nella tabella
-                SortedList<Contact> sortedContactList = new SortedList(contactList, new Comparator<Contact>() { 
-                    @Override
-                    public int compare(Contact o1, Contact o2) {
-                        // Confronto cognome
-                        int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
-                        if (cmp != 0)
-                            return cmp;
-                        // Confronto nome se i cognomi sono uguali
-                        return o1.getName().compareToIgnoreCase(o2.getName());
-                    }
-                });
-                contactTable.setItems(sortedContactList);
+                setupTableList();
                 return;
             }
         }
