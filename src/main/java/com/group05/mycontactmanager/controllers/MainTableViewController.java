@@ -154,6 +154,9 @@ public class MainTableViewController implements Initializable {
             // Inserimento dei dati in tabella
         splitPane.setDividerPositions(0.5);
         splitPane.addEventFilter(MouseEvent.MOUSE_DRAGGED, event -> event.consume());
+        splitPane.getItems().remove(rightPane); // rimuove tabella selezionati
+        contactTable.setPlaceholder(new Label("Nessun contatto in rubrica"));
+        selectedTable.setPlaceholder(new Label("Nessun contatto selezionato"));
             //ICONA
         iconClm.setCellValueFactory( contactProperty  -> {
             File file = new File(contactProperty.getValue().getImagePath());
@@ -198,7 +201,7 @@ public class MainTableViewController implements Initializable {
         checkClm.setVisible(false); //IMPOSTATA INVISIBILE (TORNERA' VISIBILE CON LA FUNZIONE SELEZIONA ATTIVA)
         
             //TEST RUBRICA
-        contactList.setAll(ContactGenerator.generateRandomContacts(15));
+        //contactList.setAll(ContactGenerator.generateRandomContacts(15));
             //CONFIGURAZIONE DELLA TABLE LIST
         setupTableList();
             

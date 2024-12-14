@@ -14,7 +14,7 @@
 }
 
 #background {
-    -fx-background-color: #2178cf;
+    -fx-background-color: #1c70c5;
 }
 
 /* Stile per tutte le Label */
@@ -52,12 +52,16 @@
 
 
 .button {
-    -fx-background-color: #2178cf;
+    -fx-background-color: #1c70c5;
     -fx-text-fill: #ffffff;
     
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-background-radius: 20px;
+}
+
+.button:hover {
+    -fx-background-color: #1360ad;
 }
 
 .split-pane:horizontal > .split-pane-divider {
@@ -131,10 +135,25 @@
     -fx-background-radius: 10px ;
     -fx-font-size:15px;
 }
+.text-field:hover {
+    -fx-background-color: -fx-text-box-border, #f7fbff;
+    -fx-background-insets: 0, 0 0 1  ;
+}
 .text-field:focused {
     -fx-background-color: -fx-focus-color, #eef6ff ;
 }
 
+
+.text-area {
+    -fx-background-color: -fx-text-box-border, #ffffff ;
+    -fx-background-insets: 0, 0 0 1  ;
+    -fx-background-radius: 10px ;
+    -fx-font-size:15px;
+}
+.text-area .content:focused {
+    -fx-background-color: -fx-focus-color, #eef6ff ;
+    -fx-background-insets: 0;
+}
 
 .combo-box-base  
 {
@@ -150,6 +169,20 @@
     -fx-background-radius: 10px ;
 }
 
+.combo-box-base:hover {
+    -fx-background-color: -fx-text-box-border, #f7fbff;
+    -fx-background-insets: 0, 0 0 1  ;
+    -fx-background-radius: 10px ;
+}
+
 .combo-box-base:disabled {
     -fx-opacity: .6;
 } 
+
+#contactListName {
+    -fx-background-color: transparent;
+}
+
+#searchBy {
+    -fx-font-size: 15px;
+}

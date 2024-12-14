@@ -24,20 +24,16 @@
       </MenuBar>
       <SplitPane fx:id="splitPane" dividerPositions="0.5" layoutY="118.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="657.0" prefWidth="1208.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="118.0">
          <items>
-            <VBox fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" spacing="20.0" SplitPane.resizableWithParent="false">
+            <VBox fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" spacing="20.0" SplitPane.resizableWithParent="false">
                <children>
                   <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="123.0" prefWidth="621.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Button fx:id="addButton" layoutX="497.0" layoutY="25.0" mnemonicParsing="false" onAction="#addContactToList" prefHeight="38.0" prefWidth="81.0" text="Aggiungi" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="22.0" />
                         <Button fx:id="selectButton" layoutX="22.0" layoutY="27.0" mnemonicParsing="false" onAction="#selectContacts" prefHeight="38.0" prefWidth="89.0" text="Seleziona" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="22.0" />
-                        <ComboBox fx:id="searchParameter" layoutX="128.0" layoutY="34.0" onAction="#chooseSearchParameter" prefHeight="31.0" prefWidth="102.0" />
-                        <TextField fx:id="searchField" layoutX="235.0" layoutY="34.0" prefHeight="31.0" prefWidth="241.0" />
-                        <Label layoutX="128.0" layoutY="9.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="102.0" text="Cerca per..." textAlignment="CENTER">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="contactListName" alignment="TOP_CENTER" layoutX="216.0" layoutY="-1.0" opacity="0.72" prefHeight="31.0" prefWidth="169.0" text="contactListName">
+                        <ComboBox fx:id="searchParameter" layoutX="128.0" layoutY="34.0" onAction="#chooseSearchParameter" prefHeight="31.0" prefWidth="125.0" />
+                        <TextField fx:id="searchField" layoutX="258.0" layoutY="34.0" prefHeight="31.0" prefWidth="218.0" />
+                        <Label id="searchBy" layoutX="128.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="102.0" text="Cerca per..." textAlignment="CENTER" />
+                        <TextField id="contactListName" fx:id="contactListName" alignment="TOP_CENTER" layoutX="207.0" layoutY="-1.0" opacity="0.72" prefHeight="31.0" prefWidth="186.0" text="contactListName">
                            <font>
                               <Font size="10.0" />
                            </font>
