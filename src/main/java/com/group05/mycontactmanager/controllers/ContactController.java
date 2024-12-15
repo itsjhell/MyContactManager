@@ -120,11 +120,12 @@ abstract class ContactController {
         // QUINDI CONTROLLO SE SI TROVA IL FILE
             // SE NON SI TROVA CARICO L'IMMAGINE DI DEFAULT <-- SAR
         File file = new File(contactProperty.get().getImagePath());
+        File defaultFile = new File("images/default.png");
         Image newImage;
         if (file.exists()) {
-            newImage = new Image(contactProperty.get().getImagePath());
+            newImage = new Image(file.toURI().toString());
         } else {
-            newImage = new Image("images/default.png");
+            newImage = new Image(defaultFile.toURI().toString());
         }
         contactImage.setImage(newImage);
     }

@@ -143,11 +143,12 @@ public class MainTableViewController implements Initializable {
             //ICONA
         iconClm.setCellValueFactory( contactProperty  -> {
             File file = new File(contactProperty.getValue().getImagePath());
+            File defaultFile = new File("images/default.png");
             Image im;
             if (file.exists())
-                im = new Image(contactProperty.getValue().getImagePath(), 25, 25, false, false);
+                im = new Image(file.toURI().toString(), 25, 25, false, false);
             else
-                im = new Image("images/default.png", 25, 25, false, false);
+                im = new Image(defaultFile.toURI().toString(), 25, 25, false, false);
             ImageView imView = new ImageView();
             imView.setImage(im);
             return new SimpleObjectProperty(imView); 
