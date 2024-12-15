@@ -85,7 +85,13 @@ public class ContactManager implements Serializable, FileManager{
      */
     @Override
     public String toString() {
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append("Nome rubrica: ").append(name).append("[\n");
+        for(Contact c: contactList) {
+            sb.append(c).append("\n");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     /**
@@ -97,6 +103,7 @@ public class ContactManager implements Serializable, FileManager{
     public void importContactsFromCSV(String nameFile) {
         try (Scanner i = new Scanner(new BufferedReader(new FileReader(nameFile)))) {
             i.useDelimiter(";");
+            contactList = new ArrayList<>();
             while (i.hasNextLine()) {
                 String line = i.nextLine().trim();
                 //System.out.println("HO LETTO LA RIGA: " + line);
