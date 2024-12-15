@@ -5,7 +5,6 @@ import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.ContactManager;
 import com.group05.mycontactmanager.models.PhoneNumber;
 import com.group05.mycontactmanager.utilities.ContactComparator;
-import com.group05.mycontactmanager.utilities.ContactGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -104,7 +103,7 @@ public class MainTableViewController implements Initializable {
     private TableColumn<Contact, String> selectedSurnameClm;
     @FXML
     private TableColumn<Contact, String> selectedNameClm;
-    
+  
     
     private Contact contact;
     
@@ -120,8 +119,8 @@ public class MainTableViewController implements Initializable {
         contactList = FXCollections.observableArrayList(contactManager.getContactList());
         selectedContacts = new FilteredList<>(contactList);
         selectedContacts.setPredicate(contact1 -> {
-                    return contact1.isSelected().get();
-                });
+            return contact1.isSelected().get();
+        });
     }
 
     /**
@@ -161,9 +160,6 @@ public class MainTableViewController implements Initializable {
             //CHECK
         multipleContactSelection();
         
-        
-            //TEST RUBRICA
-        contactList.setAll(ContactGenerator.generateRandomContacts(15));
             //CONFIGURAZIONE DELLA TABLE LIST
         setupTableList();
             
@@ -182,7 +178,6 @@ public class MainTableViewController implements Initializable {
             }
         });
         
-        //contactListName.textProperty().bindBidirectional( new SimpleStringProperty(contactManager.getName()));
         contactListName.setText(contactManager.getName());
         
         searchParameter.getItems().addAll("Cognome", "Nome", "Cognome e nome", "Telefono", "E-mail");

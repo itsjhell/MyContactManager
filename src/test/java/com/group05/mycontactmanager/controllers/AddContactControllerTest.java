@@ -34,30 +34,30 @@ import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
 /**
  *
- * @author jhell
+ * @author group05
  */
 public class AddContactControllerTest extends ApplicationTest {
     
-    protected ObjectProperty<Contact> contactProperty;
     protected ObservableList<Contact> contactList;
-    
-    protected List<PhoneNumber> numbers;
-    
-    protected List<String> emailAddresses;
-       
     private Stage stage;
-    FxRobot robot = new FxRobot();
-    private AddContactController controller;
+    private FxRobot robot = new FxRobot();
        
     @Override
     public void start(Stage stage) throws Exception {
         // Launch the main application
         contactList = FXCollections.observableArrayList(new ArrayList());
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddContactView.fxml"));
-        fxmlLoader.setControllerFactory(param -> new AddContactController(new SplitPane(), new Contact("", "", null, null, "", ""), contactList)); // Usa una fabbrica per creare il controller
+        fxmlLoader.setControllerFactory(param -> new AddContactController(new SplitPane(), new Contact("", "", null, null, "", ""), contactList));
         Parent root = fxmlLoader.load(); 
-        stage.setScene(new Scene(root, 600, 650));
-        stage.show();
+        this.stage = stage;
+        this.stage.setScene(new Scene(root));
+        this.stage.show();
+    }
+    
+    @BeforeEach
+    public void setUp() {
+        this.stage.setWidth(600);
+        this.stage.setHeight(650);
     }
 
     @Test
@@ -97,11 +97,11 @@ public class AddContactControllerTest extends ApplicationTest {
         robot.clickOn("#phoneNumber3");
         robot.write("1");
         robot.sleep(500);
-        assertNotEquals("La label ha testo", "", errorNumber.getText()); // verifica che il formato non è corretto
+        assertNotEquals("La label ha testo", "", errorNumber.getText()); 
         robot.write("12");
         
         verifyThat("#adderPhoneButton", isInvisible());
-        assertEquals("", errorNumber.getText(), "La label non è vuota"); // solo se tutti e tre i formati sono corretti
+        assertEquals("", errorNumber.getText(), "La label non è vuota"); 
     }
     
     @Test
@@ -121,14 +121,14 @@ public class AddContactControllerTest extends ApplicationTest {
         robot.clickOn("#emailAddress3");
         robot.write("ab@c@@@gmail.com");
         robot.sleep(500);
-        assertNotEquals("La label ha testo", "", errorEmail.getText()); // verifica che il formato non è corretto
+        assertNotEquals("La label ha testo", "", errorEmail.getText()); 
         robot.eraseText(14);
         robot.write("d+app@gmail.com");
         
         verifyThat("#adderEmailButton", isInvisible());
-        assertEquals("", errorEmail.getText(), "La label non è vuota"); // solo se tutti e tre i formati sono corretti
+        assertEquals("", errorEmail.getText(), "La label non è vuota"); 
     }
-   
+       
     @Test
     public void testAdd() {
         robot.clickOn("#nameField");
@@ -152,5 +152,5 @@ public class AddContactControllerTest extends ApplicationTest {
         robot.clickOn("#addButton");
         assertEquals(1, contactList.size(), "La lista dovrebbe contenere 1 contatto");
     }
-    
+        
 }
