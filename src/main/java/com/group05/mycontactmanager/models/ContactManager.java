@@ -85,7 +85,13 @@ public class ContactManager implements Serializable, FileManager{
      */
     @Override
     public String toString() {
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append("Nome rubrica: ").append(name).append("[\n");
+        for(Contact c: contactList) {
+            sb.append(c).append("\n");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     /**

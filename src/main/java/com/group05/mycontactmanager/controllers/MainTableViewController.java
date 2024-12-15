@@ -9,12 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -59,14 +56,6 @@ import javafx.stage.FileChooser;
  */
 public class MainTableViewController implements Initializable {
 
-    @FXML
-    private MenuItem saveContactListButton;
-    @FXML
-    private MenuItem loadContactListButton;
-    @FXML
-    private MenuItem importContactsButton;
-    @FXML
-    private MenuItem exportContactsButton;
     @FXML
     private SplitPane splitPane;
     @FXML
@@ -308,8 +297,6 @@ public class MainTableViewController implements Initializable {
         FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Importa rubrica...");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
         File selectedFile = fileChooser.showOpenDialog(null); // Mostra la finestra di dialogo
-        //Costruisco il ContactManager
-        ContactManager newContactManager = new ContactManager("prova");
         
         if (selectedFile != null) {
             String title = "Vuoi procedere?"; //WARNING
