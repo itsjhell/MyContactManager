@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -31,7 +30,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -304,6 +302,7 @@ public class MainTableViewController implements Initializable {
             String contentText = "Assicurati di aver salvato la rubrica corrente prima se non desideri perderla"; 
             if(showConfirmationAlert(title, headerText, contentText)) {
                 contactManager.importContactsFromCSV(selectedFile.getAbsolutePath());
+                contactListName.setText(contactManager.getName());
                 contactList = FXCollections.observableArrayList(contactManager.getContactList());
                 setupTableList();
                 return;
@@ -324,6 +323,7 @@ public class MainTableViewController implements Initializable {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
         File selectedFile = fileChooser.showSaveDialog(null); // Mostra la finestra di dialogo
 
+        contactManager.setName(contactListName.getText());
         contactManager.setContactList(contactList); //Costruisco il ContactManager
         
         if (selectedFile != null) {
@@ -344,71 +344,6 @@ public class MainTableViewController implements Initializable {
         loadAddContact(splitPane, contactList);
     }
 
-    /**
-     * @brief Sceglie il parametro di ricerca.
-     *
-     * @param[in] event L'ActionEvent associato.
-     */
-    @FXML
-    private void chooseSearchParameter(ActionEvent event) {
-    }
-    
-    /**
-     * @brief Ricerca contatti per cognome e nome.
-     *
-     * @param[in] surname La proprietà Stringa del cognome.
-     * @param[in] name La proprietà Stringa del nome.
-     *
-     * @return Un'ObservableList di contatti corrispondenti che soddisfano i criteri di ricerca 
-     */
-    public ObservableList searchBySurnameAndName(StringProperty surname, StringProperty name) {
-        return null;
-    }
-    
-    /**
-     * @brief Ricerca contatti per cognome.
-     *
-     * @param[in] surname La proprietà Stringa del cognome.
-     *
-     * @return Un'ObservableList di contatti che soddisfano i criteri di ricerca.
-     */
-    public ObservableList searchBySurname(StringProperty surname) {
-        return null;
-    }
-    
-    /**
-     * @brief Ricerca contatti per nome.
-     *
-     * @param[in] name La proprietà Stringa del nome.
-     *
-     * @return Un'ObservableList di contatti che soddisfano i criteri di ricerca. 
-     */
-    public ObservableList searchByName(StringProperty name) {
-        return null;
-    }
-    
-    /**
-     * @brief Ricerca contatti per email (non implementato).
-     *
-     * @param[in] email La proprietà Stringa dell'email.
-     *
-     * @return Un'ObservableList di contatti che soddisfano i criteri di ricerca.
-     */
-    public ObservableList searchByEmail(StringProperty email) {
-        return null;
-    }
-  
-    /**
-     * @brief Ricerca contatti per numero di telefono (non implementato).
-     *
-     * @param[in] phone La proprietà Stringa del numero di telefono.
-     *
-     * @return UUn'ObservableList di contatti che soddisfano i criteri di ricerca.
-     */
-    public ObservableList searchByPhoneNumber(StringProperty phone) {
-        return null;
-    }
-    
     /**
     * @brief Carica l'interfaccia dettagli contatto e lo aggiunge allo splitpane.
     *

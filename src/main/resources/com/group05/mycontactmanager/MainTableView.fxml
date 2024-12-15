@@ -14,10 +14,10 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem id="fileMenuButton1" fx:id="saveContactListButton" mnemonicParsing="false" onAction="#saveContactList" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Salva..." />
-                  <MenuItem id="fileMenuButton2" fx:id="loadContactListButton" mnemonicParsing="false" onAction="#loadContactList" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Carica..." />
-                  <MenuItem id="fileMenuButton3" fx:id="importContactsButton" mnemonicParsing="false" onAction="#importContacts" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Importa Contatti..." />
-                  <MenuItem id="fileMenuButton4" fx:id="exportContactsButton" mnemonicParsing="false" onAction="#exportContacts" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Esporta Contatti..." />
+                  <MenuItem id="fileMenuButton1" mnemonicParsing="false" onAction="#saveContactList" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Salva..." />
+                  <MenuItem id="fileMenuButton2" mnemonicParsing="false" onAction="#loadContactList" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Carica..." />
+                  <MenuItem id="fileMenuButton3" mnemonicParsing="false" onAction="#importContacts" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Importa Contatti..." />
+                  <MenuItem id="fileMenuButton4" mnemonicParsing="false" onAction="#exportContacts" style="-fx-text-fill: #000000; -fx-font-size: 17px; -fx-font-weight: normal;" text="Esporta Contatti..." />
                </items>
             </Menu>
          </menus>
@@ -30,7 +30,7 @@
                      <children>
                         <Button fx:id="addButton" layoutX="497.0" layoutY="25.0" mnemonicParsing="false" onAction="#addContactToList" prefHeight="38.0" prefWidth="81.0" text="Aggiungi" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="22.0" />
                         <Button fx:id="selectButton" layoutX="22.0" layoutY="27.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="89.0" text="Seleziona" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="22.0" />
-                        <ComboBox fx:id="searchParameter" layoutX="128.0" layoutY="34.0" onAction="#chooseSearchParameter" prefHeight="31.0" prefWidth="125.0" />
+                        <ComboBox fx:id="searchParameter" layoutX="128.0" layoutY="34.0" prefHeight="31.0" prefWidth="125.0" />
                         <TextField fx:id="searchField" layoutX="258.0" layoutY="34.0" prefHeight="31.0" prefWidth="218.0" />
                         <Label id="searchBy" layoutX="128.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="102.0" text="Cerca per..." textAlignment="CENTER" />
                         <TextField id="contactListName" fx:id="contactListName" alignment="TOP_CENTER" layoutX="207.0" layoutY="-1.0" opacity="0.72" prefHeight="31.0" prefWidth="186.0" text="contactListName">

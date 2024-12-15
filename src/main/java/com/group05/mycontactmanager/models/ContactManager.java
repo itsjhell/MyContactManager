@@ -104,6 +104,8 @@ public class ContactManager implements Serializable, FileManager{
         try (Scanner i = new Scanner(new BufferedReader(new FileReader(nameFile)))) {
             i.useDelimiter(";");
             contactList = new ArrayList<>();
+            if(i.hasNextLine())
+                this.setName(i.nextLine().trim());
             while (i.hasNextLine()) {
                 String line = i.nextLine().trim();
                 //System.out.println("HO LETTO LA RIGA: " + line);
@@ -174,6 +176,7 @@ public class ContactManager implements Serializable, FileManager{
     @Override
     public void exportContactsToCSV(String nameFile) {
         try(PrintWriter o = new PrintWriter( new BufferedWriter( new FileWriter(nameFile)))) {
+            o.print(this.getName()+"\n");
             for (Contact c : contactList) {
                 //nome;cognome;
                 o.print(c.getName()+";"+c.getSurname()+";");
