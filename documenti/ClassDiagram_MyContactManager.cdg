@@ -2,7 +2,7 @@
 
 <ClassDiagram name="MyContactManager">
   <ClassDiagramComponents>
-    <Class name="App" package="com.group05.mycontactmanager" visibility="public" xPosition="20.0" yPosition="20.0">
+    <Class name="App" package="com.group05.mycontactmanager" visibility="public" xPosition="445.0" yPosition="121.0">
       <Fields>
         <Field name="scene" type="Scene" visibility="private" isStatic="true"/>
       </Fields>
@@ -22,12 +22,18 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="AddContactController" package="com.group05.mycontactmanager.controllers" visibility="public" xPosition="320.0" yPosition="20.0">
+    <Class name="AddContactController" package="com.group05.mycontactmanager.controllers" visibility="public" xPosition="215.0" yPosition="1874.0">
       <Fields>
         <Field name="addButton" type="Button" visibility="private"/>
         <Field name="cancelButton" type="Button" visibility="private"/>
       </Fields>
-      <Constructors/>
+      <Constructors>
+        <Constructor visibility="package">
+          <Argument type="SplitPane" name="splitPane"/>
+          <Argument type="Contact" name="contact"/>
+          <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
+        </Constructor>
+      </Constructors>
       <Methods>
         <Method name="initialize" returnType="void" visibility="public">
           <Argument type="URL" name="url"/>
@@ -39,46 +45,54 @@
         <Method name="executeRightTask" returnType="void" visibility="package">
           <Argument type="ActionEvent" name="event"/>
         </Method>
+        <Method name="setupButtons" returnType="void" visibility="private">
+          <Argument type="TextField[]" name="fields"/>
+          <Argument type="Button" name="button"/>
+          <Argument type="Label" name="error"/>
+        </Method>
       </Methods>
     </Class>
-    <Class name="ContactController" package="com.group05.mycontactmanager.controllers" visibility="public" isAbstract="true" xPosition="620.0" yPosition="20.0">
+    <Class name="ContactController" package="com.group05.mycontactmanager.controllers" visibility="public" isAbstract="true" xPosition="988.0" yPosition="1247.0">
       <Fields>
-        <Field name="nameField" type="TextField" visibility="private"/>
-        <Field name="surnameField" type="TextField" visibility="private"/>
-        <Field name="errorName" type="Label" visibility="private"/>
-        <Field name="contactImage" type="ImageView" visibility="private"/>
-        <Field name="imageButton" type="Button" visibility="private"/>
-        <Field name="prefixMenu1" type="ComboBox&lt;PhonePrefix&gt;" visibility="private"/>
-        <Field name="prefixMenu2" type="ComboBox&lt;PhonePrefix&gt;" visibility="private"/>
-        <Field name="prefixMenu3" type="ComboBox&lt;PhonePrefix&gt;" visibility="private"/>
-        <Field name="adderPhoneButton" type="Button" visibility="private"/>
-        <Field name="phoneNumber1" type="TextField" visibility="private"/>
-        <Field name="phoneNumber2" type="TextField" visibility="private"/>
-        <Field name="phoneNumber3" type="TextField" visibility="private"/>
-        <Field name="errorNumber" type="Label" visibility="private"/>
-        <Field name="adderEmailButton" type="Button" visibility="private"/>
-        <Field name="emailAddress1" type="TextField" visibility="private"/>
-        <Field name="emailAddress3" type="TextField" visibility="private"/>
-        <Field name="emailAddress2" type="TextField" visibility="private"/>
-        <Field name="errorEmail" type="Label" visibility="private"/>
-        <Field name="notesArea" type="TextArea" visibility="private"/>
-        <Field name="contact" type="ObjectProperty&lt;Contact&gt;" visibility="private"/>
-        <Field name="contactList" type="ObservableList&lt;Contact&gt;" visibility="private"/>
-        <Field name="splitPane" type="SplitPane" visibility="protected" isStatic="true"/>
+        <Field name="nameField" type="TextField" visibility="protected"/>
+        <Field name="surnameField" type="TextField" visibility="protected"/>
+        <Field name="errorName" type="Label" visibility="protected"/>
+        <Field name="contactImage" type="ImageView" visibility="protected"/>
+        <Field name="imageButton" type="Button" visibility="protected"/>
+        <Field name="prefixMenu1" type="ComboBox&lt;PhonePrefix&gt;" visibility="protected"/>
+        <Field name="prefixMenu2" type="ComboBox&lt;PhonePrefix&gt;" visibility="protected"/>
+        <Field name="prefixMenu3" type="ComboBox&lt;PhonePrefix&gt;" visibility="protected"/>
+        <Field name="adderPhoneButton" type="Button" visibility="protected"/>
+        <Field name="phoneNumber1" type="TextField" visibility="protected"/>
+        <Field name="phoneNumber2" type="TextField" visibility="protected"/>
+        <Field name="phoneNumber3" type="TextField" visibility="protected"/>
+        <Field name="errorNumber" type="Label" visibility="protected"/>
+        <Field name="adderEmailButton" type="Button" visibility="protected"/>
+        <Field name="emailAddress1" type="TextField" visibility="protected"/>
+        <Field name="emailAddress3" type="TextField" visibility="protected"/>
+        <Field name="emailAddress2" type="TextField" visibility="protected"/>
+        <Field name="errorEmail" type="Label" visibility="protected"/>
+        <Field name="notesArea" type="TextArea" visibility="protected"/>
+        <Field name="splitPane" type="SplitPane" visibility="protected"/>
+        <Field name="imageNameApp" type="String" visibility="protected"/>
+        <Field name="contactProperty" type="ObjectProperty&lt;Contact&gt;" visibility="protected"/>
+        <Field name="contactList" type="ObservableList&lt;Contact&gt;" visibility="protected"/>
+        <Field name="numbers" type="List&lt;PhoneNumber&gt;" visibility="protected"/>
+        <Field name="emailAddresses" type="List&lt;String&gt;" visibility="protected"/>
       </Fields>
-      <Constructors/>
-      <Methods>
-        <Method name="setSplitPane" returnType="void" visibility="public" isStatic="true">
-          <Argument type="SplitPane" name="sp"/>
-        </Method>
-        <Method name="setContact" returnType="void" visibility="public">
-          <Argument type="ObjectProperty&lt;Contact&gt;" name="contact"/>
-        </Method>
-        <Method name="getContact" returnType="ObjectProperty&lt;Contact&gt;" visibility="public"/>
-        <Method name="setContactList" returnType="void" visibility="public">
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="SplitPane" name="splitPane"/>
           <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
-        </Method>
-        <Method name="getContactList" returnType="ObservableList&lt;Contact&gt;" visibility="public"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="SplitPane" name="splitPane"/>
+          <Argument type="Contact" name="contact"/>
+          <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="preloadImage" returnType="void" visibility="protected"/>
         <Method name="loadImage" returnType="void" visibility="private">
           <Argument type="ActionEvent" name="event"/>
         </Method>
@@ -91,6 +105,28 @@
         <Method name="addEmail" returnType="void" visibility="private">
           <Argument type="ActionEvent" name="event"/>
         </Method>
+        <Method name="loadDetailsContact" returnType="void" visibility="protected">
+          <Argument type="SplitPane" name="splitPane"/>
+          <Argument type="Contact" name="contact"/>
+          <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
+        </Method>
+        <Method name="loadEditContact" returnType="void" visibility="protected">
+          <Argument type="SplitPane" name="splitPane"/>
+          <Argument type="Contact" name="contact"/>
+          <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
+        </Method>
+        <Method name="fillTextFields" returnType="void" visibility="protected">
+          <Argument type="Contact" name="contact"/>
+        </Method>
+        <Method name="setupNameBinding" returnType="void" visibility="protected"/>
+        <Method name="setupPhoneBinding" returnType="void" visibility="protected"/>
+        <Method name="setupEmailBinding" returnType="void" visibility="protected">
+          <Argument type="TextField[]" name="emailFields"/>
+        </Method>
+        <Method name="setupSaveButtonBinding" returnType="void" visibility="protected">
+          <Argument type="Button" name="button"/>
+        </Method>
+        <Method name="setupPrefixMenu" returnType="void" visibility="protected"/>
         <Method name="executeLeftTask" returnType="void" visibility="package" isAbstract="true">
           <Argument type="ActionEvent" name="event"/>
         </Method>
@@ -99,12 +135,18 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="DetailsContactController" package="com.group05.mycontactmanager.controllers" visibility="public" xPosition="920.0" yPosition="20.0">
+    <Class name="DetailsContactController" package="com.group05.mycontactmanager.controllers" visibility="public" xPosition="215.0" yPosition="1323.0">
       <Fields>
         <Field name="editButton" type="Button" visibility="private"/>
         <Field name="deleteButton" type="Button" visibility="private"/>
       </Fields>
-      <Constructors/>
+      <Constructors>
+        <Constructor visibility="package">
+          <Argument type="SplitPane" name="splitPane"/>
+          <Argument type="Contact" name="contact"/>
+          <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
+        </Constructor>
+      </Constructors>
       <Methods>
         <Method name="initialize" returnType="void" visibility="public">
           <Argument type="URL" name="url"/>
@@ -116,14 +158,24 @@
         <Method name="executeRightTask" returnType="void" visibility="package">
           <Argument type="ActionEvent" name="event"/>
         </Method>
+        <Method name="configureElements" returnType="void" visibility="private"/>
+        <Method name="viewImageSetted" returnType="void" visibility="private">
+          <Argument type="String" name="imagePath"/>
+        </Method>
       </Methods>
     </Class>
-    <Class name="EditContactController" package="com.group05.mycontactmanager.controllers" visibility="public" xPosition="1220.0" yPosition="20.0">
+    <Class name="EditContactController" package="com.group05.mycontactmanager.controllers" visibility="public" xPosition="215.0" yPosition="1601.0">
       <Fields>
         <Field name="saveEditsButton" type="Button" visibility="private"/>
         <Field name="cancelEditsButton" type="Button" visibility="private"/>
       </Fields>
-      <Constructors/>
+      <Constructors>
+        <Constructor visibility="package">
+          <Argument type="SplitPane" name="splitPane"/>
+          <Argument type="Contact" name="contact"/>
+          <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
+        </Constructor>
+      </Constructors>
       <Methods>
         <Method name="initialize" returnType="void" visibility="public">
           <Argument type="URL" name="url"/>
@@ -135,42 +187,50 @@
         <Method name="executeRightTask" returnType="void" visibility="package">
           <Argument type="ActionEvent" name="event"/>
         </Method>
+        <Method name="setupButtons" returnType="void" visibility="private">
+          <Argument type="TextField[]" name="fields"/>
+          <Argument type="Button" name="button"/>
+          <Argument type="Label" name="error"/>
+        </Method>
+        <Method name="loadPrefixMenu" returnType="void" visibility="private">
+          <Argument type="TextField[]" name="phoneNumbers"/>
+        </Method>
       </Methods>
     </Class>
-    <Class name="MainTableViewController" package="com.group05.mycontactmanager.controllers" visibility="public" xPosition="1520.0" yPosition="20.0">
+    <Class name="MainTableViewController" package="com.group05.mycontactmanager.controllers" visibility="public" xPosition="218.0" yPosition="486.0">
       <Fields>
-        <Field name="saveContactListButton" type="MenuItem" visibility="private"/>
-        <Field name="loadContactListButton" type="MenuItem" visibility="private"/>
-        <Field name="importContactsButton" type="MenuItem" visibility="private"/>
-        <Field name="exportContactsButton" type="MenuItem" visibility="private"/>
         <Field name="splitPane" type="SplitPane" visibility="private"/>
-        <Field name="contactListName" type="Label" visibility="private"/>
+        <Field name="contactListName" type="TextField" visibility="private"/>
         <Field name="addButton" type="Button" visibility="private"/>
         <Field name="selectButton" type="Button" visibility="private"/>
+        <Field name="cancelSelectionButton" type="Button" visibility="private"/>
+        <Field name="deleteAllButton" type="Button" visibility="private"/>
         <Field name="searchParameter" type="ComboBox&lt;String&gt;" visibility="private"/>
         <Field name="searchField" type="TextField" visibility="private"/>
         <Field name="contactTable" type="TableView&lt;Contact&gt;" visibility="private"/>
         <Field name="iconClm" type="TableColumn&lt;Contact, Image&gt;" visibility="private"/>
         <Field name="surnameClm" type="TableColumn&lt;Contact, String&gt;" visibility="private"/>
         <Field name="nameClm" type="TableColumn&lt;Contact, String&gt;" visibility="private"/>
+        <Field name="phoneClm" type="TableColumn&lt;Contact, String&gt;" visibility="private"/>
         <Field name="checkClm" type="TableColumn&lt;Contact, CheckBox&gt;" visibility="private"/>
-        <Field name="contact" type="ObjectProperty&lt;Contact&gt;" visibility="private"/>
+        <Field name="rightPane" type="AnchorPane" visibility="private"/>
+        <Field name="selectedTable" type="TableView&lt;Contact&gt;" visibility="private"/>
+        <Field name="selectedSurnameClm" type="TableColumn&lt;Contact, String&gt;" visibility="private"/>
+        <Field name="selectedNameClm" type="TableColumn&lt;Contact, String&gt;" visibility="private"/>
+        <Field name="contact" type="Contact" visibility="private"/>
         <Field name="contactList" type="ObservableList&lt;Contact&gt;" visibility="private"/>
+        <Field name="contactManager" type="ContactManager" visibility="private"/>
+        <Field name="selectedContacts" type="FilteredList&lt;Contact&gt;" visibility="private"/>
       </Fields>
-      <Constructors/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
       <Methods>
-        <Method name="setContact" returnType="void" visibility="public">
-          <Argument type="ObjectProperty&lt;Contact&gt;" name="contact"/>
-        </Method>
-        <Method name="getContact" returnType="ObjectProperty&lt;Contact&gt;" visibility="public"/>
-        <Method name="setContactList" returnType="void" visibility="public">
-          <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
-        </Method>
-        <Method name="getContactList" returnType="ObservableList&lt;Contact&gt;" visibility="public"/>
         <Method name="initialize" returnType="void" visibility="public">
           <Argument type="URL" name="url"/>
           <Argument type="ResourceBundle" name="rb"/>
         </Method>
+        <Method name="setupTableList" returnType="void" visibility="private"/>
         <Method name="saveContactList" returnType="void" visibility="private">
           <Argument type="ActionEvent" name="event"/>
         </Method>
@@ -186,43 +246,44 @@
         <Method name="addContactToList" returnType="void" visibility="private">
           <Argument type="ActionEvent" name="event"/>
         </Method>
-        <Method name="selectContacts" returnType="void" visibility="private">
-          <Argument type="ActionEvent" name="event"/>
+        <Method name="loadDetailsContact" returnType="void" visibility="private">
+          <Argument type="SplitPane" name="splitPane"/>
+          <Argument type="Contact" name="contact"/>
+          <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
         </Method>
-        <Method name="chooseSearchParameter" returnType="void" visibility="private">
-          <Argument type="ActionEvent" name="event"/>
+        <Method name="loadAddContact" returnType="void" visibility="private">
+          <Argument type="SplitPane" name="splitPane"/>
+          <Argument type="ObservableList&lt;Contact&gt;" name="contactList"/>
         </Method>
-        <Method name="searchBySurnameAndName" returnType="ObservableList" visibility="public">
-          <Argument type="StringProperty" name="surname"/>
-          <Argument type="StringProperty" name="name"/>
+        <Method name="showErrorAlert" returnType="void" visibility="private">
+          <Argument type="String" name="errorMessage"/>
         </Method>
-        <Method name="searchBySurname" returnType="ObservableList" visibility="public">
-          <Argument type="StringProperty" name="surname"/>
+        <Method name="showConfirmationAlert" returnType="boolean" visibility="private">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="headerText"/>
+          <Argument type="String" name="contentText"/>
         </Method>
-        <Method name="searchByName" returnType="ObservableList" visibility="public">
-          <Argument type="StringProperty" name="name"/>
-        </Method>
-        <Method name="searchByEmail" returnType="ObservableList" visibility="public">
-          <Argument type="StringProperty" name="email"/>
-        </Method>
-        <Method name="searchByPhoneNumber" returnType="ObservableList" visibility="public">
-          <Argument type="StringProperty" name="phone"/>
-        </Method>
+        <Method name="multipleContactSelection" returnType="void" visibility="private"/>
       </Methods>
     </Class>
-    <Class name="Contact" package="com.group05.mycontactmanager.models" visibility="public" xPosition="1820.0" yPosition="20.0">
+    <Class name="Contact" package="com.group05.mycontactmanager.models" visibility="public" xPosition="1019.0" yPosition="534.0">
       <Fields>
         <Field name="name" type="String" visibility="private"/>
         <Field name="surname" type="String" visibility="private"/>
         <Field name="numbers" type="List&lt;PhoneNumber&gt;" visibility="private"/>
         <Field name="emailAddresses" type="List&lt;String&gt;" visibility="private"/>
-        <Field name="imagePath" type="String" visibility="private"/>
+        <Field name="imageName" type="String" visibility="private"/>
         <Field name="notes" type="String" visibility="private"/>
+        <Field name="selected" type="BooleanProperty" visibility="private" isTransient="true"/>
       </Fields>
       <Constructors>
         <Constructor visibility="public">
           <Argument type="String" name="name"/>
           <Argument type="String" name="surname"/>
+          <Argument type="List&lt;PhoneNumber&gt;" name="numbers"/>
+          <Argument type="List&lt;String&gt;" name="emailAddresses"/>
+          <Argument type="String" name="imageName"/>
+          <Argument type="String" name="notes"/>
         </Constructor>
       </Constructors>
       <Methods>
@@ -235,6 +296,7 @@
           <Argument type="String" name="surname"/>
         </Method>
         <Method name="getNumbers" returnType="List&lt;PhoneNumber&gt;" visibility="public"/>
+        <Method name="getFirstNumber" returnType="String" visibility="public"/>
         <Method name="addNumber" returnType="void" visibility="public">
           <Argument type="PhoneNumber" name="number"/>
         </Method>
@@ -249,17 +311,23 @@
           <Argument type="String" name="email"/>
         </Method>
         <Method name="getImagePath" returnType="String" visibility="public"/>
-        <Method name="setImagePath" returnType="void" visibility="public">
-          <Argument type="String" name="imagePath"/>
+        <Method name="getImageName" returnType="String" visibility="public"/>
+        <Method name="setImageName" returnType="void" visibility="public">
+          <Argument type="String" name="imageName"/>
         </Method>
         <Method name="getNotes" returnType="String" visibility="public"/>
         <Method name="setNotes" returnType="void" visibility="public">
           <Argument type="String" name="notes"/>
         </Method>
+        <Method name="isSelected" returnType="BooleanProperty" visibility="public"/>
+        <Method name="setSelected" returnType="void" visibility="public">
+          <Argument type="boolean" name="selected"/>
+        </Method>
+        <Method name="resetSelectedProperty" returnType="void" visibility="public"/>
         <Method name="toString" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="ContactManager" package="com.group05.mycontactmanager.models" visibility="public" xPosition="2120.0" yPosition="20.0">
+    <Class name="ContactManager" package="com.group05.mycontactmanager.models" visibility="public" xPosition="1274.0" yPosition="121.0">
       <Fields>
         <Field name="name" type="String" visibility="private"/>
         <Field name="contactList" type="List&lt;Contact&gt;" visibility="private"/>
@@ -278,16 +346,22 @@
         </Method>
         <Method name="getName" returnType="String" visibility="public"/>
         <Method name="getContactList" returnType="List&lt;Contact&gt;" visibility="public"/>
-        <Method name="addContact" returnType="void" visibility="public">
-          <Argument type="Contact" name="contact"/>
-        </Method>
-        <Method name="removeContact" returnType="void" visibility="public">
-          <Argument type="Contact" name="contact"/>
-        </Method>
         <Method name="toString" returnType="String" visibility="public"/>
+        <Method name="importContactsFromCSV" returnType="void" visibility="public">
+          <Argument type="String" name="nameFile"/>
+        </Method>
+        <Method name="exportContactsToCSV" returnType="void" visibility="public">
+          <Argument type="String" name="nameFile"/>
+        </Method>
+        <Method name="writeObject" returnType="void" visibility="public">
+          <Argument type="String" name="nameFile"/>
+        </Method>
+        <Method name="readObject" returnType="void" visibility="public">
+          <Argument type="String" name="nameFile"/>
+        </Method>
       </Methods>
     </Class>
-    <Class name="PhoneNumber" package="com.group05.mycontactmanager.models" visibility="public" xPosition="20.0" yPosition="420.0">
+    <Class name="PhoneNumber" package="com.group05.mycontactmanager.models" visibility="public" xPosition="1734.0" yPosition="1323.0">
       <Fields>
         <Field name="prefix" type="PhonePrefix" visibility="private"/>
         <Field name="number" type="String" visibility="private"/>
@@ -295,6 +369,9 @@
       <Constructors>
         <Constructor visibility="public">
           <Argument type="PhonePrefix" name="prefix"/>
+          <Argument type="String" name="number"/>
+        </Constructor>
+        <Constructor visibility="public">
           <Argument type="String" name="number"/>
         </Constructor>
       </Constructors>
@@ -310,18 +387,7 @@
         <Method name="toString" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Enum name="PhonePrefix" package="com.group05.mycontactmanager.models" visibility="public" xPosition="320.0" yPosition="420.0">
-      <Literals>
-        <Literal name="OTHERS"/>
-        <Literal name="USA"/>
-        <Literal name="FRANCE"/>
-        <Literal name="ITALY"/>
-        <Literal name="UK"/>
-        <Literal name="GERMANY"/>
-        <Literal name="PORTUGAL"/>
-      </Literals>
-    </Enum>
-    <Class name="Checker" package="com.group05.mycontactmanager.utilities" visibility="public" xPosition="620.0" yPosition="420.0">
+    <Class name="Checker" package="com.group05.mycontactmanager.utilities" visibility="public" xPosition="1828.0" yPosition="990.0">
       <Fields/>
       <Constructors/>
       <Methods>
@@ -333,46 +399,71 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="FileManager" package="com.group05.mycontactmanager.utilities" visibility="public" xPosition="920.0" yPosition="420.0">
+    <Class name="ContactComparator" package="com.group05.mycontactmanager.utilities" visibility="public" xPosition="1839.0" yPosition="790.0">
       <Fields/>
       <Constructors/>
       <Methods>
-        <Method name="saveContactManager" returnType="void" visibility="public" isStatic="true">
-          <Argument type="ContactManager" name="contactManager"/>
-        </Method>
-        <Method name="loadContactManager" returnType="ContactManager" visibility="public" isStatic="true"/>
-        <Method name="importContactsFromCSV" returnType="ContactManager" visibility="public" isStatic="true"/>
-        <Method name="exportContactsToCSV" returnType="void" visibility="public" isStatic="true">
-          <Argument type="ContactManager" name="contactManager"/>
+        <Method name="compare" returnType="int" visibility="public">
+          <Argument type="Contact" name="o1"/>
+          <Argument type="Contact" name="o2"/>
         </Method>
       </Methods>
     </Class>
+    <Interface name="FileManager" package="com.group05.mycontactmanager.utilities" visibility="public" xPosition="829.0" yPosition="155.0">
+      <Methods>
+        <Method name="importContactsFromCSV" returnType="void" visibility="public">
+          <Argument type="String" name="nameFile"/>
+        </Method>
+        <Method name="exportContactsToCSV" returnType="void" visibility="public">
+          <Argument type="String" name="nameFile"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Enum name="PhonePrefix" package="com.group05.mycontactmanager.models" visibility="public" xPosition="1856.0" yPosition="1741.0">
+      <Literals>
+        <Literal name="OTHERS"/>
+        <Literal name="USA"/>
+        <Literal name="FRANCE"/>
+        <Literal name="ITALY"/>
+        <Literal name="UK"/>
+        <Literal name="GERMANY"/>
+        <Literal name="PORTUGAL"/>
+      </Literals>
+    </Enum>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
+    <HasRelation name="selectedSurnameClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="prefixMenu3" source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.PhonePrefix" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.group05.mycontactmanager.utilities.ContactComparator" target="com.group05.mycontactmanager.models.Contact" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="selectedNameClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="prefixMenu1" source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.PhonePrefix" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="contactList" source="com.group05.mycontactmanager.models.ContactManager" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Contact&gt;"/>
-    <HasRelation name="nameClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="com.group05.mycontactmanager.controllers.EditContactController" target="com.group05.mycontactmanager.controllers.ContactController"/>
+    <HasRelation name="contactTable" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="prefixMenu2" source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.PhonePrefix" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.group05.mycontactmanager.utilities.Checker" target="com.group05.mycontactmanager.models.PhoneNumber" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="prefix" source="com.group05.mycontactmanager.models.PhoneNumber" target="com.group05.mycontactmanager.models.PhonePrefix" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="numbers" source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.PhoneNumber" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;PhoneNumber&gt;"/>
+    <HasRelation name="selectedTable" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="com.group05.mycontactmanager.models.ContactManager" target="com.group05.mycontactmanager.utilities.FileManager"/>
+    <IsRelation name="is" source="com.group05.mycontactmanager.controllers.DetailsContactController" target="com.group05.mycontactmanager.controllers.ContactController"/>
+    <HasRelation name="iconClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="checkClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="contactProperty" source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="phoneClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="contactList" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Contact&gt;"/>
     <UseRelation source="com.group05.mycontactmanager.models.PhoneNumber" target="com.group05.mycontactmanager.models.PhonePrefix" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="contact" source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="prefixMenu3" source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.PhonePrefix" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="prefixMenu2" source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.PhonePrefix" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="surnameClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="prefix" source="com.group05.mycontactmanager.models.PhoneNumber" target="com.group05.mycontactmanager.models.PhonePrefix" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="com.group05.mycontactmanager.controllers.EditContactController" target="com.group05.mycontactmanager.controllers.ContactController"/>
-    <UseRelation source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.Contact" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="com.group05.mycontactmanager.models.Contact" target="com.group05.mycontactmanager.models.PhoneNumber" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="com.group05.mycontactmanager.utilities.Checker" target="com.group05.mycontactmanager.models.PhoneNumber" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="com.group05.mycontactmanager.utilities.FileManager" target="com.group05.mycontactmanager.models.ContactManager" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="numbers" source="com.group05.mycontactmanager.models.Contact" target="com.group05.mycontactmanager.models.PhoneNumber" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;PhoneNumber&gt;"/>
-    <UseRelation source="com.group05.mycontactmanager.models.ContactManager" target="com.group05.mycontactmanager.models.Contact" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="com.group05.mycontactmanager.controllers.DetailsContactController" target="com.group05.mycontactmanager.controllers.ContactController"/>
-    <IsRelation name="is" source="com.group05.mycontactmanager.controllers.AddContactController" target="com.group05.mycontactmanager.controllers.ContactController"/>
-    <HasRelation name="contactTable" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="checkClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="iconClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="numbers" source="com.group05.mycontactmanager.models.Contact" target="com.group05.mycontactmanager.models.PhoneNumber" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;PhoneNumber&gt;"/>
+    <HasRelation name="contactList" source="com.group05.mycontactmanager.models.ContactManager" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Contact&gt;"/>
+    <UseRelation source="com.group05.mycontactmanager.models.Contact" target="com.group05.mycontactmanager.models.PhoneNumber" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="com.group05.mycontactmanager.controllers.AddContactController" target="com.group05.mycontactmanager.controllers.ContactController"/>
     <HasRelation name="contact" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.group05.mycontactmanager.models.ContactManager" target="com.group05.mycontactmanager.models.Contact" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="nameClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="selectedContacts" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="FilteredList&lt;Contact&gt;"/>
+    <UseRelation source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.Contact" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="contactManager" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.ContactManager" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="surnameClm" source="com.group05.mycontactmanager.controllers.MainTableViewController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="contactList" source="com.group05.mycontactmanager.controllers.ContactController" target="com.group05.mycontactmanager.models.Contact" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Contact&gt;"/>
   </ClassDiagramRelations>
 </ClassDiagram>
