@@ -1,5 +1,0 @@
-var searchData=
-[
-  ['importcontactsfromcsv_0',['importContactsFromCSV',['../classcom_1_1group05_1_1mycontactmanager_1_1utilities_1_1_file_manager.html#a122569c367fc4550c871cb0c1fbad7a7',1,'com::group05::mycontactmanager::utilities::FileManager']]],
-  ['initialize_1',['initialize',['../classcom_1_1group05_1_1mycontactmanager_1_1controllers_1_1_add_contact_controller.html#a16c6b8db4aa9902f5edb1047633f7e99',1,'com.group05.mycontactmanager.controllers.AddContactController.initialize()'],['../classcom_1_1group05_1_1mycontactmanager_1_1controllers_1_1_details_contact_controller.html#ad28abde9fac44bd9d9043b2c2b99cb3f',1,'com.group05.mycontactmanager.controllers.DetailsContactController.initialize()'],['../classcom_1_1group05_1_1mycontactmanager_1_1controllers_1_1_edit_contact_controller.html#a38718a73e13c25621b6536853c2298a7',1,'com.group05.mycontactmanager.controllers.EditContactController.initialize()'],['../classcom_1_1group05_1_1mycontactmanager_1_1controllers_1_1_main_table_view_controller.html#ab3c9e6b5f2d0e8106af36581e4f4788d',1,'com.group05.mycontactmanager.controllers.MainTableViewController.initialize()']]]
-];
