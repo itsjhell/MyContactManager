@@ -26,6 +26,7 @@ public class Checker {
      * $ : indica che il dominio deve essere la fine della stringa
      * 
      * @param[in] email L'indirizzo email da controllare.
+     *
      * @return true se la validazione è andata a buon fine e false per il contrario.
      */
     public static boolean checkEmail(String email) {
@@ -41,7 +42,9 @@ public class Checker {
     
     /**
      * @brief Verifica se il numero di telefono fornito è considerato valido.
+     *
      * @param[in] number L'oggetto PhoneNumber da controllare.
+     *
      * @return true se la validazione è andata a buon fine e false per il contrario.
      */
      public static boolean checkNumber(PhoneNumber number) {

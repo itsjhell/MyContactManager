@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.group05.mycontactmanager.utilities;
 import com.group05.mycontactmanager.models.Contact;
 import java.util.Comparator;
@@ -14,7 +9,7 @@ import java.util.Comparator;
  * Viene utilizzata dalla SortedList caricata nella TableView, per ordinare i contatti in base a cognome-nome.
  * 
  * @author group05
- * @date Dicembre 08,2024
+ * @date Dicembre 08, 2024
  * @version 1.1
  */
 public class ContactComparator implements Comparator<Contact> {

@@ -18,6 +18,7 @@ public class PhoneNumber implements Serializable{
 
     /**
      * @brief Costruttore per creare un PhoneNumber con prefisso e numero.
+     *
      * @param[in] prefix Il prefisso telefonico.
      * @param[in] number La parte numerica del telefono.
      */
@@ -26,6 +27,11 @@ public class PhoneNumber implements Serializable{
         this.number = number;
     }
     
+    /**
+     * @brief Il costruttore può creare il PhoneNumber utilizzando solo il numero di telefono..
+     *
+     * @param[in] number numero di telefono.
+     */
     public PhoneNumber(String number) {
         this.prefix = PhonePrefix.OTHERS;
         this.number = number;
@@ -33,6 +39,7 @@ public class PhoneNumber implements Serializable{
 
     /**
      * @brief Imposta il prefisso del numero di telefono.
+     *
      * @param[in] prefix Il nuovo prefisso.
      */
     public void setPrefix(PhonePrefix prefix) {
@@ -41,6 +48,7 @@ public class PhoneNumber implements Serializable{
 
     /**
      * @brief Imposta la parte numerica del telefono.
+     *
      * @param[in] number Il nuovo numero.
      */
     public void setNumber(String number) {
@@ -49,6 +57,7 @@ public class PhoneNumber implements Serializable{
     
     /**
      * @brief Restituisce il prefisso del numero di telefono.
+     *
      * @return Il prefisso PhonePrefix.
      */
     public PhonePrefix getPrefix() {
@@ -57,6 +66,7 @@ public class PhoneNumber implements Serializable{
 
     /**
      * @brief Restituisce il numero di telefono senza prefisso.
+     *
      * @return Il numero come stringa.
      */
     public String getNumber() {
@@ -65,6 +75,7 @@ public class PhoneNumber implements Serializable{
     
     /**
      * @brief Ritorna una stringa rappresentante il numero completo (prefisso + numero).
+     *
      * @return Una stringa con prefisso e numero concatenati.
      */
     @Override
