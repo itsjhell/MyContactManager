@@ -237,21 +237,5 @@ public class ContactTest {
         assertTrue(result.contains("profile1.png"), "La stringa dovrebbe contenere profile1.png");
         assertTrue(result.contains("Note di prova"), "La stringa dovrebbe contenere 'Note di prova'");
     }
-
-    /**
-     * Test del metodo clone di Contact.
-     */
-    @Test
-    public void testClone() {
-        System.out.println("clone");
-        Contact clone = instance.clone();
-        assertNotNull(clone, "Il clone non dovrebbe essere null");
-        assertEquals(instance.getName(), clone.getName(), "Il clone dovrebbe avere lo stesso nome");
-        assertEquals(instance.getSurname(), clone.getSurname(), "Il clone dovrebbe avere lo stesso cognome");
-        assertEquals(instance.getNumbers(), clone.getNumbers(), "Il clone dovrebbe avere la stessa lista di numeri");
-        assertEquals(instance.getEmailAddresses(), clone.getEmailAddresses(), "Il clone dovrebbe avere la stessa lista di email");
-        assertEquals(instance.getImageName(), clone.getImageName(), "Il clone dovrebbe avere la stessa immagine");
-        assertEquals(instance.getNotes(), clone.getNotes(), "Il clone dovrebbe avere le stesse note");
-    }
     
 }

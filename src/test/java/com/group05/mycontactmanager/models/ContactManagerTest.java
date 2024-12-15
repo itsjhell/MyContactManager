@@ -64,35 +64,4 @@ public class ContactManagerTest {
         manager.setContactList(newList);
         assertEquals(1, manager.getContactList().size(), "La lista dovrebbe contenere 1 contatto");
     }
-    
-    // Quando verranno implementati:
-    @Test
-    public void testAddContact() {
-        manager.addContact(c1); // attualmente non implementato: aggiungi test futuro
-        // Ad esempio, quando implementato:
-        // assertTrue(manager.getContactList().contains(c1), "Il contatto c1 dovrebbe essere presente");
-    }
-    
-    @Test
-    public void testRemoveContact() {
-        // Quando implementato:
-        // manager.addContact(c1);
-        // manager.removeContact(c1);
-        // assertFalse(manager.getContactList().contains(c1), "Il contatto c1 non dovrebbe essere presente");
-    }
-    
-    @Test
-    public void testImportContactsFromCSV() {
-        // Testa l'importazione di un file CSV esistente (fittizio)
-        // manager.importContactsFromCSV("testContacts.csv");
-        // assertFalse(manager.getContactList().isEmpty(), "Dopo l'import la lista non dovrebbe essere vuota");
-    }
-    
-    @Test
-    public void testExportContactsToCSV() {
-        // Testa l'export su file CSV (senza verificare realmente il file, si potrebbe mockare)
-        // manager.getContactList().add(c1);
-        // manager.exportContactsToCSV("output.csv");
-        // Controlli futuri: verificare il contenuto del file, se opportuno.
-    }
 }

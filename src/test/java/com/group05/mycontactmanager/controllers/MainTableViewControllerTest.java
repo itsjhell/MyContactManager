@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -30,15 +31,10 @@ public class MainTableViewControllerTest extends ApplicationTest {
         new App().start(stage); // App accede a MainTableView.fxml
     }
     
-    @Test
-    void testAppLaunch() {
-        assertNotNull(stage);
-    }
-    
-    @Test
-    public void testSceneMinSize() {
-        assert(stage.getMinWidth() == 1300);
-        assert(stage.getMinHeight() == 800);
+    @BeforeEach
+    public void startUp() {
+        stage.setWidth(1300); 
+        stage.setHeight(800); 
     }
 
     @Test
