@@ -33,8 +33,6 @@ public class EditContactController extends ContactController implements Initiali
     private Button saveEditsButton;
     @FXML
     private Button cancelEditsButton;
-    
-    //private Contact newContact;
 
     EditContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
         super(splitPane, contact, contactList);
@@ -42,6 +40,7 @@ public class EditContactController extends ContactController implements Initiali
     
     /**
      * @brief Inizializza il controller dopo il caricamento della vista.
+     *
      * @param[in] url L'URL per percorsi relativi.
      * @param[in] rb Il ResourceBundle per l'internazionalizzazione.
      */
@@ -65,15 +64,16 @@ public class EditContactController extends ContactController implements Initiali
 
     /**
      * @brief Azione associata al compito sinistro:
-     *        ritorna alla visualizzazione dei dettagli del contatto.
+     *
+     * ritorna alla visualizzazione dei dettagli del contatto.
+     *
      * @param[in] event L'ActionEvent associato.
      * @throws IOException In caso di errore nel caricamento della vista.
      */
     @FXML
     @Override
     void executeLeftTask(ActionEvent event) throws IOException {
-        //Raccolgo i dati dai campi
-        numbers = new ArrayList();
+        numbers = new ArrayList(); //Raccolgo i dati dai campi
         if(!phoneNumber1.getText().equals(""))
             numbers.add(new PhoneNumber(prefixMenu1.getValue(),phoneNumber1.getText()));
         if(!phoneNumber2.getText().equals(""))
@@ -90,28 +90,24 @@ public class EditContactController extends ContactController implements Initiali
         if(!emailAddress3.getText().equals(""))
             emailAddresses.add(emailAddress3.getText());
         while(emailAddresses.size() < 3)  emailAddresses.add("");
-        
-        //creo il contatto
-        //Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, contactProperty.get().getImageName(), notesArea.getText());
-        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, imageNameApp, notesArea.getText());
-        //lo sostituisco
-        contactList.remove(contactProperty.get());
-        //lo sostituisco
-        contactProperty.set(contact);
+
+        Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, imageNameApp, notesArea.getText()); //creo il contatto
+        contactList.remove(contactProperty.get()); //lo sostituisco
+        contactProperty.set(contact); //lo sostituisco
         contactList.add(contact);
-        //carcio la prossima interfaccia
-        loadDetailsContact(splitPane, contactProperty.get(), contactList);        
+        loadDetailsContact(splitPane, contactProperty.get(), contactList); //carcio la prossima interfaccia
     }
 
     /**
      * @brief Azione associata al compito destro.
-     *        salva le modifiche al contatto.
+     *
+     * salva le modifiche al contatto.
+     *
      * @param[in] event L'ActionEvent associato.
      */
     @FXML
     @Override
     void executeRightTask(ActionEvent event) throws IOException {
-        //contactProperty.get().setImageName(imageNameApp);
         splitPane.getItems().remove(1);
         loadDetailsContact(splitPane, contactProperty.get(), contactList);        
     }
@@ -123,7 +119,6 @@ public class EditContactController extends ContactController implements Initiali
                 count[0]++;
         }
         
-        //Integer count = new Integer(0);
         for(int i = count[0]; i < 3; i++) {
             fields[i].setDisable(true);
         }
@@ -159,7 +154,7 @@ public class EditContactController extends ContactController implements Initiali
     private void loadPrefixMenu(TextField[] phoneNumbers) {
         ComboBox<PhonePrefix>[] prefixMenus = new ComboBox[]{ prefixMenu1, prefixMenu2, prefixMenu3 };
         for (int i = 0; i < 3; i++) {
-            int index = i; // deve essere finale per lambda
+            int index = i;
             prefixMenus[index].disableProperty().bind(phoneNumbers[index].disableProperty());
         }
     }

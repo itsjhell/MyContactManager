@@ -39,6 +39,7 @@ public class DetailsContactController extends ContactController implements Initi
 
     /**
      * @brief Inizializza il controller dopo il caricamento della vista.
+     *
      * @param[in] url L'URL per risolvere percorsi relativi.
      * @param[in] rb Il ResourceBundle per l'internazionalizzazione.
      */
@@ -51,7 +52,9 @@ public class DetailsContactController extends ContactController implements Initi
 
     /**
      * @brief Azione associata al compito sinistro "LeftTask"
-     *        Carica l'interfaccia di modifica del contatto
+     *
+     * Carica l'interfaccia di modifica del contatto
+     *
      * @param[in] event L'evento ActionEvent generato dall'interfaccia.
      * @throws IOException In caso di errore nel caricamento della vista FXML.
      */
@@ -63,7 +66,9 @@ public class DetailsContactController extends ContactController implements Initi
 
     /**
      * @brief Azione associata al compito destro "RightTask"
-     *        Rimuove il contatto dalla lista.
+     *
+     * Rimuove il contatto dalla lista.
+     *
      * @param[in] event L'evento ActionEvent generato dall'interfaccia.
      */
     @FXML
@@ -86,9 +91,12 @@ public class DetailsContactController extends ContactController implements Initi
         }
     }
 
+    /**
+    * @brief Configura gli elementi dell'interfaccia "dettagli contatto" 
+    * e li iniziliazza a determinati valori.
+    */
     private void configureElements() {
-        //imposto un effetto visivo e rendo non edistabili i campi
-        notesArea.setEditable(false);
+        notesArea.setEditable(false); //imposto un effetto visivo e rendo non edistabili i campi
         
         TextField[] fields = { nameField, surnameField, phoneNumber1, phoneNumber2, phoneNumber3, emailAddress1, emailAddress2, emailAddress3, };
         for (TextField field : fields) {
@@ -100,9 +108,8 @@ public class DetailsContactController extends ContactController implements Initi
             combobox.setDisable(true);
             combobox.setOpacity(1);
         }
-        
-        //imposto un effetto visivo e rendo non edistabili i campi
-        Label[] labelsToHide = {errorName, errorNumber, errorEmail};
+
+        Label[] labelsToHide = {errorName, errorNumber, errorEmail}; //imposto un effetto visivo e rendo non edistabili i campi
         for (Label label : labelsToHide)
             label.setVisible(false);
         
@@ -111,6 +118,9 @@ public class DetailsContactController extends ContactController implements Initi
             button.setVisible(false);
     }
 
+    /**
+    * @brief Rende visibile in una zona predeterminata della scheda contatto l'immagine selezionata.
+    */
     private void viewImageSetted(String imagePath) {
         contactImage.setId(imagePath);
     }

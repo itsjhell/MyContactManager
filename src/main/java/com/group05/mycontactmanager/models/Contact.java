@@ -26,23 +26,17 @@ public class Contact implements Serializable{
 
 
     /**
-     * @param name
-     * @param surname
-     * @param numbers
-     * @param emailAddresses
-     * @param imageName
-     * @param notes
-
      * @brief Costruttore di un contatto con due campi obbligatori.
-     * 
+     *
      * Viene inizializzata di default una lista vuota.
      * 
      * @param[in] name nome del contatto.
      * @param[in] surname cognome del contatto.
-     * @param[in] numbers, la lista di  nome del contatto.
-     * @param[in] surname cognome del contatto.
+     * @param[in] numbers lista di numeri del contatto.
+     * @param[in] emailAddresses lista di email del contatto.
+     * @param[in] imageName immagine del contatto.
+     * @param[in] notes note del contatto.
      */
-    
     public Contact(String name, String surname, List<PhoneNumber> numbers, List<String> emailAddresses, String imageName, String notes) {
         this.name = name;
         this.surname = surname;
@@ -95,7 +89,7 @@ public class Contact implements Serializable{
     }
 
     /**
-     * @brief La funzione restituisce i numeri di teleofono del contatto.
+     * @brief La funzione restituisce i numeri di telefono del contatto.
      * 
      * @return numeri del contatto.
      */
@@ -103,7 +97,12 @@ public class Contact implements Serializable{
         return numbers;
     }
     
-     public String getFirstNumber() {
+    /**
+    * @brief Restituisce il primo numero di telefono di ogni contatto.
+    *
+    * @return primi numeri del contatto.
+    */
+    public String getFirstNumber() {
         if (numbers == null || numbers.isEmpty()) return "";
         if (numbers.get(0) == null) return "";
         if (numbers.get(0).getNumber().equals("")) return "";
@@ -204,17 +203,34 @@ public class Contact implements Serializable{
         this.notes = notes;
     }
 
-    
+    /**
+    * @brief Restituisce la proprietà booleana osservabile indicando se il contatto è selezionato.
+    *
+    * @return contatto selezionato.
+    */
     public BooleanProperty isSelected() {
         return selected;
     }
 
+    /**
+    * @brief Contrassegna il contatto come selezionato. 
+    *
+    */
     public void setSelected(boolean selected) {
         this.selected.set(selected);
     }
     
     /**
+    * @brief Reimposta il valore di selected su falso.
+    *
+    */
+    public void resetSelectedProperty() {
+        selected = new SimpleBooleanProperty(false);
+    }
+
+    /**
      * @brief Fornisce una rappresentazione testuale del contatto.
+     *
      * @return Una stringa contenente nome, cognome, numeri di telefono, email, percorso immagine e note.
      */
     @Override
@@ -228,13 +244,4 @@ public class Contact implements Serializable{
         sb.append(" Notes: ").append(notes);
         return sb.toString();
     }
-    
-    public Contact clone() {
-        return new Contact(name, surname,  numbers, emailAddresses, imageName, notes);
-    }
-
-    public void resetSelectedProperty() {
-        selected = new SimpleBooleanProperty(false);
-    }
-    
 }

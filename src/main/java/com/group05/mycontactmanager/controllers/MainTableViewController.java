@@ -114,8 +114,7 @@ public class MainTableViewController implements Initializable {
     private FilteredList<Contact> selectedContacts;
 
     public MainTableViewController() {
-        // Creazione di un'istanza di ContactManager
-        contactManager = new ContactManager("Nuova rubrica");
+        contactManager = new ContactManager("Nuova rubrica"); // Creazione di un'istanza di ContactManager
         contactList = FXCollections.observableArrayList(contactManager.getContactList());
         selectedContacts = new FilteredList<>(contactList);
         selectedContacts.setPredicate(contact1 -> {
@@ -125,13 +124,13 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Inizializza il controller.
+     *
      * @param[in] url L'URL per percorsi relativi.
      * @param[in] rb Il ResourceBundle per l'internazionalizzazione.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-            //rifinimento Layout
-        splitPane.setDividerPositions(0.5);
+        splitPane.setDividerPositions(0.5); //rifinimento Layout
         splitPane.addEventFilter(MouseEvent.MOUSE_DRAGGED, event -> event.consume());
         splitPane.getItems().remove(rightPane); // rimuove tabella selezionati
         
@@ -244,6 +243,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Salva la lista dei contatti su file.
+     *
      * @param[in] event L'ActionEvent associato.
      */
     @FXML
@@ -268,19 +268,17 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Carica la lista dei contatti da file.
+     *
      * @param[in] event L'ActionEvent associato.
      */
     @FXML
     private void loadContactList(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Carica rubrica...");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.bin"));
-        // Mostra la finestra di dialogo
-        File selectedFile = fileChooser.showOpenDialog(null);
-        //String[] name = selectedFile.getAbsolutePath().split(".");
+        File selectedFile = fileChooser.showOpenDialog(null); // Mostra la finestra di dialogo
         
         if (selectedFile != null) {
-            //WARNING
-            String title = "Vuoi procedere?";
+            String title = "Vuoi procedere?"; //WARNING
             String headerText = "Caricando una nuova rubrica potresti perdere quella attuale";
             String contentText = "Assicurati di aver salvato la rubrica corrente prima se non desideri perderla"; 
             if(showConfirmationAlert(title, headerText, contentText)) {
@@ -302,21 +300,19 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Importa contatti da un file CSV.
+     *
      * @param[in] event L'ActionEvent associato.
      */
     @FXML
     private void importContacts(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Importa rubrica...");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
-        // Mostra la finestra di dialogo
-        File selectedFile = fileChooser.showOpenDialog(null);
-        //String[] name = selectedFile.getAbsolutePath().split(".");
-        //COnstruisco il ContactManager
+        File selectedFile = fileChooser.showOpenDialog(null); // Mostra la finestra di dialogo
+        //Costruisco il ContactManager
         ContactManager newContactManager = new ContactManager("prova");
         
         if (selectedFile != null) {
-            //WARNING
-            String title = "Vuoi procedere?";
+            String title = "Vuoi procedere?"; //WARNING
             String headerText = "Importando una nuova rubrica potresti perdere quella attuale";
             String contentText = "Assicurati di aver salvato la rubrica corrente prima se non desideri perderla"; 
             if(showConfirmationAlert(title, headerText, contentText)) {
@@ -331,6 +327,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Esporta contatti in un file CSV.
+     *
      * @param[in] event L'ActionEvent associato.
      */
     @FXML
@@ -338,23 +335,20 @@ public class MainTableViewController implements Initializable {
         
         FileChooser fileChooser = new FileChooser();fileChooser.setTitle("Esporta rubrica...");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di Testo", "*.csv"));
-        // Mostra la finestra di dialogo
-        File selectedFile = fileChooser.showSaveDialog(null);
-        //String[] name = selectedFile.getAbsolutePath().split(".");
-        //COnstruisco il ContactManager
+        File selectedFile = fileChooser.showSaveDialog(null); // Mostra la finestra di dialogo
 
-        contactManager.setContactList(contactList);
+        contactManager.setContactList(contactList); //Costruisco il ContactManager
         
         if (selectedFile != null) {
             contactManager.exportContactsToCSV(selectedFile.getAbsolutePath());
         } else {
             showErrorAlert("Esportazione rubrica annullata.");
         }
-        //Converto l'observableList in un ContactManager.
     }
 
     /**
      * @brief Aggiunge un nuovo contatto alla lista, caricando la vista di aggiunta.
+     *
      * @param[in] event L'ActionEvent associato.
      * @throws IOException In caso di errore nel caricamento della vista FXML.
      */
@@ -365,6 +359,7 @@ public class MainTableViewController implements Initializable {
 
     /**
      * @brief Sceglie il parametro di ricerca.
+     *
      * @param[in] event L'ActionEvent associato.
      */
     @FXML
@@ -373,8 +368,10 @@ public class MainTableViewController implements Initializable {
     
     /**
      * @brief Ricerca contatti per cognome e nome.
+     *
      * @param[in] surname La proprietà Stringa del cognome.
      * @param[in] name La proprietà Stringa del nome.
+     *
      * @return Un'ObservableList di contatti corrispondenti che soddisfano i criteri di ricerca 
      */
     public ObservableList searchBySurnameAndName(StringProperty surname, StringProperty name) {
@@ -382,8 +379,10 @@ public class MainTableViewController implements Initializable {
     }
     
     /**
-     * @brief Ricerca contatti per cognome .
+     * @brief Ricerca contatti per cognome.
+     *
      * @param[in] surname La proprietà Stringa del cognome.
+     *
      * @return Un'ObservableList di contatti che soddisfano i criteri di ricerca.
      */
     public ObservableList searchBySurname(StringProperty surname) {
@@ -391,8 +390,10 @@ public class MainTableViewController implements Initializable {
     }
     
     /**
-     * @brief Ricerca contatti per nome .
+     * @brief Ricerca contatti per nome.
+     *
      * @param[in] name La proprietà Stringa del nome.
+     *
      * @return Un'ObservableList di contatti che soddisfano i criteri di ricerca. 
      */
     public ObservableList searchByName(StringProperty name) {
@@ -401,7 +402,9 @@ public class MainTableViewController implements Initializable {
     
     /**
      * @brief Ricerca contatti per email (non implementato).
+     *
      * @param[in] email La proprietà Stringa dell'email.
+     *
      * @return Un'ObservableList di contatti che soddisfano i criteri di ricerca.
      */
     public ObservableList searchByEmail(StringProperty email) {
@@ -410,13 +413,22 @@ public class MainTableViewController implements Initializable {
   
     /**
      * @brief Ricerca contatti per numero di telefono (non implementato).
+     *
      * @param[in] phone La proprietà Stringa del numero di telefono.
+     *
      * @return UUn'ObservableList di contatti che soddisfano i criteri di ricerca.
      */
     public ObservableList searchByPhoneNumber(StringProperty phone) {
         return null;
     }
     
+    /**
+    * @brief Carica l'interfaccia dettagli contatto e lo aggiunge allo splitpane.
+    *
+    * @param[in] splitPane nodo dell'interfaccia.
+    * @param[in] contact contatto da visualizzare.
+    * @param[in] contactList lista contatti presenti in rubrica.
+    */
     private void loadDetailsContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
         if (splitPane.getItems().size() > 1)
@@ -425,6 +437,12 @@ public class MainTableViewController implements Initializable {
         splitPane.getItems().add(fxmlLoader.load());
     }
     
+    /**
+    * @brief Carica l'interfaccia aggiungiContatto e lo aggiunge allo splitpane
+    *
+    * @param[in] splitPane nodo dell'interfaccia.
+    * @param[in] contactList lista contatti presenti in rubrica.
+    */
     private void loadAddContact(SplitPane splitPane, ObservableList<Contact> contactList) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddContactView.fxml"));
         if (splitPane.getItems().size() > 1)
@@ -433,6 +451,11 @@ public class MainTableViewController implements Initializable {
         splitPane.getItems().add(fxmlLoader.load());
     }
     
+    /**
+    * @brief Visualizza un messaggio di errore.
+    *
+    * @param[in] errorMessage stringa di avviso.
+    */
     private void showErrorAlert(String errorMessage) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Errore");
@@ -442,6 +465,13 @@ public class MainTableViewController implements Initializable {
         alert.showAndWait();
     }
     
+    /**
+    * @brief Visualizza una finestra di messaggio per conferma dell'operazione.
+    *
+    * @param[in] title stringa di titolo.
+    * @param[in] headerText stringa di intestazione.
+    * @param[in] contentText stringa di contenuto.
+    */
     private boolean showConfirmationAlert(String title, String headerText, String contentText) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -458,6 +488,10 @@ public class MainTableViewController implements Initializable {
         return result == okButton;
     }    
 
+    /**
+    * @brief Permette la selezione di molteplici contatti tramite l'utilizzo di checkbox.
+    *
+    */
     private void multipleContactSelection() {
         checkClm.setCellValueFactory((contactProperty) -> {
             CheckBox cb = new CheckBox();
@@ -512,8 +546,7 @@ public class MainTableViewController implements Initializable {
                                 toRemove.add(contact);  //Aggiungi gli elementi da rimuovere
                             }
                         }
-                        // Rimuovi gli elementi dalla contactList
-                        contactList.removeAll(toRemove);
+                        contactList.removeAll(toRemove); // Rimuovi gli elementi dalla contactList
 
                         addButton.setDisable(false);
                         selectButton.setDisable(false);
