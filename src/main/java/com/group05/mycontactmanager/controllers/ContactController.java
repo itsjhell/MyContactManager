@@ -31,7 +31,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 /**
- * @file ContactController.java
  * @brief Classe controller astratta che fornisce elementi comuni per la gestione delle viste legate ai contatti.
  * 
  * Questa classe definisce componenti UI e metodi comuni a diversi controller,
@@ -120,12 +119,12 @@ abstract class ContactController {
         // QUINDI CONTROLLO SE SI TROVA IL FILE
             // SE NON SI TROVA CARICO L'IMMAGINE DI DEFAULT <-- SAR
         File file = new File(contactProperty.get().getImagePath());
-        File defaultFile = new File("images/default.png");
+        String pathToDefault = "images/default.png";
         Image newImage;
         if (file.exists()) {
             newImage = new Image(file.toURI().toString());
         } else {
-            newImage = new Image(defaultFile.toURI().toString());
+            newImage = new Image(getClass().getClassLoader().getResource(pathToDefault).toExternalForm()); // prende l'immagine di default dalle risorse del JAR
         }
         contactImage.setImage(newImage);
     }
@@ -144,11 +143,14 @@ abstract class ContactController {
         File selectedFile = fileChooser.showOpenDialog(null);
 
         if (selectedFile != null) {
-            File copiedFile = new File("images", selectedFile.getName());
+            File imagesDir = new File("images"); // crea la cartella images nella stessa directory del JAR, se non esiste
+            if (!imagesDir.exists()) {
+                imagesDir.mkdirs(); 
+            }
+            File copiedFile = new File(imagesDir, selectedFile.getName());
             Files.copy(selectedFile.toPath(), copiedFile.toPath(), StandardCopyOption.REPLACE_EXISTING); // crea copia in locale
-            Image newImage = new Image(selectedFile.toURI().toString());
+            Image newImage = new Image(copiedFile.toURI().toString());
             contactImage.setImage(newImage);
-            // contactProperty.get().setImageName(copiedFile.getName());
             imageNameApp = copiedFile.getName();
         }
     }

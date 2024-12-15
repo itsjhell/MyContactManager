@@ -18,7 +18,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 
 /**
- * @file AddContactController.java
  * @brief Controller dedicato alla vista per l'aggiunta di un nuovo contatto.
  * 
  * Questa classe gestisce l'interfaccia grafica relativa alla creazione di un nuovo contatto.

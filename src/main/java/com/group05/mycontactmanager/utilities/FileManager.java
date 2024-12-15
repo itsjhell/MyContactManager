@@ -1,7 +1,6 @@
 package com.group05.mycontactmanager.utilities;
 
 /**
- * @file FileManager.java
  * @brief Classe di utilità per il salvataggio e il caricamento di contatti su file.
  * 
  * Questa classe fornisce metodi statici per salvare, caricare, importare ed esportare

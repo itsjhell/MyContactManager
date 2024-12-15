@@ -1,7 +1,6 @@
 package com.group05.mycontactmanager.models;
 
 /**
- * @file PhonePrefix.java
  * @brief Enum per rappresentare prefissi telefonici internazionali.
  * 
  * Questo enum definisce alcuni prefissi telefonici comuni, restituibili come stringhe.

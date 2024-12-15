@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *@file PhoneNumberTest.java
  *@brief Classe di test per PhoneNumber
  * 
  * @author group05

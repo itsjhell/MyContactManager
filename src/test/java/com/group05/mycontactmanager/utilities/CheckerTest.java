@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @file CheckerTest.java
  * @brief Classe di test per Checker
  * 
  * Verifica la validazione di email e numeri di telefono.

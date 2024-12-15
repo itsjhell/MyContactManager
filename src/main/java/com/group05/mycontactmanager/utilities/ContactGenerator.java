@@ -14,7 +14,7 @@ import java.util.Random;
 
 /**
  *
- * @author jhell
+ * @author group05
  */
 public class ContactGenerator {
       public static List<Contact> generateRandomContacts(int numContacts) {

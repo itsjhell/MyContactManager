@@ -17,7 +17,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 
 /**
- * @file DetailsContactController.java
  * @brief Controller dedicato alla vista di dettaglio di un contatto.
  * 
  * Questa classe permette la visualizzazione dei dettagli di un contatto selezionato,

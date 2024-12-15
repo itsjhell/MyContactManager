@@ -4,6 +4,7 @@ import com.group05.mycontactmanager.App;
 import com.group05.mycontactmanager.models.Contact;
 import com.group05.mycontactmanager.models.ContactManager;
 import com.group05.mycontactmanager.models.PhoneNumber;
+import com.group05.mycontactmanager.utilities.ContactComparator;
 import com.group05.mycontactmanager.utilities.ContactGenerator;
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +48,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 /**
- * @file MainTableViewController.java
  * @brief Controller principale della tabella dei contatti.
  * 
  * Questa classe gestisce l'interfaccia principale, mostrando la lista dei contatti in una tabella.
@@ -143,12 +143,12 @@ public class MainTableViewController implements Initializable {
             //ICONA
         iconClm.setCellValueFactory( contactProperty  -> {
             File file = new File(contactProperty.getValue().getImagePath());
-            File defaultFile = new File("images/default.png");
+            String pathToDefault = "images/default.png";
             Image im;
             if (file.exists())
-                im = new Image(file.toURI().toString(), 25, 25, false, false);
+                im = new Image(file.toURI().toString(), 25, 25, false, false); 
             else
-                im = new Image(defaultFile.toURI().toString(), 25, 25, false, false);
+                im = new Image(getClass().getClassLoader().getResource(pathToDefault).toExternalForm(), 25, 25, false, false); // prende l'immagine di default interna al jar, nella cartella resources
             ImageView imView = new ImageView();
             imView.setImage(im);
             return new SimpleObjectProperty(imView); 
@@ -243,17 +243,7 @@ public class MainTableViewController implements Initializable {
                     }
                 }, searchField.textProperty(), searchParameter.valueProperty()));
         
-        SortedList<Contact> sortedContactList = new SortedList<>(filteredContactList, new Comparator<Contact>() { 
-            @Override
-            public int compare(Contact o1, Contact o2) {
-                // Confronto cognome
-                int cmp = o1.getSurname().compareToIgnoreCase(o2.getSurname());
-                if (cmp != 0)
-                    return cmp;
-                // Confronto nome se i cognomi sono uguali
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
+        SortedList<Contact> sortedContactList = new SortedList<>(filteredContactList, new ContactComparator());
         contactTable.setItems(sortedContactList); // la lista che viene visualizzata in tabella è quella filtrata ma ordinata
     }
 

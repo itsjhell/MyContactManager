@@ -18,7 +18,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 
 /**
- * @file EditContactController.java
  * @brief Controller dedicato alla modifica di un contatto esistente.
  * 
  * Questa classe permette di visualizzare i campi di un contatto già esistente e modificarli.

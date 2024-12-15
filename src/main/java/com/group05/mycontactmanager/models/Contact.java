@@ -6,7 +6,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
 /**
- * @file Contact.java
  * @brief Questo file implementa la scheda del contatto.
  * 
  * La classe raggruppa funzioni che permettono di gestire le informazioni

@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
-
- * @file ContactTEst.java
  * @brief Classe di test per ContactTest
  *
  * @author group05

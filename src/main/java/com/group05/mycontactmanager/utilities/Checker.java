@@ -8,8 +8,6 @@ import java.util.regex.Pattern;
  * @file Checker.java
  * @brief Classe di utilità per la validazione di email e numeri di telefono.
  * 
- *
- * 
  * @author group05
  * @date Dicembre 08, 2024
  * @version 1.0
@@ -17,14 +15,25 @@ import java.util.regex.Pattern;
 public class Checker {
     
     /**
-     * @brief Verifica se l'email fornita è considerata valida.
+     * @brief Verifica se l'email fornita è considerata valida, tramite espressioni regolari.
+     * 
+     * ^ : indica che la stringa deve iniziare con i caratteri specificati dopo di essa
+     * [a-zA-Z0-9._%+-]+ : permette lettere (non accentate) maiuscole, minuscole, numeri, caratteri come . _ % + - e richiede almeno un carattere (dato dal + finale)
+     * @ : richiede una chiocciola come separatore
+     * [a-zA-Z0-9.-]+ : permette lettere, numeri caratteri come . -
+     * \\. : necessita un punto come separatore
+     * [a-zA-Z]{2,} : rappresenta il dominio, permette solo lettere e richiede almeno due caratteri
+     * $ : indica che il dominio deve essere la fine della stringa
+     * 
      * @param[in] email L'indirizzo email da controllare.
      * @return true se la validazione è andata a buon fine e false per il contrario.
      */
     public static boolean checkEmail(String email) {
-        if (email.equals("")) return true; // se l'utente lascia il campo vuoto
-       
-        String regex = "^([^@]+)@([^@]+\\.[^@]+)$";
+        if (email == null || email.isEmpty()) {  // se l'utente lascia il campo vuoto
+            return true;
+        } 
+
+        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();

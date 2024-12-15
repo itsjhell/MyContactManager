@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @file CheckerManagerTest.java
- * 
  * @brief Classe di test per ContactManager
  * @author group05
  * @date Dicembre 13,2024

@@ -3,7 +3,6 @@ package com.group05.mycontactmanager.models;
 import java.io.Serializable;
 
 /**
- * @file PhoneNumber.java
  * @brief Classe che rappresenta un numero di telefono con prefisso.
  * 
  * La classe modella l’entità del numero di telefono, 

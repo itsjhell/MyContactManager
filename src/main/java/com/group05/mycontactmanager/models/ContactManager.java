@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * @file ContactManager.java
  * @brief Classe per la gestione di una lista di contatti.
  * 
  * La classe raggruppa funzioni che permettono la manipolazione di una lista di contatti;

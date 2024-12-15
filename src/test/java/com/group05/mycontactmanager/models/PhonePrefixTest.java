@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *@file PhonePrefixTest.java
  *@brief Classe di test per PhonePrefix
  * 
  * @author group05
