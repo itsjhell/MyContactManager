@@ -17,8 +17,8 @@ import java.io.IOException;
  * Il metodo `main` avvia l'esecuzione dell'applicazione.
  * 
  * @author group05
- * @date Dicembre 08,2024
- * @version 1.0
+ * @date Dicembre 08, 2024
+ * @version 1.1
  */
 public class App extends Application {
 
