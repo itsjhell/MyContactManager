@@ -21,8 +21,7 @@ import javafx.scene.control.TextField;
  * @brief Controller dedicato alla vista per l'aggiunta di un nuovo contatto.
  * 
  * Questa classe gestisce l'interfaccia grafica relativa alla creazione di un nuovo contatto.
- * Permette di iniziare il processo, mostrare la vista di dettaglio dopo l'aggiunta,
- * e interagire con i campi di input.
+ * Permette di iniziare il processo, mostrare la vista di dettaglio dopo l'aggiunta e interagire con i campi di input.
  * 
  * @author group05
  * @date Dicembre 08,2024
@@ -100,7 +99,9 @@ public class AddContactController extends ContactController implements Initializ
 
     /**
      * @brief Azione associata al "compito destro" (RightTask).
-     *        Anulla l'operazione di aggiunta contatto.
+     *        
+     * Anulla l'operazione di aggiunta contatto.
+     * 
      * @param[in] event L'evento ActionEvent generato dall'interfaccia.
      */
     @FXML

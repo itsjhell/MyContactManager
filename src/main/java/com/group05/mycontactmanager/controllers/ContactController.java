@@ -84,7 +84,6 @@ abstract class ContactController {
     
     protected SplitPane splitPane;
     
-    //protected Contact contactApp;
     protected String imageNameApp;
     
     protected ObjectProperty<Contact> contactProperty;
@@ -97,16 +96,12 @@ abstract class ContactController {
        
     public ContactController(SplitPane splitPane, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
-        //contactApp = new Contact("", "", null, null, "", "");
-        //contactList = FXCollections.observableArrayList();
         this.contactList = contactList;
         this.splitPane = splitPane;
     }
     
     public ContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
-        //this.contactList = FXCollections.observableArrayList(contactList);
-        //contactApp = new Contact("", "", null, null, "", "");
         contactProperty.set(contact);
         this.contactList = contactList;
         this.splitPane = splitPane;
@@ -114,7 +109,7 @@ abstract class ContactController {
     }
     
     protected void preloadImage() {
-        // HO PROVATO CREARE UN CONTATTO CON UN IMMAGINE E POI SALVARE LA RUBRICA CHE LO CONTINE
+        // HO CREATO UN CONTATTO CON UN'IMMAGINE E POI SALVARE LA RUBRICA CHE LO CONTINE
             // SUCCESSIVAMENTE CARICANDO LA RUBRICA SALVATA SE NON VIENE TROVATA L'IMMAGINE CAUSA UN'ECCEZIONE
         // QUINDI CONTROLLO SE SI TROVA IL FILE
             // SE NON SI TROVA CARICO L'IMMAGINE DI DEFAULT <-- SAR
@@ -131,6 +126,7 @@ abstract class ContactController {
     
     /**
      * @brief Carica un'immagine per il contatto.
+     * 
      * @param[in] event L'ActionEvent associato all'azione.
      */
     @FXML
@@ -157,6 +153,7 @@ abstract class ContactController {
     
     /**
      * @brief Sceglie il prefisso telefonico.
+     * 
      * @param[in] event L'ActionEvent associato alla scelta del prefisso.
      */
     @FXML
@@ -165,6 +162,7 @@ abstract class ContactController {
 
     /**
      * @brief Aggiunge un numero di telefono.
+     * 
      * @param[in] event L'ActionEvent associato all'azione.
      */
     @FXML
@@ -179,13 +177,14 @@ abstract class ContactController {
 
     /**
      * @brief Aggiunge un indirizzo email.
+     * 
      * @param[in] event L'ActionEvent associato all'azione.
      */
     @FXML
     private void addEmail(ActionEvent event) {
     }
     
-    public void loadDetailsContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
+    protected void loadDetailsContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
         if (splitPane.getItems().size() > 1)
             splitPane.getItems().remove(1);
@@ -193,7 +192,7 @@ abstract class ContactController {
         splitPane.getItems().add(fxmlLoader.load());
     }
     
-    public void loadEditContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
+    protected void loadEditContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("EditContactView.fxml"));
         if (splitPane.getItems().size() > 1)
             splitPane.getItems().remove(1);
@@ -283,6 +282,7 @@ abstract class ContactController {
     
     /**
      * @brief Metodo astratto che va implementato nella sottoclasse in base alla funzionalità richiesta.
+     * 
      * @param[in] event L'ActionEvent associato.
      * @throws IOException In caso di errore nel caricamento vista.
      */
@@ -291,6 +291,7 @@ abstract class ContactController {
 
     /**
      * @brief Metodo astratto che va implementato nella sottoclasse in base alla funzionalità richiesta.
+     * 
      * @param[in] event L'ActionEvent associato.
      * @throws IOException In caso di errore nel caricamento vista.
      */
