@@ -27,8 +27,7 @@ public class App extends Application {
     /**
      * @brief Punto di ingresso dell'applicazione JavaFX.
      * 
-     * Questo metodo viene invocato all'avvio 
-     * dell'applicazione. 
+     * Questo metodo viene invocato all'avvio dell'applicazione. 
      * Carica la vista "MainTableView" da un file FXML, 
      * imposta le dimensioni minime della finestra, un titolo e mostra lo stage.
      * 
@@ -49,6 +48,7 @@ public class App extends Application {
 
     /**
      * @brief Cambia la vista radice della scena corrente.
+     * 
      * @param[in] fxml Il nome del file FXML da caricare come nuova radice.
      * @throws IOException In caso di errore nel caricamento del file FXML.
      */
