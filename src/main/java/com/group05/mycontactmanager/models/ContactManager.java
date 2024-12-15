@@ -97,6 +97,7 @@ public class ContactManager implements Serializable, FileManager{
     public void importContactsFromCSV(String nameFile) {
         try (Scanner i = new Scanner(new BufferedReader(new FileReader(nameFile)))) {
             i.useDelimiter(";");
+            contactList = new ArrayList<>();
             while (i.hasNextLine()) {
                 String line = i.nextLine().trim();
                 //System.out.println("HO LETTO LA RIGA: " + line);
