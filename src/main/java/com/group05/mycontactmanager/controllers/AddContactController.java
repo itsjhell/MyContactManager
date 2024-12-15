@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -92,9 +93,16 @@ public class AddContactController extends ContactController implements Initializ
         while(emailAddresses.size() < 3)  emailAddresses.add("");
         
         Contact contact = new Contact(nameField.getText(), surnameField.getText(), numbers, emailAddresses, imageNameApp, notesArea.getText());
-        contactList.add(contact);
-        
-        loadDetailsContact(splitPane, contact, contactList);
+        if (contactList.size() == 300) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Errore");
+            alert.setHeaderText("Si è verificato un errore");
+            alert.setContentText("La lista dei contatti è piena.");
+            alert.showAndWait();
+        } else {
+            contactList.add(contact);
+            loadDetailsContact(splitPane, contact, contactList);
+        }
     }
 
     /**
