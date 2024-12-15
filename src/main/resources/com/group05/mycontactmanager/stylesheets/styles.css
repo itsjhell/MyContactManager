@@ -29,7 +29,7 @@
     -fx-text-fill: #ffffff;
 }
 
-#errorLabel {
+#errorName, #errorNumber, #errorEmail {
     -fx-text-fill: #940000;
 }
 
