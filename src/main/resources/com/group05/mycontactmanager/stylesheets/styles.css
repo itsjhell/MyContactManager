@@ -186,3 +186,13 @@
 #searchBy {
     -fx-font-size: 15px;
 }
+
+.check-box .box {
+    -fx-background-color: #ffffff;
+    -fx-background-insets: 0, 0 0 1  ;
+    -fx-background-radius: 10px ;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #1c70c5;
+}
