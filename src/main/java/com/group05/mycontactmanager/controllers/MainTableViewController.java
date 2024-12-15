@@ -50,7 +50,7 @@ import javafx.stage.FileChooser;
  * 
  * @author group05
  * @date Dicembre 08,2024
- * @version 1.0
+ * @version 1.1
  */
 public class MainTableViewController implements Initializable {
 

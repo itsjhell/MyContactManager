@@ -38,8 +38,8 @@ import javafx.stage.FileChooser;
  * Gestisce campi di input per un contatto e accede al riferimento di uno SplitPane per caricare la successiva interfaccia.
  * 
  * @author group05
- * @date Dicembre 08,2024
- * @version 1.0
+ * @date Dicembre 08, 2024
+ * @version 1.1
  */
 abstract class ContactController {
     
@@ -94,12 +94,25 @@ abstract class ContactController {
     
     protected List<String> emailAddresses;
        
+    /**
+     * @brief Costruttore della superclasse astratta.
+     * 
+     * @param[in] splitPane Node dell'interfaccia.
+     * @param[in] contactList lista osservabile di contatti.
+     */
     public ContactController(SplitPane splitPane, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
         this.contactList = contactList;
         this.splitPane = splitPane;
     }
     
+    /**
+     * @brief Costruttore alternativo della superclasse astratta.
+     * 
+     * @param[in] splitPane Node dell'interfaccia.
+     * @param[in] contact il contatto da modificare o visualizzare.
+     * @param[in] contactList lista osservabile di contatti.
+     */
     public ContactController(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) {
         contactProperty = new SimpleObjectProperty();
         contactProperty.set(contact);
@@ -108,6 +121,10 @@ abstract class ContactController {
         imageNameApp = contactProperty.get().getImageName();
     }
     
+    /**
+     * @brief Carica l'immagine attuale del contatto.
+     * 
+     */
     protected void preloadImage() {
         // HO CREATO UN CONTATTO CON UN'IMMAGINE E POI SALVARE LA RUBRICA CHE LO CONTINE
             // SUCCESSIVAMENTE CARICANDO LA RUBRICA SALVATA SE NON VIENE TROVATA L'IMMAGINE CAUSA UN'ECCEZIONE
@@ -183,7 +200,14 @@ abstract class ContactController {
     @FXML
     private void addEmail(ActionEvent event) {
     }
-    
+        
+    /**
+     * @brief Carica l'interfaccia di dettaglio del contatto.
+     * 
+     * @param[in] splitPane Node dell'interfaccia.
+     * @param[in] contact il contatto da modificare o visualizzare.
+     * @param[in] contactList lista osservabile di contatti.
+     */
     protected void loadDetailsContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("DetailsContactView.fxml"));
         if (splitPane.getItems().size() > 1)
@@ -192,6 +216,13 @@ abstract class ContactController {
         splitPane.getItems().add(fxmlLoader.load());
     }
     
+    /**
+     * @brief Carica l'interfaccia di modifica del contatto.
+     * 
+     * @param[in] splitPane Node dell'interfaccia.
+     * @param[in] contact il contatto da modificare o visualizzare.
+     * @param[in] contactList lista osservabile di contatti.
+     */
     protected void loadEditContact(SplitPane splitPane, Contact contact, ObservableList<Contact> contactList) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("EditContactView.fxml"));
         if (splitPane.getItems().size() > 1)
@@ -200,6 +231,11 @@ abstract class ContactController {
         splitPane.getItems().add(fxmlLoader.load());
     }
     
+    /**
+     * @brief Carica nei TextField le informazioni del contatto.
+     * 
+     * @param[in] contact il contatto da modificare o visualizzare.
+     */
     protected void fillTextFields(Contact contact) {
         //array di TextField per rendere più pulito in caricamento al suo interno
         TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
@@ -222,6 +258,10 @@ abstract class ContactController {
             emailFields[i].setText(emailAddresses.get(i));
     }
     
+    /**
+     * @brief Effettua un binding tra nome, cognome e relativa etichetta di errore.
+     * 
+     */
     protected void setupNameBinding() {
         StringBinding nameBinding = Bindings.createStringBinding(() -> {
             if (nameField.getText().isEmpty() && surnameField.getText().isEmpty()) 
@@ -234,6 +274,10 @@ abstract class ContactController {
         errorName.textProperty().bind(nameBinding);
     }
     
+    /**
+     * @brief Effettua un binding tra i numeri di telefono, i prefissi e relativa etichetta di errore.
+     * 
+     */
     protected void setupPhoneBinding() {
         ComboBox<PhonePrefix>[] prefixMenus = new ComboBox[]{ prefixMenu1, prefixMenu2, prefixMenu3 }; 
         TextField[] phoneFields = { phoneNumber1, phoneNumber2, phoneNumber3 };
@@ -249,6 +293,11 @@ abstract class ContactController {
         errorNumber.textProperty().bind(phoneBinding);
     }
     
+    /**
+     * @brief Effettua un binding tra le email e la relativa etichetta di errore.
+     * 
+     * @param[in] emailFields vettore dei TextField delle email.
+     */
     protected void setupEmailBinding(TextField[] emailFields) {
         StringBinding emailBinding = Bindings.createStringBinding(() -> {
             for(int i = 0; i <emailFields.length; i++) {
@@ -262,6 +311,12 @@ abstract class ContactController {
         errorEmail.textProperty().bind(emailBinding);
     }
     
+     /**
+     * @brief Effettua un binding tra il bottone di aggiunta del contatto o 
+     *  salvataggio delle modifiche e tutte le etichette di errore.
+     * 
+     * @param[in] emailFields vettore dei TextField delle email.
+     */
     protected void setupSaveButtonBinding(Button button) {
         // Creazione del BooleanBinding che verifica se tutte e tre le label sono visibili
         BooleanBinding addBinding = Bindings.createBooleanBinding(() -> {
@@ -271,6 +326,10 @@ abstract class ContactController {
         button.disableProperty().bind(addBinding.not());   
     }
     
+    /**
+     * @brief Inizializza i ComboBox con i prefissi telefonici.
+     * 
+     */
     protected void setupPrefixMenu() {
         prefixMenu1.setItems(FXCollections.observableArrayList(PhonePrefix.values()));
         prefixMenu1.getSelectionModel().selectFirst();

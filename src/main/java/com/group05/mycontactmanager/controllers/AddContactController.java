@@ -25,8 +25,8 @@ import javafx.scene.control.TextField;
  * Permette di iniziare il processo, mostrare la vista di dettaglio dopo l'aggiunta e interagire con i campi di input.
  * 
  * @author group05
- * @date Dicembre 08,2024
- * @version 1.0
+ * @date Dicembre 08, 2024
+ * @version 1.1
  */
 public class AddContactController extends ContactController implements Initializable {
     @FXML
@@ -119,6 +119,14 @@ public class AddContactController extends ContactController implements Initializ
         splitPane.getItems().remove(1);
     }
  
+    /**
+     * @brief Gestisce il funzionamento dei bottoni che rendono modificabili
+     * i TextField relativi a numero di telefono e email.
+     * 
+     * @param[in] fields vettore dei TextField.
+     * @param[i] button pulsante relativo alla sezione dei TextField.
+     * @param[i] error la label aassociata al formato del contenuto dei TextField.
+     */
     private void setupButtons(TextField[] fields, Button button, Label error) {
         ComboBox<PhonePrefix>[] prefixMenus = new ComboBox[]{ prefixMenu1, prefixMenu2, prefixMenu3 };
         

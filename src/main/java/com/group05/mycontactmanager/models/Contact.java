@@ -13,7 +13,7 @@ import javafx.beans.property.SimpleBooleanProperty;
  * 
  * @author Group 05
  * @date Dicembre 8, 2024
- * @version 1.0
+ * @version 1.1
  */
 public class Contact implements Serializable{
     private String name;
